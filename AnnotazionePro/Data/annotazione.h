@@ -16,8 +16,8 @@ public:
     void setDescrizione(const QString &value);
 
 private:
-    QString Titolo;
-    QString Descrizione;
+    QString _titolo;
+    QString _descrizione;
 
 };
 
