@@ -11,6 +11,8 @@ CONFIG += c++11
 SOURCES += \
     Data/annotazione.cpp \
     Data/nota.cpp \
+    Data/promemoria.cpp \
+    Data/ricorrenza.cpp \
     Util/lista.cpp \
     main.cpp \
     mainwindow.cpp
@@ -18,6 +20,8 @@ SOURCES += \
 HEADERS += \
     Data/annotazione.h \
     Data/nota.h \
+    Data/promemoria.h \
+    Data/ricorrenza.h \
     Util/lista.h \
     mainwindow.h
 
