@@ -14,7 +14,8 @@ public:
     //Override Operatori di Confronto
     bool operator==(const Nota &n) const;
     bool operator!=(const Nota &n) const;
-
+    //Override Operatore di Somma
+    void operator+(const QString &value);
 private:
     QString _corpo;
 };

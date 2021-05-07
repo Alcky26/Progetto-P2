@@ -19,6 +19,8 @@ public:
     //Override Operatori di Confronto
     bool operator==(const promemoria &p) const;
     bool operator!=(const promemoria &p) const;
+    //Override Operatore di Somma
+    void operator+(const QString &value);
 
 private:
     QDate _date;

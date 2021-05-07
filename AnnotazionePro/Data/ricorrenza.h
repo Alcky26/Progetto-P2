@@ -25,6 +25,9 @@ public:
     //Override Operatori di Confronto
     bool operator==(const ricorrenza &r) const;
     bool operator!=(const ricorrenza &r) const;
+    //Override Operatore di Somma
+    void operator+(const QString &value);
+
 
 private:
     QDate _date;

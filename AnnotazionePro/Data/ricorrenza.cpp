@@ -1,7 +1,6 @@
 #include "ricorrenza.h"
 
 
-//ricorrenza(QString titolo, QString descrizione, QString corpo,QDate date,QTime time,Tipo type);
 ricorrenza::ricorrenza(QString titolo, QString descrizione, QString corpo, QDate date, QTime time, Tipo type) : Annotazione(titolo,descrizione), Nota(titolo,descrizione,corpo), _date(date), _time(time), _type(type)
 {
 
@@ -50,4 +49,9 @@ bool ricorrenza::operator==(const ricorrenza &r) const
 bool ricorrenza::operator!=(const ricorrenza &r) const
 {
     return !operator==(r);
+}
+
+void ricorrenza::operator+(const QString &value)
+{
+   setCorpo(getCorpo() + " " + value);
 }

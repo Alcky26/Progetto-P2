@@ -41,3 +41,7 @@ bool promemoria::operator!=(const promemoria &p) const
     return !operator==(p);
 }
 
+void promemoria::operator+(const QString &value)
+{
+    setCorpo(getCorpo() + " " + value);
+}

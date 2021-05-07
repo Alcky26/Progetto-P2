@@ -26,3 +26,8 @@ bool Nota::operator!=(const Nota &n) const
 {
     return !operator==(n);
 }
+
+void Nota::operator+(const QString &value)
+{
+    _corpo += value;
+}
