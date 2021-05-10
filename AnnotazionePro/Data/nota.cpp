@@ -1,6 +1,6 @@
 #include "nota.h"
 
-Nota::Nota(QString titolo, QString descrizione, QString corpo): Annotazione(titolo,descrizione), _corpo(corpo)
+Nota::Nota(QString titolo, QString corpo): Annotazione(titolo), _corpo(corpo)
 {
 
 }
@@ -18,7 +18,6 @@ void Nota::setCorpo(const QString &value)
 bool Nota::operator==(const Nota &n) const
 {
     return getTitolo()== n.getTitolo() &&
-            getDescrizione()== n.getDescrizione() &&
             _corpo == n._corpo;
 }
 

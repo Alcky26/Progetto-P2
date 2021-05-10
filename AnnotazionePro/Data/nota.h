@@ -6,7 +6,7 @@
 class Nota: virtual public Annotazione
 {
 public:
-    Nota(QString titolo, QString descrizione, QString Corpo);
+    Nota(QString titolo, QString Corpo);
     ~Nota();
     //Get e Set
     QString getCorpo() const;

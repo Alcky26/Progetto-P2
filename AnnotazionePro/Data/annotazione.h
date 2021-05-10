@@ -5,19 +5,15 @@
 class Annotazione
 {
 public:
-    Annotazione(QString titolo, QString descrizione);
+    Annotazione(QString titolo);
     virtual ~Annotazione()=0;
 
 
     QString getTitolo() const;
     void setTitolo(const QString &value);
 
-    QString getDescrizione() const;
-    void setDescrizione(const QString &value);
-
 private:
     QString _titolo;
-    QString _descrizione;
 
 };
 

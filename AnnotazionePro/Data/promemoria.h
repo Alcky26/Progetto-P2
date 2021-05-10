@@ -8,7 +8,7 @@
 class promemoria : virtual public Nota
 {
 public:
-    promemoria(QString titolo, QString descrizione, QString corpo,QDate date,QTime time);
+    promemoria(QString titolo, QString corpo,QDate date,QTime time);
     ~promemoria();
     //Get e Set
     QDate getDate() const;
@@ -20,7 +20,7 @@ public:
     bool operator==(const promemoria &p) const;
     bool operator!=(const promemoria &p) const;
     //Override Operatore di Somma
-    void operator+(const QString &value);
+    /* void operator+(const QString &value);*/
 
 private:
     QDate _date;

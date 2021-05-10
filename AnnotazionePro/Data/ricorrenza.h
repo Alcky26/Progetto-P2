@@ -5,12 +5,12 @@
 #include <QDate>
 #include <QTime>
 
-enum Tipo {Giornaliero,Settimanale,Mensile,Annuale, Personalizzato };
+enum Tipo {Giornaliero,Settimanale,Mensile,Annuale};
 
 class ricorrenza : virtual public Nota
 {
 public:
-    ricorrenza(QString titolo, QString descrizione, QString corpo,QDate date,QTime time,Tipo type);
+    ricorrenza(QString titolo, QString corpo,QDate date,QTime time,Tipo type);
     ~ricorrenza();
     //Get e Set
     Tipo getType() const;
@@ -26,8 +26,10 @@ public:
     bool operator==(const ricorrenza &r) const;
     bool operator!=(const ricorrenza &r) const;
     //Override Operatore di Somma
-    void operator+(const QString &value);
-
+    //void operator+(const QString &value);
+    //Metodi
+    void Aggiorna();
+    void Posticipa();
 
 private:
     QDate _date;

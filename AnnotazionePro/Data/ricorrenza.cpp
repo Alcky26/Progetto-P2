@@ -1,7 +1,7 @@
 #include "ricorrenza.h"
 
 
-ricorrenza::ricorrenza(QString titolo, QString descrizione, QString corpo, QDate date, QTime time, Tipo type) : Annotazione(titolo,descrizione), Nota(titolo,descrizione,corpo), _date(date), _time(time), _type(type)
+ricorrenza::ricorrenza(QString titolo, QString corpo, QDate date, QTime time, Tipo type) : Annotazione(titolo), Nota(titolo,corpo), _date(date), _time(time), _type(type)
 {
 
 }
@@ -39,7 +39,6 @@ void ricorrenza::setTime(const QTime &time)
 bool ricorrenza::operator==(const ricorrenza &r) const
 {
     return getTitolo()== r.getTitolo() &&
-           getDescrizione()== r.getDescrizione() &&
            getCorpo() == r.getCorpo() &&
            _date == r.getDate() &&
            _time == r.getTime() &&
@@ -50,8 +49,34 @@ bool ricorrenza::operator!=(const ricorrenza &r) const
 {
     return !operator==(r);
 }
-
+/*
 void ricorrenza::operator+(const QString &value)
 {
    setCorpo(getCorpo() + " " + value);
+}
+*/
+
+void ricorrenza::Aggiorna()
+{
+    if( _type == Giornaliero)
+    {
+        setDate(getDate().addDays(1));
+    }
+    else if( _type == Settimanale)
+    {
+        setDate(getDate().addDays(7));
+    }
+    else if( _type == Mensile)
+    {
+        setDate(getDate().addMonths(1));
+    }
+    else if( _type == Annuale)
+    {
+        setDate(getDate().addYears(1));
+    }
+}
+
+void ricorrenza::Posticipa()
+{
+    setTime(getTime().addSecs(600));
 }

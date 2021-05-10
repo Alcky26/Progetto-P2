@@ -1,7 +1,7 @@
 #include "promemoria.h"
 
 
-promemoria::promemoria(QString titolo, QString descrizione, QString corpo, QDate date, QTime time) : Annotazione(titolo,descrizione), Nota(titolo,descrizione,corpo), _date(date), _time(time)
+promemoria::promemoria(QString titolo, QString corpo, QDate date, QTime time) : Annotazione(titolo), Nota(titolo,corpo), _date(date), _time(time)
 {
 
 }
@@ -30,7 +30,6 @@ void promemoria::setTime(const QTime &time)
 bool promemoria::operator==(const promemoria &p) const
 {
     return getTitolo()== p.getTitolo() &&
-           getDescrizione()== p.getDescrizione() &&
            getCorpo() == p.getCorpo() &&
            _date == p.getDate() &&
            _time == p.getTime();
@@ -40,8 +39,9 @@ bool promemoria::operator!=(const promemoria &p) const
 {
     return !operator==(p);
 }
-
+/*
 void promemoria::operator+(const QString &value)
 {
     setCorpo(getCorpo() + " " + value);
 }
+*/
