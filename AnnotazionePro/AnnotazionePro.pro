@@ -14,6 +14,7 @@ SOURCES += \
     Data/promemoria.cpp \
     Data/ricorrenza.cpp \
     Util/lista.cpp \
+    Util/nodo.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -23,6 +24,7 @@ HEADERS += \
     Data/promemoria.h \
     Data/ricorrenza.h \
     Util/lista.h \
+    Util/nodo.h \
     mainwindow.h
 
 # Default rules for deployment.
