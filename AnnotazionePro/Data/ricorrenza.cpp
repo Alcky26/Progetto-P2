@@ -1,7 +1,12 @@
 #include "ricorrenza.h"
 
 
-ricorrenza::ricorrenza(QString titolo, QString corpo, QDate date, QTime time, Tipo type) : Annotazione(titolo), Nota(titolo,corpo), _date(date), _time(time), _type(type)
+ricorrenza::ricorrenza(QString titolo, QString corpo, QDate date, QTime time, Tipo type) : annotazione(titolo), nota(titolo,corpo), _date(date), _time(time), _type(type)
+{
+
+}
+
+ricorrenza::~ricorrenza()
 {
 
 }

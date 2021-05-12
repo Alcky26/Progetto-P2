@@ -1,16 +1,21 @@
 #include "annotazione.h"
 
-Annotazione::Annotazione(QString titolo): _titolo(titolo)
+annotazione::annotazione(QString titolo): _titolo(titolo)
 {
 
 }
 
-QString Annotazione::getTitolo() const
+annotazione::annotazione():_titolo("")
+{
+
+}
+
+QString annotazione::getTitolo() const
 {
     return _titolo;
 }
 
-void Annotazione::setTitolo(const QString &value)
+void annotazione::setTitolo(const QString &value)
 {
     _titolo = value;
 }

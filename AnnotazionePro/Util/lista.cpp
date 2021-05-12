@@ -77,6 +77,38 @@ void lista<T>::insertBack(const T &t)
 }
 
 template<class T>
+T& lista<T>::popFront()
+{
+    nodo<T> *popped=new nodo<T>;
+    if(this->isEmpty())
+        return nullptr;
+    else {
+        popped=_first;
+        popped->_next->_prev=popped->_prev;
+        _first=_first->_next;
+        delete _first;
+    }
+    _size--;
+    return *popped;
+}
+
+template<class T>
+T& lista<T>::popBack()
+{
+    nodo<T> *popped=new nodo<T>;
+    if(this->isEmpty())
+        return nullptr;
+    else {
+        popped=_end;
+        popped->_prev->_next=popped->_next;
+        _end=_end->_prev;
+        delete _end;
+    }
+    _size--;
+    return *popped;
+}
+
+template<class T>
 typename lista<T>::constiterator lista<T>::begin() const {
     return _first;
 }
@@ -194,6 +226,17 @@ typename lista<T>::constiterator lista<T>::indexOf(const T &t) const {
     return nullptr;
 }
 
+/*template<class T>
+T &lista<T>::index(lista::constiterator ci) const
+{
+    for(constiterator i = begin(); i != end(); i++)
+    {
+        if(*i == ci)
+            return this.;
+    }
+    return nullptr;
+}
+*/
 template<class T>
 typename lista<T>::constiterator lista<T>::erase(constiterator x) {
 
@@ -206,11 +249,9 @@ typename lista<T>::constiterator lista<T>::erase(constiterator x) {
     } else {
         if (x == begin()) {
             nodo<T>* f = _first;
-
             _first = _first->_next;
             _first->_prev = nullptr;
             ++x;
-
             f->_next = nullptr;
             delete f;
             _size--;
@@ -227,10 +268,8 @@ typename lista<T>::constiterator lista<T>::erase(constiterator x) {
             nodo<T>* s = x._ptr->_next;
             p->_next = s;
             s->_prev = p;
-
             x._ptr->_prev = nullptr;
             x._ptr->_next = nullptr;
-
             delete x._ptr;
             _size--;
             return constiterator(s, false);

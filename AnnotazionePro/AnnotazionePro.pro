@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     Data/annotazione.cpp \
+    Data/elenco.cpp \
     Data/nota.cpp \
     Data/promemoria.cpp \
     Data/ricorrenza.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 
 HEADERS += \
     Data/annotazione.h \
+    Data/elenco.h \
     Data/nota.h \
     Data/promemoria.h \
     Data/ricorrenza.h \

@@ -3,6 +3,7 @@
 
 #include "nodo.h"
 
+
 template <class T>
 class lista
 {
@@ -20,6 +21,8 @@ public:
     bool isEmpty() const;
     void insertFront(const T& t);
     void insertBack(const T& t);
+    T& popFront();
+    T& popBack();
     class constiterator {
         friend class lista<T>;
         private:
@@ -63,6 +66,10 @@ public:
 
     //resituisce il constiterator dell'elemento dato t
     constiterator indexOf(const T& t) const;
+
+
+    //resituisce l'oggetto dell'elemento in posizione ci
+    T& index(constiterator ci) const;
 
     //rimuove tutti gli elementi della lista
     void clear();

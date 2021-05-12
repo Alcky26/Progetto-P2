@@ -1,7 +1,12 @@
 #include "promemoria.h"
 
 
-promemoria::promemoria(QString titolo, QString corpo, QDate date, QTime time) : Annotazione(titolo), Nota(titolo,corpo), _date(date), _time(time)
+promemoria::promemoria(QString titolo, QString corpo, QDate date, QTime time) : annotazione(titolo), nota(titolo,corpo), _date(date), _time(time)
+{
+
+}
+
+promemoria::~promemoria()
 {
 
 }

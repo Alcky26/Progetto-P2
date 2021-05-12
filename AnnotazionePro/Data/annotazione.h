@@ -2,11 +2,12 @@
 #define ANNOTAZIONE_H
 
 #include <QString>
-class Annotazione
+class annotazione
 {
 public:
-    Annotazione(QString titolo);
-    virtual ~Annotazione()=0;
+    annotazione(QString titolo);
+    annotazione();
+    virtual ~annotazione()=0;
 
 
     QString getTitolo() const;

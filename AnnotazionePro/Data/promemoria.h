@@ -5,11 +5,11 @@
 #include <QTime>
 #include "nota.h"
 
-class promemoria : virtual public Nota
+class promemoria : virtual public nota
 {
 public:
     promemoria(QString titolo, QString corpo,QDate date,QTime time);
-    ~promemoria();
+    virtual ~promemoria();
     //Get e Set
     QDate getDate() const;
     void setDate(const QDate &date);

@@ -1,23 +1,23 @@
-#ifndef NOTA_H
-#define NOTA_H
+#ifndef nota_H
+#define nota_H
 
 #include <QString>
 #include "annotazione.h"
-class Nota: virtual public Annotazione
+class nota: virtual public annotazione
 {
 public:
-    Nota(QString titolo, QString Corpo);
-    ~Nota();
+    nota(QString titolo, QString Corpo);
+    virtual ~nota();
     //Get e Set
     QString getCorpo() const;
     void setCorpo(const QString &value);
     //Override Operatori di Confronto
-    bool operator==(const Nota &n) const;
-    bool operator!=(const Nota &n) const;
+    bool operator==(const nota &n) const;
+    bool operator!=(const nota &n) const;
     //Override Operatore di Somma
     void operator+(const QString &value);
 private:
     QString _corpo;
 };
 
-#endif // NOTA_H
+#endif // nota_H

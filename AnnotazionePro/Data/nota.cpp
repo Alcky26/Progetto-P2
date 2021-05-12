@@ -1,32 +1,37 @@
 #include "nota.h"
 
-Nota::Nota(QString titolo, QString corpo): Annotazione(titolo), _corpo(corpo)
+nota::nota(QString titolo, QString corpo): annotazione(titolo), _corpo(corpo)
 {
 
 }
 
-QString Nota::getCorpo() const
+nota::~nota()
+{
+
+}
+
+QString nota::getCorpo() const
 {
     return _corpo;
 }
 
-void Nota::setCorpo(const QString &value)
+void nota::setCorpo(const QString &value)
 {
     _corpo = value;
 }
 
-bool Nota::operator==(const Nota &n) const
+bool nota::operator==(const nota &n) const
 {
     return getTitolo()== n.getTitolo() &&
             _corpo == n._corpo;
 }
 
-bool Nota::operator!=(const Nota &n) const
+bool nota::operator!=(const nota &n) const
 {
     return !operator==(n);
 }
 
-void Nota::operator+(const QString &value)
+void nota::operator+(const QString &value)
 {
     _corpo += value;
 }
