@@ -10,6 +10,11 @@ annotazione::annotazione():_titolo("")
 
 }
 
+annotazione::~annotazione()
+{
+
+}
+
 QString annotazione::getTitolo() const
 {
     return _titolo;

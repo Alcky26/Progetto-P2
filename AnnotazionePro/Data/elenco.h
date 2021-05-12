@@ -1,4 +1,4 @@
-/*#ifndef ELENCO_H
+#ifndef ELENCO_H
 #define ELENCO_H
 
 #include <QString>
@@ -30,5 +30,3 @@ private:
 };
 
 #endif // ELENCO_H
-
-*/
