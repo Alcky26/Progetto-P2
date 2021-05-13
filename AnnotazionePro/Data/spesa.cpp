@@ -5,9 +5,9 @@ spesa::spesa(QString titolo, QString descrizione) : elenco(titolo,descrizione), 
 
 }
 
-spesa::spesa(QString titolo, QString descrizione, const lista<spese> &spesa) : elenco(titolo,descrizione)
+spesa::spesa(QString titolo, QString descrizione, const lista<type_spesa> &spesa) : elenco(titolo,descrizione)
 {
-    for(lista<spese>::constiterator ci = spesa.begin(); ci!=spesa.end();ci++)
+    for(lista<type_spesa>::constiterator ci = spesa.begin(); ci!=spesa.end();ci++)
     {
         _spesa.insertBack(*ci);
     }
@@ -21,7 +21,7 @@ spesa::~spesa()
 double spesa::CostoComplessivo() const
 {
     double total=0;
-    for(lista<spese>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
+    for(lista<type_spesa>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
     {
         total+= ci->costo;
     }
@@ -31,7 +31,7 @@ double spesa::CostoComplessivo() const
 double spesa::CostoRimanente() const
 {
     double total=0;
-    for(lista<spese>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
+    for(lista<type_spesa>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
     {
         if(!(ci->isDone))
         {
@@ -45,7 +45,7 @@ double spesa::CostoRimanente() const
 double spesa::CostoAttuale() const
 {
     double total=0;
-    for(lista<spese>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
+    for(lista<type_spesa>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
     {
         if(ci->isDone)
         {
@@ -58,13 +58,13 @@ double spesa::CostoAttuale() const
 
 void spesa::addElemento(const QString &elemento, const double &prezzo)
 {
-    spese newElement;
+    type_spesa newElement;
     newElement.costo=prezzo;
     newElement.value=elemento;
     _spesa.insertBack(newElement);
 }
 
-void spesa::addElemento(const spese &value)
+void spesa::addElemento(const type_spesa &value)
 {
     _spesa.insertBack(value);
 }

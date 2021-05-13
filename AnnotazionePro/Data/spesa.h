@@ -3,7 +3,7 @@
 
 #include "elenco.h"
 
-struct spese {
+struct type_spesa {
     QString value;
     double costo;
     bool isDone=0;
@@ -13,7 +13,7 @@ class spesa : virtual public elenco
 {
 public:
     spesa(QString titolo, QString descrizione);
-    spesa(QString titolo, QString descrizione,const lista<spese> &spesa);
+    spesa(QString titolo, QString descrizione,const lista<type_spesa> &spesa);
     ~spesa();
 
     double CostoComplessivo() const;
@@ -24,10 +24,10 @@ public:
 
     void addElemento(const QString &elemento, const double &prezzo);
 
-    void addElemento(const spese &value);
+    void addElemento(const type_spesa &value);
 
 private:
-    lista<spese> _spesa;
+    lista<type_spesa> _spesa;
 };
 
 #endif // SPESA_H
