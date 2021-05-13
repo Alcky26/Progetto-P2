@@ -14,6 +14,7 @@ SOURCES += \
     Data/nota.cpp \
     Data/promemoria.cpp \
     Data/ricorrenza.cpp \
+    Data/spesa.cpp \
     Util/lista.cpp \
     Util/nodo.cpp \
     main.cpp \
@@ -25,6 +26,7 @@ HEADERS += \
     Data/nota.h \
     Data/promemoria.h \
     Data/ricorrenza.h \
+    Data/spesa.h \
     Util/lista.h \
     Util/nodo.h \
     mainwindow.h
