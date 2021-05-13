@@ -22,6 +22,10 @@ public:
 
     double CostoAttuale() const;
 
+    void addElemento(const QString &elemento, const double &prezzo);
+
+    void addElemento(const spese &value);
+
 private:
     lista<spese> _spesa;
 };

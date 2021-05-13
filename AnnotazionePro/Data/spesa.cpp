@@ -56,3 +56,16 @@ double spesa::CostoAttuale() const
     return total;
 }
 
+void spesa::addElemento(const QString &elemento, const double &prezzo)
+{
+    spese newElement;
+    newElement.costo=prezzo;
+    newElement.value=elemento;
+    _spesa.insertBack(newElement);
+}
+
+void spesa::addElemento(const spese &value)
+{
+    _spesa.insertBack(value);
+}
+
