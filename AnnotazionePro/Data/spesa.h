@@ -2,16 +2,12 @@
 #define SPESA_H
 
 #include "elenco.h"
-
-struct type_spesa {
-    QString value;
-    double costo;
-    bool isDone=0;
-};
+#include "Util/type_spesa.h"
 
 class spesa : virtual public elenco
 {
 public:
+    spesa();
     spesa(QString titolo, QString descrizione);
     spesa(QString titolo, QString descrizione,const lista<type_spesa> &spesa);
     ~spesa();
@@ -22,9 +18,11 @@ public:
 
     double CostoAttuale() const;
 
-    void addElemento(const QString &elemento, const double &prezzo);
+    void addElement(const QString &elemento, const double &prezzo);
 
-    void addElemento(const type_spesa &value);
+    void addElement(const type_spesa &value);
+
+    void Remove(const QString &elemento, const double &prezzo);
 
 private:
     lista<type_spesa> _spesa;

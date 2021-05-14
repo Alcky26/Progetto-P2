@@ -1,5 +1,10 @@
 #include "spesa.h"
 
+spesa::spesa() : elenco(), _spesa()
+{
+
+}
+
 spesa::spesa(QString titolo, QString descrizione) : elenco(titolo,descrizione), _spesa()
 {
 
@@ -20,10 +25,11 @@ spesa::~spesa()
 
 double spesa::CostoComplessivo() const
 {
+
     double total=0;
     for(lista<type_spesa>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
     {
-        total+= ci->costo;
+        total+= ci->getCost();
     }
     return total;
 }
@@ -33,9 +39,9 @@ double spesa::CostoRimanente() const
     double total=0;
     for(lista<type_spesa>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
     {
-        if(!(ci->isDone))
+        if(!ci->getIsDone())
         {
-            total+= ci->costo;
+            total+= ci->getCost();
         }
 
     }
@@ -47,25 +53,39 @@ double spesa::CostoAttuale() const
     double total=0;
     for(lista<type_spesa>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
     {
-        if(ci->isDone)
+        if(ci->getIsDone())
         {
-            total+= ci->costo;
+            total+= ci->getCost();
         }
 
     }
     return total;
 }
 
-void spesa::addElemento(const QString &elemento, const double &prezzo)
+void spesa::addElement(const QString &elemento, const double &prezzo)
 {
     type_spesa newElement;
-    newElement.costo=prezzo;
-    newElement.value=elemento;
+    newElement.setCost(prezzo);
+    newElement.setValue(elemento);
     _spesa.insertBack(newElement);
 }
 
-void spesa::addElemento(const type_spesa &value)
+void spesa::addElement(const type_spesa &value)
 {
     _spesa.insertBack(value);
 }
+
+void spesa::Remove(const QString &elemento, const double &prezzo)
+{
+    for(lista<type_spesa>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
+    {
+        if(ci->getCost()==prezzo && ci->getValue()==elemento)
+        {
+            _spesa.erase(ci);
+        }
+    }
+}
+
+
+
 

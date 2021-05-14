@@ -4,15 +4,13 @@
 #include <QString>
 #include "Util/lista.h"
 #include "annotazione.h"
+#include "Util/type_elenco.h"
 
-struct elenchi {
-    QString value;
-    bool isDone=0;
-};
 
 class elenco: virtual public annotazione
 {
 public:
+    elenco();
     elenco(QString titolo, QString descrizione);
     elenco(QString titolo, QString descrizione,const lista<QString> &elenco);
     virtual ~elenco();
@@ -27,7 +25,7 @@ public:
 
 private:
     QString _descrizione;
-    lista<elenchi> _elenco;
+    lista<type_elenco> _elenco;
 };
 
 #endif // ELENCO_H

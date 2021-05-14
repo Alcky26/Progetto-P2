@@ -1,5 +1,10 @@
 #include "elenco.h"
 
+elenco::elenco() : annotazione(), _elenco()
+{
+
+}
+
 elenco::elenco(QString titolo, QString descrizione):annotazione(titolo),_descrizione(descrizione),_elenco()
 {
 
@@ -12,10 +17,10 @@ elenco::~elenco()
 
 elenco::elenco(QString titolo, QString descrizione, const lista<QString> &elenco):annotazione(titolo),_descrizione(descrizione)
 {
-    elenchi elem;
+    type_elenco elem;
     for( lista<QString>::constiterator ci = elenco.begin(); ci!=elenco.end(); ci++)
     {
-        elem.value=(*ci);
+        elem.setValue(*ci);
         _elenco.insertFront(elem);
     }
 }
@@ -32,8 +37,8 @@ void elenco::setDescrizione(const QString &descrizione)
 
 void elenco::addElemento(const QString &elemento)
 {
-    elenchi elem;
-    elem.value=elemento;
+    type_elenco elem;
+    elem.setValue(elemento);
     _elenco.insertBack(elem);
 
 }

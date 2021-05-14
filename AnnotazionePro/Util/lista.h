@@ -13,19 +13,25 @@ private:
     unsigned int _size; //dimensione della lista
 
 public:
+    //costruttori
     lista();
     lista(const lista& l);
+    //distruttore
     ~lista();
+    //copia
     lista& operator=(const lista& d);
+    //getSize & isEmpty
     unsigned int getSize() const;
     bool isEmpty() const;
+    //Inserts
     void insertFront(const T& t);
     void insertBack(const T& t);
+
     class constiterator {
         friend class lista<T>;
         private:
             nodo<T> *_ptr;
-            bool _pastTheEnd; // true sse constiterator è "past-the-end"
+            bool _pastTheEnd; // true se constiterator è "past-the-end"
             constiterator(nodo<T>* p, bool pte=false);
         public:
             constiterator();
@@ -64,7 +70,6 @@ public:
 
     //resituisce il constiterator dell'elemento dato t
     constiterator indexOf(const T& t) const;
-
 
     //resituisce l'oggetto dell'elemento in posizione ci
     T& index(constiterator ci) const;
