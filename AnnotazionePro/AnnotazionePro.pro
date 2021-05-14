@@ -19,6 +19,8 @@ SOURCES += \
     Util/nodo.cpp \
     Util/type_elenco.cpp \
     Util/type_spesa.cpp \
+    View/Widget/wannotazione.cpp \
+    View/example.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -33,6 +35,8 @@ HEADERS += \
     Util/nodo.h \
     Util/type_elenco.h \
     Util/type_spesa.h \
+    View/Widget/wannotazione.h \
+    View/example.h \
     mainwindow.h
 
 # Default rules for deployment.
