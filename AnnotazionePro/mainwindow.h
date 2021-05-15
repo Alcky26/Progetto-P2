@@ -17,7 +17,7 @@
 #include "View/Widget/wannotazione.h"
 #include <QDebug>
 #include <QDesktopWidget>
-
+#include <QMessageBox>
 
 class MainWindow : public QWidget
 {
@@ -30,7 +30,7 @@ public:
 private:
     //
     QVBoxLayout *mainLayout;
-    wAnnotazione *wA;
+    //wAnnotazione *wA;
     //load Data when opening the window
     void loadData();
 
@@ -46,8 +46,11 @@ private slots:
     void apriClicked();
     void salvaClicked();
     void salvaConNomeClicked();
-    void esportaStipendio();
-    void analizzaStipendio();
+
+    // Metodi Per Help!
+    void apriInfos() const;
+    void apriHelp() const;
+    void apriAboutUs() const;
 
 };
 #endif // MAINWINDOW_H

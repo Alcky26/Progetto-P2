@@ -9,13 +9,14 @@
 #include <QPushButton>
 
 
-class wAnnotazione :public QWidget
+class wAnnotazione : virtual public QWidget
 {
      Q_OBJECT
 public:
     wAnnotazione();
 
     void update();
+
 private:
     //Modello
 
@@ -37,7 +38,7 @@ private:
 
 
     //Azioni
-    QPushButton *scelta, *aggiungi;
+    QPushButton *_scelta, *_aggiungi;
 
 
     //Extra
