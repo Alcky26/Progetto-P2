@@ -15,6 +15,7 @@ SOURCES += \
     Data/promemoria.cpp \
     Data/ricorrenza.cpp \
     Data/spesa.cpp \
+    Model/modelannotazione.cpp \
     Util/lista.cpp \
     Util/nodo.cpp \
     Util/type_elenco.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     Data/promemoria.h \
     Data/ricorrenza.h \
     Data/spesa.h \
+    Model/modelannotazione.h \
     Util/lista.h \
     Util/nodo.h \
     Util/type_elenco.h \

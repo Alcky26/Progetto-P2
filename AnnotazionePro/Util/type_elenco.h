@@ -13,7 +13,7 @@ class type_elenco
 public:
     //Costruttore e Distruttore
     type_elenco();
-    //elenchi(QString value);
+    type_elenco(QString* value);
     type_elenco(QString value, bool isDone=0);
 
 
@@ -22,6 +22,7 @@ public:
     //Get e Set
     QString getValue() const;
     void setValue(const QString &value);
+
     bool getIsDone() const;
     void setIsDone(bool value);
 

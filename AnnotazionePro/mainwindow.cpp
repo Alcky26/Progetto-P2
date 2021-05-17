@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     // Da aggiungere
     //
     // Dichiarazione wAnnotazione e ModelAnnotazione
-    //  Model = new ModelAnnotazione();
+    Model = new ModelAnnotazione();
     //  wAnn = new wAnnotazione(Model);
     //
     // Aggiunta di wAnnotazione al mainLayout

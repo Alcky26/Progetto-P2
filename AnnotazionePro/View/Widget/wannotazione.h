@@ -7,31 +7,34 @@
 #include <QLabel>
 #include "Util/lista.h"
 #include <QPushButton>
+#include <QComboBox>
+#include "Model/modelannotazione.h"
 
-
-class wAnnotazione : virtual public QWidget
+class wAnnotazione : public QWidget
 {
      Q_OBJECT
 public:
-    wAnnotazione();
+    wAnnotazione(ModelAnnotazione *model, QWidget *parent);
 
     void update();
 
 private:
     //Modello
-
+    ModelAnnotazione *_model;
 
     //GUI
-    QGridLayout *mainLayout;
-    QVBoxLayout *opzioni;
+    QVBoxLayout *mainLayout,*opzioni;
+    QGridLayout *griglia;
+
+    QGridLayout *viewLayoutAggiungi;
 
     //QLabel
     //QLineEdit
     //void QPushButton::setMenu(QMenu *menu)
 
     //Input
-    QLineEdit *titolo, *descrizione, *values;
-
+    QLineEdit *_LineTitolo, *_LineDescrizione, *_LineValori;
+    QComboBox *_tipologia;
 
     //Custom Input
 
@@ -42,11 +45,11 @@ private:
 
 
     //Extra
-    QLabel *_titolo, *_descrizione,*_values;
 
 
-    void Aggiungi();
-    void Change();
+    // Nuova Annotazione (?)
+    void viewAggiungi();
+    //void Modifica();
 
     bool InputValido();
 
@@ -54,7 +57,7 @@ private:
 
 
 private slots:
-    void btnAggiungiClicked();
+    //void btnAggiungiClicked();
    /* void tipologiaIndexChanged(int);
 
         void btnModificaClicked();

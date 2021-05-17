@@ -5,6 +5,11 @@ type_elenco::type_elenco() : _value(), _isDone(0)
 
 }
 
+type_elenco::type_elenco(QString* value) : _value(*value), _isDone(0)
+{
+
+}
+
 type_elenco::type_elenco(QString value, bool isDone) : _value(value), _isDone(isDone)
 {
 
@@ -34,3 +39,5 @@ void type_elenco::setIsDone(bool value)
 {
     _isDone = value;
 }
+
+

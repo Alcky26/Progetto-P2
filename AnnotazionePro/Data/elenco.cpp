@@ -15,13 +15,21 @@ elenco::~elenco()
 
 }
 
-elenco::elenco(QString titolo, QString descrizione, const lista<QString> &elenco):annotazione(titolo),_descrizione(descrizione)
+elenco::elenco(QString titolo, QString descrizione, lista<QString*> &elenco):annotazione(titolo),_descrizione(descrizione)
 {
-    type_elenco elem;
-    for( lista<QString>::constiterator ci = elenco.begin(); ci!=elenco.end(); ci++)
+    /*type_elenco* elem=new type_elenco();
+    for( lista<QString*>::constiterator ci = elenco.begin(); ci!=elenco.end(); ci++)
     {
-        elem.setValue(*ci);
+        elem->setValue(*ci);
         _elenco.insertFront(elem);
+    }*/
+
+    type_elenco* newElement;
+
+    for( lista<QString*>::constiterator ci = elenco.begin(); ci!=elenco.end();ci++)
+    {
+        newElement= new type_elenco(*ci);
+        _elenco.insertFront(newElement);
     }
 }
 
@@ -35,10 +43,9 @@ void elenco::setDescrizione(const QString &descrizione)
     _descrizione = descrizione;
 }
 
-void elenco::addElemento(const QString &elemento)
+void elenco::addElemento(const QString* &elemento)
 {
-    type_elenco elem;
-    elem.setValue(elemento);
+    type_elenco* elem = new type_elenco();
+    elem->setValue(*elemento);
     _elenco.insertBack(elem);
-
 }

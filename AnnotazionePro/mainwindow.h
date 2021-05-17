@@ -18,6 +18,7 @@
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QMessageBox>
+#include "Model/modelannotazione.h"
 
 class MainWindow : public QWidget
 {
@@ -30,6 +31,7 @@ public:
 private:
     //
     QVBoxLayout *mainLayout;
+    ModelAnnotazione* Model;
     //wAnnotazione *wA;
     //load Data when opening the window
     void loadData();
