@@ -13,12 +13,12 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     //
     // Dichiarazione wAnnotazione e ModelAnnotazione
     Model = new ModelAnnotazione();
-    //  wAnn = new wAnnotazione(Model);
+    wA= new wAnnotazione(Model);
     //
     // Aggiunta di wAnnotazione al mainLayout
-    //  mainLayout->addWidget(wAnn);
+    mainLayout->addWidget(wA);
 
-    //setLayout(mainLayout);
+    setLayout(mainLayout);
 }
 
 void MainWindow::addMenuButtons()

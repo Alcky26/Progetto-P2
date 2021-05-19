@@ -71,9 +71,6 @@ public:
     //resituisce il constiterator dell'elemento dato t
     constiterator indexOf(const T& t) const;
 
-    //resituisce l'oggetto dell'elemento in posizione ci
-    T& index(constiterator ci) const;
-
     //rimuove tutti gli elementi della lista
     void clear();
 };
@@ -272,17 +269,6 @@ typename lista<T>::constiterator lista<T>::indexOf(const T &t) const {
     return nullptr;
 }
 
-/*template<class T>
-T &lista<T>::index(lista::constiterator ci) const
-{
-    for(constiterator i = begin(); i != end(); i++)
-    {
-        if(*i == ci)
-            return this.;
-    }
-    return nullptr;
-}
-*/
 template<class T>
 typename lista<T>::constiterator lista<T>::erase(constiterator x) {
 

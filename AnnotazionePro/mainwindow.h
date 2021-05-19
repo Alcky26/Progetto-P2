@@ -32,7 +32,7 @@ private:
     //
     QVBoxLayout *mainLayout;
     ModelAnnotazione* Model;
-    //wAnnotazione *wA;
+    wAnnotazione *wA;
     //load Data when opening the window
     void loadData();
 

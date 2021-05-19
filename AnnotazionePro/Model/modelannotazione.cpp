@@ -52,8 +52,11 @@ void ModelAnnotazione::salvato()
 QStringList ModelAnnotazione::categorie()
 {
     QStringList tipologieItems;
-    tipologieItems.push_back("Titolo");
-    tipologieItems.push_back("Descrizione");
+    tipologieItems.push_back("Nota");
+    tipologieItems.push_back("Promemoria");
+    tipologieItems.push_back("Ricorrenza");
+    tipologieItems.push_back("Elenco");
+    tipologieItems.push_back("Spesa");
     return tipologieItems;
 }
 

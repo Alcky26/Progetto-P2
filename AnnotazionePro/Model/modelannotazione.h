@@ -29,6 +29,7 @@ public:
 private:
     bool _needToSave=false;
     lista<annotazione*> _annotazioni;
+
 };
 
 #endif // MODELANNOTAZIONE_H

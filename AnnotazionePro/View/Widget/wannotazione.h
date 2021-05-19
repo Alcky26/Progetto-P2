@@ -9,12 +9,13 @@
 #include <QPushButton>
 #include <QComboBox>
 #include "Model/modelannotazione.h"
+#include <QGroupBox>
 
 class wAnnotazione : public QWidget
 {
      Q_OBJECT
 public:
-    wAnnotazione(ModelAnnotazione *model, QWidget *parent);
+    wAnnotazione(ModelAnnotazione *model, QWidget *parent = 0);
 
     void update();
 
@@ -23,17 +24,20 @@ private:
     ModelAnnotazione *_model;
 
     //GUI
-    QVBoxLayout *mainLayout,*opzioni;
-    QGridLayout *griglia;
 
-    QGridLayout *viewLayoutAggiungi;
+    QHBoxLayout *mainLayout;
 
-    //QLabel
-    //QLineEdit
+    QVBoxLayout *opzioni, *griglia, *viewLayoutAggiungi;
+
+    QGridLayout *viewLayoutGriglia;
+
+    QVBoxLayout *layoutAnnotazione;
+
+
     //void QPushButton::setMenu(QMenu *menu)
 
     //Input
-    QLineEdit *_LineTitolo, *_LineDescrizione, *_LineValori;
+    QLineEdit *_LineTitolo, *_LineCorpo, *_LineValori;
     QComboBox *_tipologia;
 
     //Custom Input
@@ -45,11 +49,17 @@ private:
 
 
     //Extra
-
+    QGroupBox *spacingOpzioni, *spacingGriglia;
 
     // Nuova Annotazione (?)
     void viewAggiungi();
     //void Modifica();
+
+    void VisualizzaNota();
+    void VisualizzaPromemoria();
+    void VisualizzaRicorrenza();
+    void VisualizzaElenco();
+    void VisualizzaSpesa();
 
     bool InputValido();
 
@@ -57,9 +67,10 @@ private:
 
 
 private slots:
-    //void btnAggiungiClicked();
-   /* void tipologiaIndexChanged(int);
 
+    void tipologiaIndexChanged(int);
+    //void btnAggiungiClicked();
+   /*
         void btnModificaClicked();
         void btnRimuoviClicked();
         void cellaClicked(int, int);
