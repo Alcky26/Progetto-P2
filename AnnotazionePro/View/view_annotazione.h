@@ -27,19 +27,22 @@ private:
     model_annotazione *_model;
 
     // GUI
-    QHBoxLayout *mainLayout;
-    QVBoxLayout *opzioni, *griglia;
+    QHBoxLayout *_mainLayout;
+    QVBoxLayout *_opzioni, *_griglia;
     QLineEdit *_LineTitolo,*_LineCorpo;
     QComboBox *_tipologia;
     QCalendarWidget *_calendario;
     QDateTimeEdit *_ora;
+    QHBoxLayout *_bottomBar;
     // Metodi
     void viewOpzioni();
+    void viewGriglia();
     void VisualizzaNota();
     void VisualizzaPromemoria();
     void VisualizzaRicorrenza();
     void VisualizzaElenco();
     void VisualizzaSpesa();
+
 
 private slots:
 

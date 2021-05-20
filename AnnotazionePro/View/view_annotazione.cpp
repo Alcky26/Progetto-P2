@@ -4,69 +4,74 @@
 
 view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): QWidget(parent), _model(model)
 {
-    mainLayout = new QHBoxLayout(this);
-    griglia = new QVBoxLayout();
-    opzioni = new QVBoxLayout();
+    _mainLayout = new QHBoxLayout(this);
+    _griglia = new QVBoxLayout();
+    _opzioni = new QVBoxLayout();
 
+    // Setup Opzioni
     viewOpzioni();
+    // Setup Griglia
+    viewGriglia();
 
-    mainLayout->addLayout(griglia,80);
-    mainLayout->addLayout(opzioni,20);
+    _mainLayout->addLayout(_griglia,50);
+    _mainLayout->addLayout(_opzioni,30);
 
     connect(_tipologia, SIGNAL(currentIndexChanged(int)), this, SLOT(tipologiaIndexChanged(int)));
 }
 
 void view_annotazione::viewOpzioni()
 {
-    QVBoxLayout *tempLayout = new QVBoxLayout();
-    QGroupBox *suppLayout = new QGroupBox("Griglia");
 
-    /*QSizePolicy suppPolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-    suppPolicy.setHorizontalStretch(4);
-    suppLayout->setSizePolicy(suppPolicy);*/
-
-    suppLayout->setLayout(tempLayout);
-    griglia->addWidget(suppLayout);
-
-    QVBoxLayout *tempLayout2 = new QVBoxLayout();
-    QGroupBox *suppLayout2 = new QGroupBox("Opzioni");
+    QVBoxLayout *_tempLayoutOpzioni = new QVBoxLayout();
+    QGroupBox *suppLayoutOpzioni = new QGroupBox("Opzioni");
 
     _LineTitolo = new QLineEdit();
     _LineCorpo = new QLineEdit();
     _tipologia = new QComboBox();
     _calendario = new QCalendarWidget();
 
-    tempLayout2->addWidget(new QLabel("Tipologia"));
+    _tempLayoutOpzioni->addWidget(new QLabel("Tipologia"));
     _tipologia->addItems(model_annotazione::categorie());
-    tempLayout2->addWidget(_tipologia);
+    _tempLayoutOpzioni->addWidget(_tipologia);
 
 
     _LineTitolo->setPlaceholderText("Titolo");
-    tempLayout2->addWidget(_LineTitolo);
+    _tempLayoutOpzioni->addWidget(_LineTitolo);
 
     //NOTA
     _LineCorpo->setPlaceholderText("Corpo");
-    tempLayout2->addWidget(_LineCorpo);
-
-    tempLayout2->addWidget(_calendario);
-    _calendario->setVisible(false);
+    _tempLayoutOpzioni->addWidget(_LineCorpo);
 
     ////
     _ora = new QDateTimeEdit(QDate::currentDate());
     _ora->setMinimumDate(QDate::currentDate().addDays(-365));
     _ora->setMaximumDate(QDate::currentDate().addDays(365));
     _ora->setDisplayFormat("yyyy.MM.dd");
-    tempLayout2->addWidget(_ora);
-
+    _tempLayoutOpzioni->addWidget(_ora);
+    _ora->setVisible(false);
     ////
 
-    suppLayout2->setLayout(tempLayout2);
-    suppLayout2->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Maximum);
+    _tempLayoutOpzioni->addWidget(_calendario);
+    _calendario->setVisible(false);
 
-    opzioni->addWidget(suppLayout2);
-    opzioni->setAlignment(suppLayout2,Qt::AlignTop);
+    suppLayoutOpzioni->setLayout(_tempLayoutOpzioni);
+    suppLayoutOpzioni->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Maximum);
+
+    _opzioni->addWidget(suppLayoutOpzioni);
+    _opzioni->setAlignment(suppLayoutOpzioni,Qt::AlignTop);
 }
 
+void view_annotazione::viewGriglia(){
+    QVBoxLayout *_tempLayoutGriglia = new QVBoxLayout();
+    QGroupBox *_suppLayoutGriglia = new QGroupBox("Griglia");
+
+    /*QSizePolicy suppPolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+    suppPolicy.setHorizontalStretch(4);
+    suppLayout->setSizePolicy(suppPolicy);*/
+
+    _suppLayoutGriglia->setLayout(_tempLayoutGriglia);
+    _griglia->addWidget(_suppLayoutGriglia);
+}
 
 void view_annotazione::tipologiaIndexChanged(int index)
 {
@@ -85,29 +90,34 @@ void view_annotazione::tipologiaIndexChanged(int index)
 void view_annotazione::VisualizzaNota()
 {
     _LineCorpo->setVisible(true);
+    _ora->setVisible(false);
     _calendario->setVisible(false);
 }
 
 void view_annotazione::VisualizzaPromemoria()
 {
     _LineCorpo->setVisible(true);
+    _ora->setVisible(true);
     _calendario->setVisible(true);
 }
 
 void view_annotazione::VisualizzaRicorrenza()
 {
     _LineCorpo->setVisible(true);
+    _ora->setVisible(true);
     _calendario->setVisible(true);
 }
 
 void view_annotazione::VisualizzaElenco()
 {
     _LineCorpo->setVisible(false);
+    _ora->setVisible(false);
     _calendario->setVisible(false);
 }
 
 void view_annotazione::VisualizzaSpesa()
 {
     _LineCorpo->setVisible(false);
+    _ora->setVisible(false);
     _calendario->setVisible(false);
 }
