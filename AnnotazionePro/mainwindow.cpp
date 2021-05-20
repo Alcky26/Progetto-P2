@@ -6,24 +6,21 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     mainLayout = new QVBoxLayout(this);
     // Aggiunge bottoni in alto a Sinistra
     addMenuButtons();
-    // Modifica Dimensioni e Margini
-    setApplicationStyle();
-
-    // Da aggiungere
-    //
     // Dichiarazione wAnnotazione e ModelAnnotazione
-    Model = new ModelAnnotazione();
-    wA= new wAnnotazione(Model);
+    model = new model_annotazione();
+    wA= new view_annotazione(model);
     //
     // Aggiunta di wAnnotazione al mainLayout
     mainLayout->addWidget(wA);
-
+    setApplicationStyle();
     setLayout(mainLayout);
 }
 
 void MainWindow::addMenuButtons()
 {
     QMenuBar* menuBar = new QMenuBar(this);
+
+    menuBar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Maximum);
 
     QMenu* file = new QMenu("File", menuBar);
 
@@ -42,9 +39,9 @@ void MainWindow::addMenuButtons()
     QAction* analizzaStipendio = new QAction("Analizza stipendio", file);
     analizzaStipendio->setShortcut(Qt::CTRL | Qt::Key_A);*/
 
-    connect(apri, SIGNAL(triggered()), this, SLOT(apriClicked()));
-    connect(salva, SIGNAL(triggered()), this, SLOT(salvaClicked()));
-    connect(salvaConNome, SIGNAL(triggered()), this, SLOT(salvaConNomeClicked()));
+    connect(apri, SIGNAL(triggered()), this, SLOT(openClicked()));
+    connect(salva, SIGNAL(triggered()), this, SLOT(saveClicked()));
+    connect(salvaConNome, SIGNAL(triggered()), this, SLOT(saveNameClicked()));
     connect(chiudi, SIGNAL(triggered()), this, SLOT(close()));
     /*connect(esportaStipendio, SIGNAL(triggered()), this, SLOT(esportaStipendio()));
     connect(analizzaStipendio, SIGNAL(triggered()), this, SLOT(analizzaStipendio()));
@@ -67,9 +64,9 @@ void MainWindow::addMenuButtons()
     QAction* _help = new QAction("How to",_helpMenu);
     QAction* _aboutUs = new QAction("About us",_helpMenu);
     // Associo Actions
-    connect(_info,SIGNAL(triggered()),this,SLOT(apriInfos()));
-    connect(_help,SIGNAL(triggered()),this,SLOT(apriHelp()));
-    connect(_aboutUs,SIGNAL(triggered()),this,SLOT(apriAboutUs()));
+    connect(_info,SIGNAL(triggered()),this,SLOT(openInfos()));
+    connect(_help,SIGNAL(triggered()),this,SLOT(openHelp()));
+    connect(_aboutUs,SIGNAL(triggered()),this,SLOT(openAboutUs()));
 
     _helpMenu->addAction(_info);
     _helpMenu->addAction(_help);
@@ -79,7 +76,6 @@ void MainWindow::addMenuButtons()
     menuBar->addMenu(_helpMenu);
 
     mainLayout->addWidget(menuBar);
-
 }
 
 void MainWindow::setApplicationStyle()
@@ -90,34 +86,34 @@ void MainWindow::setApplicationStyle()
     mainLayout->setMargin(0);
 }
 
-void MainWindow::apriClicked()
+void MainWindow::openClicked()
 {
 
 }
 
-void MainWindow::salvaClicked()
+void MainWindow::saveClicked()
 {
 
 }
 
-void MainWindow::salvaConNomeClicked()
+void MainWindow::saveNameClicked()
 {
 
 }
 
-void MainWindow::apriInfos() const
+void MainWindow::openInfos() const
 {
     QMessageBox box(QMessageBox::Information, "Info", QString("Informazioni - "), QMessageBox::Ok);
     box.exec();
 }
 
-void MainWindow::apriHelp() const
+void MainWindow::openHelp() const
 {
     QMessageBox box(QMessageBox::Information, "Help", QString("Help - "), QMessageBox::Ok);
     box.exec();
 }
 
-void MainWindow::apriAboutUs() const
+void MainWindow::openAboutUs() const
 {
     QMessageBox box(QMessageBox::Information, "About Us", QString("About Us - "), QMessageBox::Ok);
     box.exec();
@@ -126,7 +122,7 @@ void MainWindow::apriAboutUs() const
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     //serve il Model
-
+    event->setAccepted(true);
 }
 
 

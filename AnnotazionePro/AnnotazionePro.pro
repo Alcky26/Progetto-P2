@@ -15,13 +15,13 @@ SOURCES += \
     Data/promemoria.cpp \
     Data/ricorrenza.cpp \
     Data/spesa.cpp \
-    Model/modelannotazione.cpp \
+    Model/model_annotazione.cpp \
     Util/lista.cpp \
     Util/nodo.cpp \
     Util/type_elenco.cpp \
     Util/type_spesa.cpp \
     View/Widget/wannotazione.cpp \
-    View/example.cpp \
+    View/view_annotazione.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -32,13 +32,13 @@ HEADERS += \
     Data/promemoria.h \
     Data/ricorrenza.h \
     Data/spesa.h \
-    Model/modelannotazione.h \
+    Model/model_annotazione.h \
     Util/lista.h \
     Util/nodo.h \
     Util/type_elenco.h \
     Util/type_spesa.h \
     View/Widget/wannotazione.h \
-    View/example.h \
+    View/view_annotazione.h \
     mainwindow.h
 
 # Default rules for deployment.

@@ -1,14 +1,14 @@
-#ifndef MODELANNOTAZIONE_H
-#define MODELANNOTAZIONE_H
+#ifndef MODEL_ANNOTAZIONE_H
+#define MODEL_ANNOTAZIONE_H
 
 #include "Util/lista.h"
 #include "Data/annotazione.h"
 #include <QStringList>
 
-class ModelAnnotazione
+class model_annotazione
 {
 public:
-    ModelAnnotazione();
+    model_annotazione();
 
     //void ReadFile();
     //QDomDocument SaveFile();
@@ -32,4 +32,4 @@ private:
 
 };
 
-#endif // MODELANNOTAZIONE_H
+#endif // MODEL_ANNOTAZIONE_H

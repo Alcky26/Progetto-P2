@@ -1,27 +1,27 @@
-#include "modelannotazione.h"
+#include "model_annotazione.h"
 
-ModelAnnotazione::ModelAnnotazione() : _needToSave(false),_annotazioni()
+model_annotazione::model_annotazione() : _needToSave(false),_annotazioni()
 {
 
 }
 
-void ModelAnnotazione::aggiungiAnnotazione(annotazione *annotazione)
+void model_annotazione::aggiungiAnnotazione(annotazione *annotazione)
 {
     _annotazioni.insertBack(annotazione);
     _needToSave=true;
 }
 
-lista<annotazione *> ModelAnnotazione::getAnnotazioni() const
+lista<annotazione *> model_annotazione::getAnnotazioni() const
 {
     return _annotazioni;
 }
 
-void ModelAnnotazione::reset()
+void model_annotazione::reset()
 {
     _annotazioni.clear();
 }
 
-void ModelAnnotazione::rimouviElemento(annotazione *annot)
+void model_annotazione::rimouviElemento(annotazione *annot)
 {
 
     lista<annotazione *>::constiterator ci = _annotazioni.begin();
@@ -39,17 +39,17 @@ void ModelAnnotazione::rimouviElemento(annotazione *annot)
 
 }
 
-bool ModelAnnotazione::deviSalvare() const
+bool model_annotazione::deviSalvare() const
 {
     return _needToSave;
 }
 
-void ModelAnnotazione::salvato()
+void model_annotazione::salvato()
 {
     _needToSave = false;
 }
 
-QStringList ModelAnnotazione::categorie()
+QStringList model_annotazione::categorie()
 {
     QStringList tipologieItems;
     tipologieItems.push_back("Nota");

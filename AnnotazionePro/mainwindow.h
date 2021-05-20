@@ -14,11 +14,11 @@
 #include <QTextStream>
 #include <QCloseEvent>
 #include <QInputDialog>
-#include "View/Widget/wannotazione.h"
+#include "View/view_annotazione.h"
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QMessageBox>
-#include "Model/modelannotazione.h"
+#include "Model/model_annotazione.h"
 
 class MainWindow : public QWidget
 {
@@ -31,8 +31,8 @@ public:
 private:
     //
     QVBoxLayout *mainLayout;
-    ModelAnnotazione* Model;
-    wAnnotazione *wA;
+    model_annotazione *model;
+    view_annotazione *wA;
     //load Data when opening the window
     void loadData();
 
@@ -45,14 +45,14 @@ private:
     void closeEvent(QCloseEvent *event);
 
 private slots:
-    void apriClicked();
-    void salvaClicked();
-    void salvaConNomeClicked();
+    void openClicked();
+    void saveClicked();
+    void saveNameClicked();
 
     // Metodi Per Help!
-    void apriInfos() const;
-    void apriHelp() const;
-    void apriAboutUs() const;
+    void openInfos() const;
+    void openHelp() const;
+    void openAboutUs() const;
 
 };
 #endif // MAINWINDOW_H
