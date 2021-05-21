@@ -13,6 +13,9 @@
 #include <QCalendarWidget>
 #include <QDateTimeEdit>
 #include "Model/model_annotazione.h"
+#include <QTextEdit>
+#include <QtDebug>
+#include <QTime>
 
 
 class view_annotazione : public QWidget
@@ -29,7 +32,8 @@ private:
     // GUI
     QHBoxLayout *_mainLayout;
     QVBoxLayout *_opzioni, *_griglia;
-    QLineEdit *_LineTitolo,*_LineCorpo;
+    QLineEdit *_LineTitolo;
+    QTextEdit *_LineCorpo;
     QComboBox *_tipologia;
     QCalendarWidget *_calendario;
     QDateTimeEdit *_ora;
@@ -47,6 +51,7 @@ private:
 private slots:
 
     void tipologiaIndexChanged(int);
+    void onTextChanged();
 };
 
 #endif // VIEW_ANNOTAZIONE_H

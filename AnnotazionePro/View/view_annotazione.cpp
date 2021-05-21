@@ -13,10 +13,11 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     // Setup Griglia
     viewGriglia();
 
-    _mainLayout->addLayout(_griglia,50);
+    _mainLayout->addLayout(_griglia,70);
     _mainLayout->addLayout(_opzioni,30);
 
     connect(_tipologia, SIGNAL(currentIndexChanged(int)), this, SLOT(tipologiaIndexChanged(int)));
+    connect( _LineCorpo, SIGNAL( textChanged() ), this, SLOT( onTextChanged() ) );
 }
 
 void view_annotazione::viewOpzioni()
@@ -26,31 +27,36 @@ void view_annotazione::viewOpzioni()
     QGroupBox *suppLayoutOpzioni = new QGroupBox("Opzioni");
 
     _LineTitolo = new QLineEdit();
-    _LineCorpo = new QLineEdit();
+    _LineCorpo = new QTextEdit();
     _tipologia = new QComboBox();
     _calendario = new QCalendarWidget();
 
     _tempLayoutOpzioni->addWidget(new QLabel("Tipologia"));
     _tipologia->addItems(model_annotazione::categorie());
+    _tipologia->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_tipologia);
 
 
     _LineTitolo->setPlaceholderText("Titolo");
+    _LineTitolo->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_LineTitolo);
 
     //NOTA
     _LineCorpo->setPlaceholderText("Corpo");
+    _LineCorpo->setMaximumWidth(500);
+    _LineCorpo->setMaximumHeight(23);
     _tempLayoutOpzioni->addWidget(_LineCorpo);
 
     ////
     _ora = new QDateTimeEdit(QDate::currentDate());
-    _ora->setMinimumDate(QDate::currentDate().addDays(-365));
-    _ora->setMaximumDate(QDate::currentDate().addDays(365));
-    _ora->setDisplayFormat("yyyy.MM.dd");
+    _ora->setDisplayFormat("hh:mm:ss");
+    _ora->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_ora);
     _ora->setVisible(false);
     ////
 
+    _calendario->setMaximumWidth(500);
+    _calendario->setGridVisible(true);
     _tempLayoutOpzioni->addWidget(_calendario);
     _calendario->setVisible(false);
 
@@ -59,6 +65,12 @@ void view_annotazione::viewOpzioni()
 
     _opzioni->addWidget(suppLayoutOpzioni);
     _opzioni->setAlignment(suppLayoutOpzioni,Qt::AlignTop);
+}
+
+void view_annotazione::onTextChanged()
+{
+    QSize size = _LineCorpo->document()->size().toSize();
+    _LineCorpo->setFixedHeight( size.height() + 3 );
 }
 
 void view_annotazione::viewGriglia(){
