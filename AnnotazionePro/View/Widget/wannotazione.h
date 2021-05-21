@@ -21,7 +21,13 @@ class wAnnotazione : public QWidget
 {
      Q_OBJECT
 public:
-    wAnnotazione(annotazione *ann, QWidget *parent = 0);
+
+    wAnnotazione(nota *nota, QWidget *parent = 0);
+    wAnnotazione(promemoria *prom, QWidget *parent = 0);
+    wAnnotazione(ricorrenza *ric, QWidget *parent = 0);
+    wAnnotazione(elenco *elen, QWidget *parent = 0);
+    wAnnotazione(spesa *spes, QWidget *parent = 0);
+
 
 private:
 

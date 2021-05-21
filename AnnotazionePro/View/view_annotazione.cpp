@@ -17,7 +17,10 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     _mainLayout->addLayout(_opzioni,30);
 
     connect(_tipologia, SIGNAL(currentIndexChanged(int)), this, SLOT(tipologiaIndexChanged(int)));
-    connect( _LineCorpo, SIGNAL( textChanged() ), this, SLOT( onTextChanged() ) );
+    connect(_LineCorpo, SIGNAL( textChanged() ), this, SLOT( onTextChanged() ) );
+
+
+    connect(_aggiunta, SIGNAL(&QPushButton::released), this, SLOT(OnClick()));
 }
 
 void view_annotazione::viewOpzioni()
@@ -59,6 +62,10 @@ void view_annotazione::viewOpzioni()
     _calendario->setGridVisible(true);
     _tempLayoutOpzioni->addWidget(_calendario);
     _calendario->setVisible(false);
+
+    _aggiunta = new QPushButton("Aggiungi Nuova Annotazione");
+    _aggiunta->setMaximumWidth(500);
+    _tempLayoutOpzioni->addWidget(_aggiunta);
 
     suppLayoutOpzioni->setLayout(_tempLayoutOpzioni);
     suppLayoutOpzioni->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Maximum);
@@ -132,4 +139,10 @@ void view_annotazione::VisualizzaSpesa()
     _LineCorpo->setVisible(false);
     _ora->setVisible(false);
     _calendario->setVisible(false);
+}
+
+
+void view_annotazione::OnClick()
+{
+    qDebug() << "ciao";
 }

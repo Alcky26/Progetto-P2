@@ -1,6 +1,26 @@
 #include "wannotazione.h"
 
-wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent): annotazione(), QWidget(parent)
+wAnnotazione::wAnnotazione(nota *nota, QWidget *parent) : QWidget(parent)
+{
+
+}
+
+wAnnotazione::wAnnotazione(promemoria *prom, QWidget *parent) : QWidget(parent)
+{
+
+}
+
+wAnnotazione::wAnnotazione(ricorrenza *ric, QWidget *parent) : QWidget(parent)
+{
+
+}
+
+wAnnotazione::wAnnotazione(elenco *elen, QWidget *parent) : QWidget(parent)
+{
+
+}
+
+wAnnotazione::wAnnotazione(spesa *spes, QWidget *parent) : QWidget(parent)
 {
 
 }

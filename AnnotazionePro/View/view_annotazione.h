@@ -35,6 +35,7 @@ private:
     QLineEdit *_LineTitolo;
     QTextEdit *_LineCorpo;
     QComboBox *_tipologia;
+    QPushButton *_aggiunta;
     QCalendarWidget *_calendario;
     QDateTimeEdit *_ora;
     QHBoxLayout *_bottomBar;
@@ -52,6 +53,7 @@ private slots:
 
     void tipologiaIndexChanged(int);
     void onTextChanged();
+    void OnClick();
 };
 
 #endif // VIEW_ANNOTAZIONE_H
