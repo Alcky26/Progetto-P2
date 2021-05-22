@@ -24,6 +24,7 @@
 #include "Data/spesa.h"
 #include "View/Widget/wannotazione.h"
 #include <QGraphicsView>
+#include <QScrollBar>
 
 
 class view_annotazione : public QWidget
@@ -50,8 +51,6 @@ private:
     QDateTimeEdit *_ora;
     QHBoxLayout *_bottomBar;
 
-    QGridLayout *_tempLayoutGriglia;
-    QGraphicsView *_suppLayoutGriglia;
     // Metodi
     void viewOpzioni();
     void viewGriglia();
@@ -62,6 +61,7 @@ private:
     void VisualizzaSpesa();
     void aggiornaGriglia(QGridLayout *supplay);
     void clearGriglia();
+    void resizeAnn(wAnnotazione* Ann);
 
 private slots:
 

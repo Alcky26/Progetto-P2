@@ -18,6 +18,7 @@
 #include "Data/spesa.h"
 #include <QGraphicsView>
 #include <QListWidget>
+#include <QPlainTextEdit >
 
 class wAnnotazione : public QWidget
 {
@@ -29,8 +30,9 @@ public:
 
 private:
     QVBoxLayout *_mainBoxLayout;
-    QLabel *_LabTitolo, *_LabCorpo;
-
+    //QLabel *_LabTitolo, *_LabCorpo;
+    QLabel *_LabTitolo;
+    QPlainTextEdit  * _LabCorpo;
 
 };
 

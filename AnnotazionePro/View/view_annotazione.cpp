@@ -13,12 +13,14 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     // Setup Griglia
     viewGriglia();
 
+
+
+
     _mainLayout->addLayout(_griglia,70);
     _mainLayout->addLayout(_opzioni,30);
 
     connect(_tipologia, SIGNAL(currentIndexChanged(int)), this, SLOT(tipologiaIndexChanged(int)));
     connect(_LineCorpo, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
-
 
     connect(_aggiunta, SIGNAL(clicked()), this, SLOT(OnClick()));
 }
@@ -82,19 +84,41 @@ void view_annotazione::onTextChanged()
 
 void view_annotazione::viewGriglia()
 {
-     _tempLayoutGriglia = new QGridLayout();
-    _suppLayoutGriglia = new QGraphicsView();
+    QGridLayout *_tempLayoutGriglia = new QGridLayout();
+    QGroupBox *_suppLayoutGriglia = new QGroupBox();
 
     /*QSizePolicy suppPolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     suppPolicy.setHorizontalStretch(4);
-    suppLayout->setSizePolicy(suppPolicy);*/
+    _suppLayoutGriglia->setSizePolicy(suppPolicy);*/
+
+    QScrollArea *_scrollAreaAnnot = new QScrollArea;
+
 
     clearGriglia();
+
+    QRect geometry = _griglia->geometry();
+    int width = geometry.width();
+
+
+    //////////////////////////////////////
+    /*
+    WIDTH 100
+    SP - T - SP - T - SP - T - SP - T - SP
+    5 * SP + 4 * T = 100
+    20 (T) * 4 + X (SP) * 5 = 100
+    5 * X = 28
+    T è 20
+    SP è 4
+    */
+    /////////////////////////////////////
+    _tempLayoutGriglia->setSpacing(width/25);
 
     aggiornaGriglia(_tempLayoutGriglia);
 
     _suppLayoutGriglia->setLayout(_tempLayoutGriglia);
-    _griglia->addWidget(_suppLayoutGriglia);
+    _scrollAreaAnnot->setWidget(_suppLayoutGriglia);
+    _griglia->addWidget(_scrollAreaAnnot);
+
 }
 
 void view_annotazione::clearGriglia()
@@ -103,6 +127,16 @@ void view_annotazione::clearGriglia()
     {
        _griglia->itemAt(i)->widget()->deleteLater();
     }
+}
+
+void view_annotazione::resizeAnn(wAnnotazione* Ann)
+{
+    QRect geometry = _griglia->geometry();
+    int width = geometry.width();
+    int height = geometry.height();
+    Ann->setMaximumSize(width/5,height/5);
+    Ann->setFixedSize(width/5,height/5);
+    Ann->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
 }
 
 void view_annotazione::tipologiaIndexChanged(int index)
@@ -156,23 +190,27 @@ void view_annotazione::VisualizzaSpesa()
 
 void view_annotazione::aggiornaGriglia(QGridLayout *supplay)
 {
+
     lista<wAnnotazione*> supp = _wA;
     int count = 0;
     for(lista<wAnnotazione*>::constiterator cit = supp.begin(); cit != supp.end(); cit++)
     {
+        resizeAnn(* cit);
         supplay->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
         count++;
     }
+    supplay->setAlignment(Qt::AlignLeft);
+    supplay->setAlignment(Qt::AlignTop);
 }
 
 void view_annotazione::OnClick()
 {
     //if per tipologia
-    annotazione *nuovo=nullptr;
-    nuovo = new nota(_LineTitolo->text(), _LineCorpo->document()->toRawText());
-    wAnnotazione *waa = new wAnnotazione(nuovo);
-    _wA.insertFront(waa);
-    waa->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Maximum);
-    waa->setMaximumWidth(400);
+    annotazione *_nuovoInsert =nullptr;
+    _nuovoInsert  = new nota(_LineTitolo->text(), _LineCorpo->document()->toRawText());
+    wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
+    _wA.insertFront(_nuovoWAnn);
     viewGriglia();
 }
+
+
