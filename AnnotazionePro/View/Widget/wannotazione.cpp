@@ -1,26 +1,20 @@
 #include "wannotazione.h"
 
-wAnnotazione::wAnnotazione(nota *nota, QWidget *parent) : QWidget(parent)
+wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 {
+    _mainBoxLayout = new QVBoxLayout(this);
 
-}
+    QListWidget *scatola= new QListWidget();
+    scatola->setSizeAdjustPolicy(QListWidget::AdjustToContents);
 
-wAnnotazione::wAnnotazione(promemoria *prom, QWidget *parent) : QWidget(parent)
-{
+    QVBoxLayout *temp = new QVBoxLayout();
 
-}
+    //varia in base al tipo dynamico di ann
+    _LabTitolo = new QLabel(ann->getTitolo());
+    _LabCorpo = new QLabel(dynamic_cast<nota*>(ann)->getCorpo());
+    temp->addWidget(_LabTitolo);
+    temp->addWidget(_LabCorpo);
 
-wAnnotazione::wAnnotazione(ricorrenza *ric, QWidget *parent) : QWidget(parent)
-{
-
-}
-
-wAnnotazione::wAnnotazione(elenco *elen, QWidget *parent) : QWidget(parent)
-{
-
-}
-
-wAnnotazione::wAnnotazione(spesa *spes, QWidget *parent) : QWidget(parent)
-{
-
+    scatola->setLayout(temp);
+    _mainBoxLayout->addWidget(scatola);
 }

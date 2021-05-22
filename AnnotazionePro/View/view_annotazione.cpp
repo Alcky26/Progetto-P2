@@ -17,10 +17,10 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     _mainLayout->addLayout(_opzioni,30);
 
     connect(_tipologia, SIGNAL(currentIndexChanged(int)), this, SLOT(tipologiaIndexChanged(int)));
-    connect(_LineCorpo, SIGNAL( textChanged() ), this, SLOT( onTextChanged() ) );
+    connect(_LineCorpo, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
 
 
-    connect(_aggiunta, SIGNAL(&QPushButton::released), this, SLOT(OnClick()));
+    connect(_aggiunta, SIGNAL(clicked()), this, SLOT(OnClick()));
 }
 
 void view_annotazione::viewOpzioni()
@@ -80,16 +80,29 @@ void view_annotazione::onTextChanged()
     _LineCorpo->setFixedHeight( size.height() + 3 );
 }
 
-void view_annotazione::viewGriglia(){
-    QVBoxLayout *_tempLayoutGriglia = new QVBoxLayout();
-    QGroupBox *_suppLayoutGriglia = new QGroupBox("Griglia");
+void view_annotazione::viewGriglia()
+{
+     _tempLayoutGriglia = new QGridLayout();
+    _suppLayoutGriglia = new QGraphicsView();
 
     /*QSizePolicy suppPolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     suppPolicy.setHorizontalStretch(4);
     suppLayout->setSizePolicy(suppPolicy);*/
 
+    clearGriglia();
+
+    aggiornaGriglia(_tempLayoutGriglia);
+
     _suppLayoutGriglia->setLayout(_tempLayoutGriglia);
     _griglia->addWidget(_suppLayoutGriglia);
+}
+
+void view_annotazione::clearGriglia()
+{
+    for (int i = 0; i < _griglia->count(); i++)
+    {
+       _griglia->itemAt(i)->widget()->deleteLater();
+    }
 }
 
 void view_annotazione::tipologiaIndexChanged(int index)
@@ -141,8 +154,25 @@ void view_annotazione::VisualizzaSpesa()
     _calendario->setVisible(false);
 }
 
+void view_annotazione::aggiornaGriglia(QGridLayout *supplay)
+{
+    lista<wAnnotazione*> supp = _wA;
+    int count = 0;
+    for(lista<wAnnotazione*>::constiterator cit = supp.begin(); cit != supp.end(); cit++)
+    {
+        supplay->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
+        count++;
+    }
+}
 
 void view_annotazione::OnClick()
 {
-    qDebug() << "ciao";
+    //if per tipologia
+    annotazione *nuovo=nullptr;
+    nuovo = new nota(_LineTitolo->text(), _LineCorpo->document()->toRawText());
+    wAnnotazione *waa = new wAnnotazione(nuovo);
+    _wA.insertFront(waa);
+    waa->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Maximum);
+    waa->setMaximumWidth(400);
+    viewGriglia();
 }

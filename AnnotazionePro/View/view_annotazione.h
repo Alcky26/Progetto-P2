@@ -16,6 +16,14 @@
 #include <QTextEdit>
 #include <QtDebug>
 #include <QTime>
+#include "Data/annotazione.h"
+#include "Data/nota.h"
+#include "Data/ricorrenza.h"
+#include "Data/promemoria.h"
+#include "Data/elenco.h"
+#include "Data/spesa.h"
+#include "View/Widget/wannotazione.h"
+#include <QGraphicsView>
 
 
 class view_annotazione : public QWidget
@@ -28,10 +36,12 @@ public:
 private:
     // Modello
     model_annotazione *_model;
+    lista<wAnnotazione*> _wA;
 
     // GUI
     QHBoxLayout *_mainLayout;
-    QVBoxLayout *_opzioni, *_griglia;
+    QVBoxLayout *_opzioni;
+    QVBoxLayout *_griglia;
     QLineEdit *_LineTitolo;
     QTextEdit *_LineCorpo;
     QComboBox *_tipologia;
@@ -39,6 +49,9 @@ private:
     QCalendarWidget *_calendario;
     QDateTimeEdit *_ora;
     QHBoxLayout *_bottomBar;
+
+    QGridLayout *_tempLayoutGriglia;
+    QGraphicsView *_suppLayoutGriglia;
     // Metodi
     void viewOpzioni();
     void viewGriglia();
@@ -47,7 +60,8 @@ private:
     void VisualizzaRicorrenza();
     void VisualizzaElenco();
     void VisualizzaSpesa();
-
+    void aggiornaGriglia(QGridLayout *supplay);
+    void clearGriglia();
 
 private slots:
 

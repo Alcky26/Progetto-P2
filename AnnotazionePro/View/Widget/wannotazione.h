@@ -16,20 +16,20 @@
 #include "Data/promemoria.h"
 #include "Data/elenco.h"
 #include "Data/spesa.h"
+#include <QGraphicsView>
+#include <QListWidget>
 
 class wAnnotazione : public QWidget
 {
      Q_OBJECT
 public:
 
-    wAnnotazione(nota *nota, QWidget *parent = 0);
-    wAnnotazione(promemoria *prom, QWidget *parent = 0);
-    wAnnotazione(ricorrenza *ric, QWidget *parent = 0);
-    wAnnotazione(elenco *elen, QWidget *parent = 0);
-    wAnnotazione(spesa *spes, QWidget *parent = 0);
-
+    wAnnotazione(annotazione *ann, QWidget *parent = 0);
+    ~wAnnotazione() = default;
 
 private:
+    QVBoxLayout *_mainBoxLayout;
+    QLabel *_LabTitolo, *_LabCorpo;
 
 
 };
