@@ -53,31 +53,42 @@ void view_annotazione::viewOpzioni()
     _LineCorpo->setMaximumHeight(23);
     _tempLayoutOpzioni->addWidget(_LineCorpo);
 
-    ////
+    //ORA
     _ora = new QDateTimeEdit(QDate::currentDate());
     _ora->setDisplayFormat("hh:mm:ss");
     _ora->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_ora);
     _ora->setVisible(false);
-    ////
 
+    //DATA
     _calendario->setMaximumWidth(500);
     _calendario->setGridVisible(true);
     _tempLayoutOpzioni->addWidget(_calendario);
     _calendario->setVisible(false);
 
+    //TIPO
     _tipo->addItem("Giornaliero");
     _tipo->addItem("Settimanale");
     _tipo->addItem("Mensile");
     _tipo->addItem("Annuale");
-
     _tempLayoutOpzioni->addWidget(_tipo);
     _tipo->setVisible(false);
 
+    //LISTA per LIST
+    _ListHelp = new QLabel("Separare i valori dell'array con ;");
+    _LineList = new QTextEdit();
+    _LineList->setMaximumWidth(500);
+    _ListHelp->setVisible(false);
+    _LineList->setVisible(false);
+    _tempLayoutOpzioni->addWidget(_ListHelp);
+    _tempLayoutOpzioni->addWidget(_LineList);
+
+    //BOTTONE 1 ( AGGIUNGI )
     _aggiunta = new QPushButton("Aggiungi Nuova Annotazione");
     _aggiunta->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_aggiunta);
 
+    //BOTTONE 2 ( AGGIORNA )
     _aggiorna = new QPushButton("Aggiorna");
     _tempLayoutOpzioni->addWidget(_aggiorna);
     _aggiorna->setMaximumWidth(500);
@@ -152,12 +163,6 @@ void view_annotazione::resizeAnn(wAnnotazione* Ann)
     Ann->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
 }
 
-void view_annotazione::resizeGriglia()
-{
-
-
-}
-
 Tipo view_annotazione::MetodoSupporto(int _index)
 {
     Tipo _nuovoTipo=Giornaliero;
@@ -171,6 +176,22 @@ Tipo view_annotazione::MetodoSupporto(int _index)
        _nuovoTipo = Annuale;
 
     return _nuovoTipo;
+}
+
+lista<type_elenco *> view_annotazione::TextToList()
+{
+
+    QString _BoxValue=_LineList->document()->toRawText();
+    QStringList _SupportList = _BoxValue.split(';');
+    lista<type_elenco*> _endResult;
+
+    for(QStringList::ConstIterator cit=_SupportList.begin(); cit != _SupportList.end(); cit++)
+    {
+
+        _endResult.insertFront(new type_elenco(* (cit),false));
+    }
+
+    return _endResult;
 }
 
 void view_annotazione::tipologiaIndexChanged(int index)
@@ -193,6 +214,8 @@ void view_annotazione::VisualizzaNota()
     _ora->setVisible(false);
     _calendario->setVisible(false);
     _tipo->setVisible(false);
+    _LineList->setVisible(false);
+    _ListHelp->setVisible(false);
 }
 
 void view_annotazione::VisualizzaPromemoria()
@@ -201,6 +224,8 @@ void view_annotazione::VisualizzaPromemoria()
     _ora->setVisible(true);
     _calendario->setVisible(true);
     _tipo->setVisible(false);
+    _LineList->setVisible(false);
+    _ListHelp->setVisible(false);
 }
 
 void view_annotazione::VisualizzaRicorrenza()
@@ -209,22 +234,28 @@ void view_annotazione::VisualizzaRicorrenza()
     _ora->setVisible(true);
     _calendario->setVisible(true);
     _tipo->setVisible(true);
+    _LineList->setVisible(false);
+    _ListHelp->setVisible(false);
 }
 
 void view_annotazione::VisualizzaElenco()
 {
-    _LineCorpo->setVisible(false);
+    _LineCorpo->setVisible(true);
     _ora->setVisible(false);
     _calendario->setVisible(false);
     _tipo->setVisible(false);
+    _LineList->setVisible(true);
+    _ListHelp->setVisible(true);
 }
 
 void view_annotazione::VisualizzaSpesa()
 {
-    _LineCorpo->setVisible(false);
+    _LineCorpo->setVisible(true);
     _ora->setVisible(false);
     _calendario->setVisible(false);
     _tipo->setVisible(false);
+    _LineList->setVisible(true);
+    _ListHelp->setVisible(true);
 }
 
 void view_annotazione::aggiornaGriglia(QGridLayout *supplay)
@@ -260,7 +291,9 @@ void view_annotazione::OnClick()
     //Elenco
     else if (_value == 3)
         // Fix later Lol
-        _nuovoInsert  = new elenco(_LineTitolo->text(), _LineCorpo->document()->toRawText());
+        //_nuovoInsert  = new elenco(_LineTitolo->text(), _LineCorpo->document()->toRawText(), TextToList());
+        //_nuovoInsert  = new elenco(_LineTitolo->text(), _LineCorpo->document()->toRawText());
+        _nuovoInsert = new elenco("a","b",TextToList());
     //Spesa
     else if (_value == 4)
         //Fix Later Lol

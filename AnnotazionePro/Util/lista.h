@@ -73,6 +73,10 @@ public:
 
     //rimuove tutti gli elementi della lista
     void clear();
+
+    //operatore di assegnazione
+    void operator=(const lista<T*> &t);
+
 };
 
 template<class T>
@@ -333,6 +337,11 @@ void lista<T>::clear(){
     _first = _end = nullptr;
     _size = 0;
 }
+/*
+template<class T>
+void operator=(const lista<T*> &t)
+{
+}*/
 
 
 #endif // LISTA_H

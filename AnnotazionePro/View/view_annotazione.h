@@ -52,6 +52,8 @@ private:
     QCalendarWidget *_calendario;
     QDateTimeEdit *_ora;
     QComboBox *_tipo;
+    QLabel *_ListHelp;
+    QTextEdit *_LineList;
     QPushButton *_aggiunta;
     QPushButton *_aggiorna;
 
@@ -68,11 +70,12 @@ private:
     void aggiornaGriglia(QGridLayout *supplay);
     void clearGriglia();
     void resizeAnn(wAnnotazione* Ann);
-    void resizeGriglia();
 
     Tipo MetodoSupporto(int _index) ;
     void AggiuntaAnnotazione();
 
+    //Metodi da mettere su file a parte
+    lista<type_elenco *> TextToList();
 private slots:
 
     void tipologiaIndexChanged(int);

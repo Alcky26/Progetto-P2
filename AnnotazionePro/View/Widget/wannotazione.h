@@ -35,6 +35,7 @@ private:
     QPlainTextEdit  * _LabCorpo;
     QLabel *_LabDateTime;
     QLabel *_LabRicorrenza;
+    QLabel *_LabElenco;
 };
 
 #endif // WANNOTAZIONE_H

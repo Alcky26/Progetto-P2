@@ -13,10 +13,13 @@ public:
     elenco();
     elenco(QString titolo, QString descrizione);
     elenco(QString titolo, QString descrizione,lista<QString*> &elenco);
+    elenco(QString titolo, QString descrizione,lista<type_elenco*> elenco);
     virtual ~elenco();
 
     ///Override Operatore di Somma
     ///void operator+(const QString &value);
+
+    QString getListAsText();
 
     QString descrizione() const;
     void setDescrizione(QString const &descrizione);
