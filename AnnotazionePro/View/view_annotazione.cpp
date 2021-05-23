@@ -35,6 +35,7 @@ void view_annotazione::viewOpzioni()
     _LineCorpo = new QTextEdit();
     _tipologia = new QComboBox();
     _calendario = new QCalendarWidget();
+    _tipo = new QComboBox();
 
     _tempLayoutOpzioni->addWidget(new QLabel("Tipologia"));
     _tipologia->addItems(model_annotazione::categorie());
@@ -64,6 +65,14 @@ void view_annotazione::viewOpzioni()
     _calendario->setGridVisible(true);
     _tempLayoutOpzioni->addWidget(_calendario);
     _calendario->setVisible(false);
+
+    _tipo->addItem("Giornaliero");
+    _tipo->addItem("Settimanale");
+    _tipo->addItem("Mensile");
+    _tipo->addItem("Annuale");
+
+    _tempLayoutOpzioni->addWidget(_tipo);
+    _tipo->setVisible(false);
 
     _aggiunta = new QPushButton("Aggiungi Nuova Annotazione");
     _aggiunta->setMaximumWidth(500);
@@ -139,6 +148,19 @@ void view_annotazione::resizeAnn(wAnnotazione* Ann)
     Ann->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
 }
 
+Tipo view_annotazione::MetodoSupporto(int _index) const
+{
+    Tipo _nuovoTipo;
+    if(_index==0)
+        _nuovoTipo = Giornaliero;
+    else if (_index == 1)
+        _nuovoTipo = Settimanale;
+    else if (_index == 2)
+       _nuovoTipo = Mensile;
+    else if (_index == 3)
+       _nuovoTipo = Annuale;
+}
+
 void view_annotazione::tipologiaIndexChanged(int index)
 {
     if(index==0)
@@ -158,6 +180,7 @@ void view_annotazione::VisualizzaNota()
     _LineCorpo->setVisible(true);
     _ora->setVisible(false);
     _calendario->setVisible(false);
+    _tipo->setVisible(false);
 }
 
 void view_annotazione::VisualizzaPromemoria()
@@ -165,6 +188,7 @@ void view_annotazione::VisualizzaPromemoria()
     _LineCorpo->setVisible(true);
     _ora->setVisible(true);
     _calendario->setVisible(true);
+    _tipo->setVisible(false);
 }
 
 void view_annotazione::VisualizzaRicorrenza()
@@ -172,6 +196,7 @@ void view_annotazione::VisualizzaRicorrenza()
     _LineCorpo->setVisible(true);
     _ora->setVisible(true);
     _calendario->setVisible(true);
+    _tipo->setVisible(true);
 }
 
 void view_annotazione::VisualizzaElenco()
@@ -179,6 +204,7 @@ void view_annotazione::VisualizzaElenco()
     _LineCorpo->setVisible(false);
     _ora->setVisible(false);
     _calendario->setVisible(false);
+    _tipo->setVisible(false);
 }
 
 void view_annotazione::VisualizzaSpesa()
@@ -186,6 +212,7 @@ void view_annotazione::VisualizzaSpesa()
     _LineCorpo->setVisible(false);
     _ora->setVisible(false);
     _calendario->setVisible(false);
+    _tipo->setVisible(false);
 }
 
 void view_annotazione::aggiornaGriglia(QGridLayout *supplay)
@@ -206,8 +233,31 @@ void view_annotazione::aggiornaGriglia(QGridLayout *supplay)
 void view_annotazione::OnClick()
 {
     //if per tipologia
+    int _value = _tipologia->currentIndex();
     annotazione *_nuovoInsert =nullptr;
-    _nuovoInsert  = new nota(_LineTitolo->text(), _LineCorpo->document()->toRawText());
+    //Nota
+    if(_value==0)
+        _nuovoInsert  = new nota(_LineTitolo->text(), _LineCorpo->document()->toRawText());
+    //Promemoria
+    else if (_value == 1)
+        _nuovoInsert  = new promemoria(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time());
+    //Ricorrenza
+    else if (_value == 2)
+        //Cambiare Giornaliero con l'effettivo tipo
+        _nuovoInsert  = new ricorrenza(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(), MetodoSupporto(_tipo->currentIndex()));
+    //Elenco
+    else if (_value == 3)
+        // Fix later Lol
+        _nuovoInsert  = new elenco(_LineTitolo->text(), _LineCorpo->document()->toRawText());
+    //Spesa
+    else if (_value == 4)
+        //Fix Later Lol
+        _nuovoInsert  = new spesa(_LineTitolo->text(), _LineCorpo->document()->toRawText());
+
+
+
+    //annotazione *_nuovoInsert =nullptr;
+
     wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
     _wA.insertFront(_nuovoWAnn);
     viewGriglia();

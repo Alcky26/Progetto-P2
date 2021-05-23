@@ -54,6 +54,27 @@ bool ricorrenza::operator!=(const ricorrenza &r) const
 {
     return !operator==(r);
 }
+
+QString ricorrenza::typeToQString() const
+{
+    if( _type == Giornaliero)
+    {
+        return "Giornaliero";
+    }
+    else if( _type == Settimanale)
+    {
+        return "Settimanale";
+    }
+    else if( _type == Mensile)
+    {
+        return "Mensile";
+    }
+    else if( _type == Annuale)
+    {
+        return "Annuale";
+    }
+    else return " ";
+}
 /*
 void ricorrenza::operator+(const QString &value)
 {

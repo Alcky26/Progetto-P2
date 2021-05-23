@@ -28,6 +28,7 @@ public:
     //Override Operatore di Somma
     //void operator+(const QString &value);
     //Metodi
+    QString typeToQString() const;
     void Aggiorna();
     void Posticipa();
 

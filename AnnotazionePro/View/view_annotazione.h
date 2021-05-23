@@ -27,6 +27,7 @@
 #include <QScrollBar>
 
 
+
 class view_annotazione : public QWidget
 {
     Q_OBJECT
@@ -49,7 +50,8 @@ private:
     QPushButton *_aggiunta;
     QCalendarWidget *_calendario;
     QDateTimeEdit *_ora;
-    QHBoxLayout *_bottomBar;
+    QComboBox *_tipo;
+
 
     // Metodi
     void viewOpzioni();
@@ -63,6 +65,7 @@ private:
     void clearGriglia();
     void resizeAnn(wAnnotazione* Ann);
 
+    Tipo MetodoSupporto(int _index) const;
 private slots:
 
     void tipologiaIndexChanged(int);

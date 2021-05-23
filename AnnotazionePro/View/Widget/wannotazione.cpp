@@ -17,6 +17,30 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 
     temp->addWidget(_LabCorpo);
 
+    if(dynamic_cast<promemoria*>(ann))
+    {
+        _LabDateTime = new QLabel(dynamic_cast<promemoria*>(ann)->getDate().toString() + " " +  dynamic_cast<promemoria*>(ann)->getTime().toString());
+        temp->addWidget(_LabDateTime);
+    }
+
+    if(dynamic_cast<ricorrenza*>(ann))
+    {
+        _LabDateTime = new QLabel(dynamic_cast<ricorrenza*>(ann)->getDate().toString());
+
+        temp->addWidget(_LabDateTime);
+    }
+
+
+    /*if(dynamic_cast<ricorrenza*>(ann))
+    {
+        _LabDateTime = new QLabel(dynamic_cast<ricorrenza*>(ann)->getDate().toString() + " " + dynamic_cast<promemoria*>(ann)->getTime().toString());
+        temp->addWidget(_LabDateTime);
+
+
+        //_LabRicorrenza = new QLabel(dynamic_cast<ricorrenza*>(ann)->typeToQString());
+        //temp->addWidget(_LabRicorrenza);
+    }*/
+
     scatola->setLayout(temp);
     _mainBoxLayout->addWidget(scatola);
 }
