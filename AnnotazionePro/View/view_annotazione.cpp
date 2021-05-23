@@ -13,9 +13,6 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     // Setup Griglia
     viewGriglia();
 
-
-
-
     _mainLayout->addLayout(_griglia,70);
     _mainLayout->addLayout(_opzioni,30);
 
@@ -23,6 +20,8 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     connect(_LineCorpo, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
 
     connect(_aggiunta, SIGNAL(clicked()), this, SLOT(OnClick()));
+
+    connect(_aggiorna,SIGNAL(clicked()), this, SLOT(Aggiorna()));
 }
 
 void view_annotazione::viewOpzioni()
@@ -39,6 +38,7 @@ void view_annotazione::viewOpzioni()
 
     _tempLayoutOpzioni->addWidget(new QLabel("Tipologia"));
     _tipologia->addItems(model_annotazione::categorie());
+
     _tipologia->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_tipologia);
 
@@ -77,6 +77,10 @@ void view_annotazione::viewOpzioni()
     _aggiunta = new QPushButton("Aggiungi Nuova Annotazione");
     _aggiunta->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_aggiunta);
+
+    _aggiorna = new QPushButton("Aggiorna");
+    _tempLayoutOpzioni->addWidget(_aggiorna);
+    _aggiorna->setMaximumWidth(500);
 
     suppLayoutOpzioni->setLayout(_tempLayoutOpzioni);
     suppLayoutOpzioni->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Maximum);
@@ -148,7 +152,13 @@ void view_annotazione::resizeAnn(wAnnotazione* Ann)
     Ann->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
 }
 
-Tipo view_annotazione::MetodoSupporto(int _index) const
+void view_annotazione::resizeGriglia()
+{
+
+
+}
+
+Tipo view_annotazione::MetodoSupporto(int _index)
 {
     Tipo _nuovoTipo=Giornaliero;
     if(_index==0)
@@ -256,12 +266,15 @@ void view_annotazione::OnClick()
         //Fix Later Lol
         _nuovoInsert  = new spesa(_LineTitolo->text(), _LineCorpo->document()->toRawText());
 
-
-
     //annotazione *_nuovoInsert =nullptr;
 
     wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
     _wA.insertFront(_nuovoWAnn);
+    viewGriglia();
+}
+
+void view_annotazione::Aggiorna()
+{
     viewGriglia();
 }
 

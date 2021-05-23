@@ -35,6 +35,6 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 
     _Scatola->setLayout(_mainVBoxLayout);
 
-    _Scatola->setStyleSheet("color:white;background-color:rgb(176, 203, 247);");
+    //_Scatola->setStyleSheet("color:white;background-color:rgb(176, 203, 247);");
     _mainBoxLayout->addWidget(_Scatola);
 }

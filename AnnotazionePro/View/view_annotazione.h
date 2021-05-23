@@ -25,7 +25,7 @@
 #include "View/Widget/wannotazione.h"
 #include <QGraphicsView>
 #include <QScrollBar>
-
+#include <QMessageBox>
 
 
 class view_annotazione : public QWidget
@@ -42,35 +42,44 @@ private:
 
     // GUI
     QHBoxLayout *_mainLayout;
+    // 2 Aree Principali
     QVBoxLayout *_opzioni;
     QVBoxLayout *_griglia;
+    //Elementi per Inserimento
     QLineEdit *_LineTitolo;
     QTextEdit *_LineCorpo;
-    QComboBox *_tipologia;
-    QPushButton *_aggiunta;
+    QComboBox *_tipologia;   
     QCalendarWidget *_calendario;
     QDateTimeEdit *_ora;
     QComboBox *_tipo;
-
+    QPushButton *_aggiunta;
+    QPushButton *_aggiorna;
 
     // Metodi
     void viewOpzioni();
     void viewGriglia();
+
     void VisualizzaNota();
     void VisualizzaPromemoria();
     void VisualizzaRicorrenza();
     void VisualizzaElenco();
     void VisualizzaSpesa();
+
     void aggiornaGriglia(QGridLayout *supplay);
     void clearGriglia();
     void resizeAnn(wAnnotazione* Ann);
+    void resizeGriglia();
 
-    Tipo MetodoSupporto(int _index) const;
+    Tipo MetodoSupporto(int _index) ;
+    void AggiuntaAnnotazione();
+
 private slots:
 
     void tipologiaIndexChanged(int);
     void onTextChanged();
     void OnClick();
+    void Aggiorna();
+
 };
 
 #endif // VIEW_ANNOTAZIONE_H
