@@ -73,7 +73,7 @@ QString ricorrenza::typeToQString() const
     {
         return "Annuale";
     }
-    else return " ";
+    else return "null";
 }
 /*
 void ricorrenza::operator+(const QString &value)

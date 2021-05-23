@@ -150,7 +150,7 @@ void view_annotazione::resizeAnn(wAnnotazione* Ann)
 
 Tipo view_annotazione::MetodoSupporto(int _index) const
 {
-    Tipo _nuovoTipo;
+    Tipo _nuovoTipo=Giornaliero;
     if(_index==0)
         _nuovoTipo = Giornaliero;
     else if (_index == 1)
@@ -159,6 +159,8 @@ Tipo view_annotazione::MetodoSupporto(int _index) const
        _nuovoTipo = Mensile;
     else if (_index == 3)
        _nuovoTipo = Annuale;
+
+    return _nuovoTipo;
 }
 
 void view_annotazione::tipologiaIndexChanged(int index)
