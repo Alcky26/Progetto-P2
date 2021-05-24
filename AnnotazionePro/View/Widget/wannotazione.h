@@ -30,12 +30,12 @@ public:
 
 private:
     QVBoxLayout *_mainBoxLayout;
-    QLabel *_LabDescrizione;
     QLabel *_LabTitolo;
     QPlainTextEdit  * _LabCorpo;
     QLabel *_LabDateTime;
     QLabel *_LabRicorrenza;
-    QLabel *_LabElenco;
+    QLabel *_LabDescrizione;
+    QPlainTextEdit *_LabElenco;
 };
 
 #endif // WANNOTAZIONE_H

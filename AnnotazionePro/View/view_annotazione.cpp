@@ -18,10 +18,11 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
 
     connect(_tipologia, SIGNAL(currentIndexChanged(int)), this, SLOT(tipologiaIndexChanged(int)));
     connect(_LineCorpo, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
-    connect(_LineDesc, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
     //Bottone
+    connect(_LineDesc, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
     connect(_aggiunta, SIGNAL(clicked()), this, SLOT(OnClick()));
     connect(_aggiorna,SIGNAL(clicked()), this, SLOT(Aggiorna()));
+
 }
 
 void view_annotazione::viewOpzioni()
@@ -61,7 +62,6 @@ void view_annotazione::viewOpzioni()
     _tempLayoutOpzioni->addWidget(_LineDesc);
     _LineDesc->setVisible(false);
 
-
     //ORA
     _ora = new QDateTimeEdit(QDate::currentDate());
     _ora->setDisplayFormat("hh:mm:ss");
@@ -81,6 +81,7 @@ void view_annotazione::viewOpzioni()
     _tipo->addItem("Mensile");
     _tipo->addItem("Annuale");
     _tempLayoutOpzioni->addWidget(_tipo);
+    _tipo->setMaximumWidth(500);
     _tipo->setVisible(false);
 
     //LISTA per LIST
@@ -99,8 +100,9 @@ void view_annotazione::viewOpzioni()
 
     //BOTTONE 2 ( AGGIORNA )
     _aggiorna = new QPushButton("Aggiorna");
-    _tempLayoutOpzioni->addWidget(_aggiorna);
     _aggiorna->setMaximumWidth(500);
+    _tempLayoutOpzioni->addWidget(_aggiorna);
+
 
     suppLayoutOpzioni->setLayout(_tempLayoutOpzioni);
     suppLayoutOpzioni->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Maximum);
@@ -237,23 +239,25 @@ void view_annotazione::VisualizzaRicorrenza()
 
 void view_annotazione::VisualizzaElenco()
 {
-    _LineCorpo->setVisible(false);
-    _LineDesc->setVisible(true);
+    _LineCorpo->setVisible(true);
+    _LineDesc->setVisible(false);
     _ora->setVisible(false);
     _calendario->setVisible(false);
     _tipo->setVisible(false);
     _LineList->setVisible(true);
+    _ListHelp->setText("Separare i valori della Lista con ;");
     _ListHelp->setVisible(true);
 }
 
 void view_annotazione::VisualizzaSpesa()
 {
-    _LineCorpo->setVisible(false);
-    _LineDesc->setVisible(true);
+    _LineCorpo->setVisible(true);
+    _LineDesc->setVisible(false);
     _ora->setVisible(false);
     _calendario->setVisible(false);
     _tipo->setVisible(false);
     _LineList->setVisible(true);
+    _ListHelp->setText("Separare i valori della Lista con ; ed il Prezzo con ,");
     _ListHelp->setVisible(true);
 }
 
@@ -300,6 +304,7 @@ void view_annotazione::OnClick()
     }
 
     wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
+    _nuovoWAnn->setAttribute(Qt::WA_Hover,true);
     _wA.insertFront(_nuovoWAnn);
     viewGriglia();
 }

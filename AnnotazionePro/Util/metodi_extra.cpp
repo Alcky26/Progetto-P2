@@ -21,12 +21,28 @@ lista<type_spesa *> metodi_extra::TextToTypeSpesa(QString Testo)
 {
 
     QStringList _SupportList = Testo.split(';');
-    lista<type_spesa*> _endResult;
+    QStringList _NewSupportList;
 
-    for(QStringList::ConstIterator cit=_SupportList.begin(); cit != _SupportList.end(); cit=cit+2)
+    for(QStringList::ConstIterator cit =_SupportList.begin(); cit != _SupportList.end(); cit++)
     {
+        _NewSupportList.append((cit)->split(','));
+    }
 
-        _endResult.insertFront(new type_spesa(* (cit),(*(cit+1)).toDouble(),false));
+    lista<type_spesa*> _endResult;
+    try {
+        for(QStringList::ConstIterator cit=_NewSupportList.begin(); cit != _NewSupportList.end(); cit++)
+        {
+           if(! (cit==_NewSupportList.end() ) )
+           {
+               _endResult.insertFront(new type_spesa(* (cit),(*(cit+1)).toDouble(),false));
+           }
+           else
+                _endResult.insertFront(new type_spesa(* (cit),0,false));
+        }
+
+    }  catch (_exception e) {
+        //PORCO IL CAZZO
+
     }
 
     return _endResult;

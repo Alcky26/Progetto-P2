@@ -21,7 +21,7 @@ QString elenco::getListAsText()
     for( lista<type_elenco*>::constiterator ci = _elenco.begin(); ci!=_elenco.end();ci++)
     {
         _finalValue += (*ci)->getValue();
-        _finalValue+=" -  ";
+        _finalValue+="\n";
     }
     return _finalValue;
 }
