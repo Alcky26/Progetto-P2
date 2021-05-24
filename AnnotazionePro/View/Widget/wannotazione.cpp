@@ -14,11 +14,11 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     _LabTitolo = new QLabel(ann->getTitolo());
     _mainVBoxLayout->addWidget(_LabTitolo);
 
-    _LabCorpo = new QPlainTextEdit (dynamic_cast<nota*>(ann)->getCorpo());
-    _mainVBoxLayout->addWidget(_LabCorpo);
-
-    //_LabCorpo = new QLabel(dynamic_cast<nota*>(ann)->getCorpo());
-
+    if(dynamic_cast<nota*>(ann))
+    {
+        _LabCorpo = new QPlainTextEdit (dynamic_cast<nota*>(ann)->getCorpo());
+        _mainVBoxLayout->addWidget(_LabCorpo);
+    }
 
     if(dynamic_cast<promemoria*>(ann))
     {
@@ -35,13 +35,23 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
         _mainVBoxLayout->addWidget(_LabRicorrenza);
         _Scatola->setStyleSheet("color:white;background-color:rgb(214, 125, 24);");
     }
-/*
+
     if(dynamic_cast<elenco*>(ann))
     {
+        _LabDescrizione = new QLabel(dynamic_cast<elenco*>(ann)->getDescrizione());
+        _mainVBoxLayout->addWidget(_LabDescrizione);
         _LabElenco = new QLabel(dynamic_cast<elenco*>(ann)->getListAsText());
-        _mainVBoxLayout->addWidget(_LabDateTime);
+        _mainVBoxLayout->addWidget(_LabElenco);
     }
-*/
+
+    if(dynamic_cast<spesa*>(ann))
+    {
+        _LabDescrizione = new QLabel(dynamic_cast<spesa*>(ann)->getDescrizione());
+        _mainVBoxLayout->addWidget(_LabDescrizione);
+        _LabElenco = new QLabel(dynamic_cast<spesa*>(ann)->getListAsText());
+        _mainVBoxLayout->addWidget(_LabElenco);
+    }
+
     _Scatola->setLayout(_mainVBoxLayout);
     //_Scatola->setStyleSheet("color:white;background-color:rgb(176, 203, 247);");
     _mainBoxLayout->addWidget(_Scatola);

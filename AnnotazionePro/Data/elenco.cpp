@@ -46,7 +46,7 @@ elenco::elenco(QString titolo, QString descrizione, lista<type_elenco*> elenco):
     }
 }
 
-QString elenco::descrizione() const
+QString elenco::getDescrizione() const
 {
     return _descrizione;
 }

@@ -48,7 +48,7 @@ private:
     QVBoxLayout *_griglia;
     //Elementi per Inserimento
     QLineEdit *_LineTitolo;
-    QTextEdit *_LineCorpo;
+    QTextEdit *_LineCorpo, *_LineDesc;
     QComboBox *_tipologia;   
     QCalendarWidget *_calendario;
     QDateTimeEdit *_ora;

@@ -18,6 +18,7 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
 
     connect(_tipologia, SIGNAL(currentIndexChanged(int)), this, SLOT(tipologiaIndexChanged(int)));
     connect(_LineCorpo, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
+    connect(_LineDesc, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
     //Bottone
     connect(_aggiunta, SIGNAL(clicked()), this, SLOT(OnClick()));
     connect(_aggiorna,SIGNAL(clicked()), this, SLOT(Aggiorna()));
@@ -31,6 +32,7 @@ void view_annotazione::viewOpzioni()
 
     _LineTitolo = new QLineEdit();
     _LineCorpo = new QTextEdit();
+    _LineDesc = new QTextEdit();
     _tipologia = new QComboBox();
     _calendario = new QCalendarWidget();
     _tipo = new QComboBox();
@@ -51,6 +53,14 @@ void view_annotazione::viewOpzioni()
     _LineCorpo->setMaximumWidth(500);
     _LineCorpo->setMaximumHeight(23);
     _tempLayoutOpzioni->addWidget(_LineCorpo);
+
+    //DESCRIZIONE
+    _LineDesc->setPlaceholderText("Descrizione");
+    _LineDesc->setMaximumWidth(500);
+    _LineDesc->setMaximumHeight(23);
+    _tempLayoutOpzioni->addWidget(_LineDesc);
+    _LineDesc->setVisible(false);
+
 
     //ORA
     _ora = new QDateTimeEdit(QDate::currentDate());
@@ -195,6 +205,7 @@ void view_annotazione::tipologiaIndexChanged(int index)
 void view_annotazione::VisualizzaNota()
 {
     _LineCorpo->setVisible(true);
+    _LineDesc->setVisible(false);
     _ora->setVisible(false);
     _calendario->setVisible(false);
     _tipo->setVisible(false);
@@ -205,6 +216,7 @@ void view_annotazione::VisualizzaNota()
 void view_annotazione::VisualizzaPromemoria()
 {
     _LineCorpo->setVisible(true);
+    _LineDesc->setVisible(false);
     _ora->setVisible(true);
     _calendario->setVisible(true);
     _tipo->setVisible(false);
@@ -215,6 +227,7 @@ void view_annotazione::VisualizzaPromemoria()
 void view_annotazione::VisualizzaRicorrenza()
 {
     _LineCorpo->setVisible(true);
+    _LineDesc->setVisible(false);
     _ora->setVisible(true);
     _calendario->setVisible(true);
     _tipo->setVisible(true);
@@ -224,7 +237,8 @@ void view_annotazione::VisualizzaRicorrenza()
 
 void view_annotazione::VisualizzaElenco()
 {
-    _LineCorpo->setVisible(true);
+    _LineCorpo->setVisible(false);
+    _LineDesc->setVisible(true);
     _ora->setVisible(false);
     _calendario->setVisible(false);
     _tipo->setVisible(false);
@@ -234,7 +248,8 @@ void view_annotazione::VisualizzaElenco()
 
 void view_annotazione::VisualizzaSpesa()
 {
-    _LineCorpo->setVisible(true);
+    _LineCorpo->setVisible(false);
+    _LineDesc->setVisible(true);
     _ora->setVisible(false);
     _calendario->setVisible(false);
     _tipo->setVisible(false);

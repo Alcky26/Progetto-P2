@@ -30,7 +30,7 @@ public:
 
 private:
     QVBoxLayout *_mainBoxLayout;
-    //QLabel *_LabTitolo, *_LabCorpo;
+    QLabel *_LabDescrizione;
     QLabel *_LabTitolo;
     QPlainTextEdit  * _LabCorpo;
     QLabel *_LabDateTime;
