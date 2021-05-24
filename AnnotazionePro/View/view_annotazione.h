@@ -26,6 +26,7 @@
 #include <QGraphicsView>
 #include <QScrollBar>
 #include <QMessageBox>
+#include "Util/metodi_extra.h"
 
 
 class view_annotazione : public QWidget
@@ -74,8 +75,6 @@ private:
     Tipo MetodoSupporto(int _index) ;
     void AggiuntaAnnotazione();
 
-    //Metodi da mettere su file a parte
-    lista<type_elenco *> TextToList();
 private slots:
 
     void tipologiaIndexChanged(int);

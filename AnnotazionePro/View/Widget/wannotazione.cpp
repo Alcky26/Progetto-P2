@@ -6,6 +6,7 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 
     QListWidget *_Scatola= new QListWidget();
     _Scatola->setSizeAdjustPolicy(QListWidget::AdjustToContents);
+    _Scatola->setStyleSheet("color:white;background-color:rgb(50, 168, 82);");
 
     QVBoxLayout *_mainVBoxLayout = new QVBoxLayout();
 
@@ -23,6 +24,7 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     {
         _LabDateTime = new QLabel(dynamic_cast<promemoria*>(ann)->getDate().toString() + " " +  dynamic_cast<promemoria*>(ann)->getTime().toString());
         _mainVBoxLayout->addWidget(_LabDateTime);
+        _Scatola->setStyleSheet("color:white;background-color:rgb(50, 97, 168);");
     }
 
     if(dynamic_cast<ricorrenza*>(ann))
@@ -31,6 +33,7 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
         _mainVBoxLayout->addWidget(_LabDateTime);
         _LabRicorrenza = new QLabel(dynamic_cast<ricorrenza*>(ann)->typeToQString());
         _mainVBoxLayout->addWidget(_LabRicorrenza);
+        _Scatola->setStyleSheet("color:white;background-color:rgb(214, 125, 24);");
     }
 /*
     if(dynamic_cast<elenco*>(ann))

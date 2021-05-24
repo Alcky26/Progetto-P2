@@ -18,9 +18,8 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
 
     connect(_tipologia, SIGNAL(currentIndexChanged(int)), this, SLOT(tipologiaIndexChanged(int)));
     connect(_LineCorpo, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
-
+    //Bottone
     connect(_aggiunta, SIGNAL(clicked()), this, SLOT(OnClick()));
-
     connect(_aggiorna,SIGNAL(clicked()), this, SLOT(Aggiorna()));
 }
 
@@ -178,21 +177,6 @@ Tipo view_annotazione::MetodoSupporto(int _index)
     return _nuovoTipo;
 }
 
-lista<type_elenco *> view_annotazione::TextToList()
-{
-
-    QString _BoxValue=_LineList->document()->toRawText();
-    QStringList _SupportList = _BoxValue.split(';');
-    lista<type_elenco*> _endResult;
-
-    for(QStringList::ConstIterator cit=_SupportList.begin(); cit != _SupportList.end(); cit++)
-    {
-
-        _endResult.insertFront(new type_elenco(* (cit),false));
-    }
-
-    return _endResult;
-}
 
 void view_annotazione::tipologiaIndexChanged(int index)
 {
@@ -286,20 +270,19 @@ void view_annotazione::OnClick()
         _nuovoInsert  = new promemoria(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time());
     //Ricorrenza
     else if (_value == 2)
-        //Cambiare Giornaliero con l'effettivo tipo
         _nuovoInsert  = new ricorrenza(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(), MetodoSupporto(_tipo->currentIndex()));
     //Elenco
     else if (_value == 3)
-        // Fix later Lol
-        //_nuovoInsert  = new elenco(_LineTitolo->text(), _LineCorpo->document()->toRawText(), TextToList());
-        //_nuovoInsert  = new elenco(_LineTitolo->text(), _LineCorpo->document()->toRawText());
-        _nuovoInsert = new elenco("a","b",TextToList());
+    {
+        QString _BoxValue= _LineList->document()->toRawText();
+        _nuovoInsert = new elenco(_LineTitolo->text(),_LineCorpo->document()->toRawText(),  metodi_extra::TextToTypeElenco(_BoxValue));
+    }
     //Spesa
     else if (_value == 4)
-        //Fix Later Lol
-        _nuovoInsert  = new spesa(_LineTitolo->text(), _LineCorpo->document()->toRawText());
-
-    //annotazione *_nuovoInsert =nullptr;
+    {
+        QString _BoxValue= _LineList->document()->toRawText();
+        _nuovoInsert = new spesa(_LineTitolo->text(),_LineCorpo->document()->toRawText(),  metodi_extra::TextToTypeSpesa(_BoxValue));
+    }
 
     wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
     _wA.insertFront(_nuovoWAnn);
