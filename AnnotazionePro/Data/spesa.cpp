@@ -100,6 +100,11 @@ void spesa::Remove(const QString &elemento, const double &prezzo)
     }
 }
 
+lista<type_spesa *> spesa::getSpesa() const
+{
+    return _spesa;
+}
+
 
 
 

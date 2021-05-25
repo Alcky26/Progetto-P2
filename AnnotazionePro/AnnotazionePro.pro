@@ -23,6 +23,7 @@ SOURCES += \
     Util/type_spesa.cpp \
     View/Widget/wannotazione.cpp \
     View/view_annotazione.cpp \
+    View/view_finestra.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -41,6 +42,7 @@ HEADERS += \
     Util/type_spesa.h \
     View/Widget/wannotazione.h \
     View/view_annotazione.h \
+    View/view_finestra.h \
     mainwindow.h
 
 # Default rules for deployment.

@@ -19,7 +19,7 @@ public:
     //annotazione* getAnnotazioni(QString Titolo) const;
 
     void reset();
-
+////////////// METODO MODIFICADI UN ELEMENTO ???????!??!?!??!?!?!?!?!?
     void rimouviElemento(annotazione *annot);
 
     bool deviSalvare() const;

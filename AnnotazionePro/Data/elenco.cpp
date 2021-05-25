@@ -62,3 +62,9 @@ void elenco::addElemento(const QString* &elemento)
     elem->setValue(*elemento);
     _elenco.insertBack(elem);
 }
+
+lista<type_elenco *> elenco::getElenco() const
+{
+    return _elenco;
+}
+

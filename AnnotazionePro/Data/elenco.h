@@ -26,6 +26,8 @@ public:
 
     void addElemento(const QString* &elemento);
 
+    lista<type_elenco *> getElenco() const;
+
 private:
     QString _descrizione;
     lista<type_elenco*> _elenco;

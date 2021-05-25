@@ -27,6 +27,8 @@ public:
 
     void Remove(const QString &elemento, const double &prezzo);
 
+    lista<type_spesa *> getSpesa() const;
+
 private:
     lista<type_spesa*> _spesa;
 };

@@ -43,11 +43,15 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 
     if(dynamic_cast<nota*>(ann))
     {
-        _LabCorpo = new QPlainTextEdit (dynamic_cast<nota*>(ann)->getCorpo());
+        _LabCorpo = new QPlainTextEdit(dynamic_cast<nota*>(ann)->getCorpo());
         _LabCorpo->setFont(_MainFont);
         _LabCorpo->setFrameStyle(1);
         _LabCorpo->setEnabled(false);
-        _mainVBoxLayout->addWidget(_LabCorpo);
+        _LabCorpo->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        _corpoScroll=new QScrollArea();
+        //_corpoScroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        _corpoScroll->setWidget(_LabCorpo);
+        _mainVBoxLayout->addWidget(_corpoScroll);
     }
 
     if(dynamic_cast<elenco*>(ann) && !dynamic_cast<spesa*>(ann))
@@ -59,7 +63,10 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
         _LabElenco->setFont(_MainFont);
         _LabElenco->setFrameStyle(1);
         _LabElenco->setEnabled(false);
-        _mainVBoxLayout->addWidget(_LabElenco);
+        _LabElenco->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        _corpoScroll=new QScrollArea();
+        _corpoScroll->setWidget(_LabElenco);
+        _mainVBoxLayout->addWidget(_corpoScroll);
         _Scatola->setStyleSheet("color:white;background-color:rgb(212, 16, 222);");
     }
 
@@ -72,7 +79,10 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
         _LabElenco->setFont(_MainFont);
         _LabElenco->setEnabled(false);
         _LabElenco->setFrameStyle(1);
-        _mainVBoxLayout->addWidget(_LabElenco);
+        _LabElenco->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        _corpoScroll=new QScrollArea();
+        _corpoScroll->setWidget(_LabElenco);
+        _mainVBoxLayout->addWidget(_corpoScroll);
         _Scatola->setStyleSheet("color:white;background-color:rgb(237, 5, 9);");
     }
 

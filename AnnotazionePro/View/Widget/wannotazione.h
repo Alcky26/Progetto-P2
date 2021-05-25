@@ -21,6 +21,7 @@
 #include <QPlainTextEdit >
 #include <QMessageBox>
 #include <QDebug>
+#include <QScrollBar>
 
 
 class wAnnotazione : public QWidget
@@ -35,6 +36,7 @@ private:
     QVBoxLayout *_mainBoxLayout;
     QLabel *_LabTitolo;
     QPlainTextEdit  * _LabCorpo;
+    QScrollArea *_corpoScroll;
     QLabel *_LabDateTime;
     QLabel *_LabRicorrenza;
     QLabel *_LabDescrizione;

@@ -60,6 +60,7 @@ private:
 
     QPushButton *_aggiunta;
     QPushButton *_aggiorna;
+    QPushButton *_aggiungiRiga;
 
     // Metodi
     void viewOpzioni();
@@ -84,6 +85,7 @@ private slots:
     void onTextChanged();
     void OnClick();
     void Aggiorna();
+    void OnClickRow();
 
 
 };

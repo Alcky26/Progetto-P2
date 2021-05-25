@@ -71,6 +71,9 @@ public:
     //resituisce il constiterator dell'elemento dato t
     constiterator indexOf(const T& t) const;
 
+    //restituisce elemento del indice dato
+    T index(const lista<T>::constiterator &ci) const;
+
     //rimuove tutti gli elementi della lista
     void clear();
 
@@ -261,6 +264,16 @@ bool lista<T>::contains(const T &t) const {
             return true;
     }
     return false;
+}
+
+template<class T>
+T lista<T>::index(const lista<T>::constiterator &ci) const {
+    for(constiterator i = begin(); i != end(); i++)
+    {
+        if(*i == *ci)
+            return *i;
+    }
+    return nullptr;
 }
 
 template<class T>

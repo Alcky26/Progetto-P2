@@ -18,11 +18,11 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
 
     connect(_tipologia, SIGNAL(currentIndexChanged(int)), this, SLOT(tipologiaIndexChanged(int)));
     connect(_LineCorpo, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
-    //Bottone
     connect(_LineDesc, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
+    //Bottone
     connect(_aggiunta, SIGNAL(clicked()), this, SLOT(OnClick()));
     connect(_aggiorna,SIGNAL(clicked()), this, SLOT(Aggiorna()));
-
+    connect(_aggiungiRiga,SIGNAL(clicked()), this, SLOT(OnClickRow()));
 
 }
 
@@ -91,6 +91,12 @@ void view_annotazione::viewOpzioni()
     _tempLayoutOpzioni->addWidget(_TableList);
     _TableList->setVisible(false);
 
+    //BOTTONE 3 ( AGGIUNGI ROW )
+    _aggiungiRiga = new QPushButton("Aggiungi Riga");
+    _aggiungiRiga->setMaximumWidth(500);
+    _tempLayoutOpzioni->addWidget(_aggiungiRiga);
+    _aggiungiRiga->setVisible(false);
+
     //BOTTONE 1 ( AGGIUNGI )
     _aggiunta = new QPushButton("Aggiungi Nuova Annotazione");
     _aggiunta->setMaximumWidth(500);
@@ -100,6 +106,7 @@ void view_annotazione::viewOpzioni()
     _aggiorna = new QPushButton("Aggiorna");
     _aggiorna->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_aggiorna);
+
 
 
     suppLayoutOpzioni->setLayout(_tempLayoutOpzioni);
@@ -210,6 +217,7 @@ void view_annotazione::VisualizzaNota()
     _calendario->setVisible(false);
     _tipo->setVisible(false);
     _TableList->setVisible(false);
+    _aggiungiRiga->setVisible(false);
 }
 
 void view_annotazione::VisualizzaPromemoria()
@@ -220,6 +228,7 @@ void view_annotazione::VisualizzaPromemoria()
     _calendario->setVisible(true);
     _tipo->setVisible(false);
     _TableList->setVisible(false);
+    _aggiungiRiga->setVisible(false);
 }
 
 void view_annotazione::VisualizzaRicorrenza()
@@ -230,6 +239,7 @@ void view_annotazione::VisualizzaRicorrenza()
     _calendario->setVisible(true);
     _tipo->setVisible(true);
     _TableList->setVisible(false);
+    _aggiungiRiga->setVisible(false);
 }
 
 void view_annotazione::VisualizzaElenco()
@@ -240,6 +250,7 @@ void view_annotazione::VisualizzaElenco()
     _calendario->setVisible(false);
     _tipo->setVisible(false);
     _TableList->setVisible(true);
+    _aggiungiRiga->setVisible(true);
     //SETUP TABLEVIEW
     _TableList->setColumnCount(1);
     _TableList->setRowCount(5);
@@ -248,7 +259,7 @@ void view_annotazione::VisualizzaElenco()
         _TableList->setItem(i,0,new QTableWidgetItem(""));
     }
 
-    _TableList->setColumnWidth(0,_TableList->width()-10);
+    _TableList->setColumnWidth(0,_TableList->width()-20);
     _TableList->setShowGrid(true);
     _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
 }
@@ -261,13 +272,15 @@ void view_annotazione::VisualizzaSpesa()
     _calendario->setVisible(false);
     _tipo->setVisible(false);
     _TableList->setVisible(true);
+    _aggiungiRiga->setVisible(true);
+
     //SETUP TABLEVIEW
     _TableList->setColumnCount(2);
     _TableList->setRowCount(5);
-    _TableList->setColumnWidth(0,(_TableList->width()/2)-5);
+    _TableList->setColumnWidth(0,(_TableList->width()/2)-10);
     _TableList->setShowGrid(true);
     _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
-    _TableList->setColumnWidth(1,(_TableList->width()/2)-5);
+    _TableList->setColumnWidth(1,(_TableList->width()/2)-10);
     for(int i=0;i<5;i++)
     {
         _TableList->setItem(i,0,new QTableWidgetItem(""));
@@ -330,11 +343,10 @@ void view_annotazione::OnClick()
         {
             if(! (_TableList->item(i,0)->text().isEmpty()))
             {
-                if( (_TableList->item(i,1)->text().isEmpty()))
+                if(_TableList->item(i,1)->text().isEmpty())
                     _ListaTableSpesa->insertFront(new type_spesa( _TableList->item(i,0)->text(),0,0));
                 else
                 {
-                    // DOUBLE NON FUNZIONA
                     _ValueTemp = _TableList->item(i,1)->text().toDouble();
                     _ListaTableSpesa->insertFront(new type_spesa( _TableList->item(i,0)->text(),0,_ValueTemp));
                 }
@@ -346,6 +358,7 @@ void view_annotazione::OnClick()
     }
 
     wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
+    _model->aggiungiAnnotazione(_nuovoInsert);
     _wA.insertFront(_nuovoWAnn);
     viewGriglia();
 }
@@ -353,6 +366,18 @@ void view_annotazione::OnClick()
 void view_annotazione::Aggiorna()
 {
     viewGriglia();
+}
+
+void view_annotazione::OnClickRow()
+{
+    _TableList->insertRow(_TableList->rowCount());
+    if(_TableList->columnCount()==1)
+        _TableList->setItem(_TableList->rowCount()-1,0,new QTableWidgetItem(""));
+    else
+    {
+        _TableList->setItem(_TableList->rowCount()-1,0,new QTableWidgetItem(""));
+        _TableList->setItem(_TableList->rowCount()-1,1,new QTableWidgetItem(""));
+    }
 }
 
 
