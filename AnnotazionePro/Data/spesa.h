@@ -2,6 +2,7 @@
 #define SPESA_H
 
 #include "elenco.h"
+#include <QDebug>
 #include "Util/type_spesa.h"
 
 class spesa : virtual public elenco
@@ -17,6 +18,8 @@ public:
     double CostoRimanente() const;
 
     double CostoAttuale() const;
+
+    QString getListSpesaAsText();
 
     void addElement(const QString &elemento, const double &prezzo);
 

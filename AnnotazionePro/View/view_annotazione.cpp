@@ -23,6 +23,7 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     connect(_aggiunta, SIGNAL(clicked()), this, SLOT(OnClick()));
     connect(_aggiorna,SIGNAL(clicked()), this, SLOT(Aggiorna()));
 
+
 }
 
 void view_annotazione::viewOpzioni()
@@ -84,14 +85,11 @@ void view_annotazione::viewOpzioni()
     _tipo->setMaximumWidth(500);
     _tipo->setVisible(false);
 
-    //LISTA per LIST
-    _ListHelp = new QLabel("Separare i valori dell'array con ;");
-    _LineList = new QTextEdit();
-    _LineList->setMaximumWidth(500);
-    _ListHelp->setVisible(false);
-    _LineList->setVisible(false);
-    _tempLayoutOpzioni->addWidget(_ListHelp);
-    _tempLayoutOpzioni->addWidget(_LineList);
+    //LISTA
+    _TableList = new QTableWidget();
+    _TableList->setMaximumWidth(500);
+    _tempLayoutOpzioni->addWidget(_TableList);
+    _TableList->setVisible(false);
 
     //BOTTONE 1 ( AGGIUNGI )
     _aggiunta = new QPushButton("Aggiungi Nuova Annotazione");
@@ -211,8 +209,7 @@ void view_annotazione::VisualizzaNota()
     _ora->setVisible(false);
     _calendario->setVisible(false);
     _tipo->setVisible(false);
-    _LineList->setVisible(false);
-    _ListHelp->setVisible(false);
+    _TableList->setVisible(false);
 }
 
 void view_annotazione::VisualizzaPromemoria()
@@ -222,8 +219,7 @@ void view_annotazione::VisualizzaPromemoria()
     _ora->setVisible(true);
     _calendario->setVisible(true);
     _tipo->setVisible(false);
-    _LineList->setVisible(false);
-    _ListHelp->setVisible(false);
+    _TableList->setVisible(false);
 }
 
 void view_annotazione::VisualizzaRicorrenza()
@@ -233,32 +229,51 @@ void view_annotazione::VisualizzaRicorrenza()
     _ora->setVisible(true);
     _calendario->setVisible(true);
     _tipo->setVisible(true);
-    _LineList->setVisible(false);
-    _ListHelp->setVisible(false);
+    _TableList->setVisible(false);
 }
 
 void view_annotazione::VisualizzaElenco()
 {
-    _LineCorpo->setVisible(true);
-    _LineDesc->setVisible(false);
+    _LineCorpo->setVisible(false);
+    _LineDesc->setVisible(true);
     _ora->setVisible(false);
     _calendario->setVisible(false);
     _tipo->setVisible(false);
-    _LineList->setVisible(true);
-    _ListHelp->setText("Separare i valori della Lista con ;");
-    _ListHelp->setVisible(true);
+    _TableList->setVisible(true);
+    //SETUP TABLEVIEW
+    _TableList->setColumnCount(1);
+    _TableList->setRowCount(5);
+    for(int i=0;i<5;i++)
+    {
+        _TableList->setItem(i,0,new QTableWidgetItem(""));
+    }
+
+    _TableList->setColumnWidth(0,_TableList->width()-10);
+    _TableList->setShowGrid(true);
+    _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
 }
 
 void view_annotazione::VisualizzaSpesa()
 {
-    _LineCorpo->setVisible(true);
-    _LineDesc->setVisible(false);
+    _LineCorpo->setVisible(false);
+    _LineDesc->setVisible(true);
     _ora->setVisible(false);
     _calendario->setVisible(false);
     _tipo->setVisible(false);
-    _LineList->setVisible(true);
-    _ListHelp->setText("Separare i valori della Lista con ; ed il Prezzo con ,");
-    _ListHelp->setVisible(true);
+    _TableList->setVisible(true);
+    //SETUP TABLEVIEW
+    _TableList->setColumnCount(2);
+    _TableList->setRowCount(5);
+    _TableList->setColumnWidth(0,(_TableList->width()/2)-5);
+    _TableList->setShowGrid(true);
+    _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
+    _TableList->setColumnWidth(1,(_TableList->width()/2)-5);
+    for(int i=0;i<5;i++)
+    {
+        _TableList->setItem(i,0,new QTableWidgetItem(""));
+        _TableList->setItem(i,1,new QTableWidgetItem(""));
+    }
+    _TableList->setHorizontalHeaderItem(1,new QTableWidgetItem("Costo"));
 }
 
 void view_annotazione::aggiornaGriglia(QGridLayout *supplay)
@@ -293,18 +308,44 @@ void view_annotazione::OnClick()
     //Elenco
     else if (_value == 3)
     {
-        QString _BoxValue= _LineList->document()->toRawText();
-        _nuovoInsert = new elenco(_LineTitolo->text(),_LineCorpo->document()->toRawText(),  metodi_extra::TextToTypeElenco(_BoxValue));
+        lista<type_elenco*> *_ListaTableElenco = new lista<type_elenco*>();
+
+        for(int i=0;i<_TableList->rowCount();i++)
+        {
+            if(! (_TableList->item(i,0)->text().isEmpty()) )
+            {
+                _ListaTableElenco->insertFront(new type_elenco(_TableList->item(i,0)->text()));
+            }
+
+        }
+
+        _nuovoInsert = new elenco(_LineTitolo->text(),_LineDesc->document()->toRawText(),*_ListaTableElenco);
     }
     //Spesa
     else if (_value == 4)
     {
-        QString _BoxValue= _LineList->document()->toRawText();
-        _nuovoInsert = new spesa(_LineTitolo->text(),_LineCorpo->document()->toRawText(),  metodi_extra::TextToTypeSpesa(_BoxValue));
+        lista<type_spesa*> *_ListaTableSpesa = new lista<type_spesa*>();
+        double _ValueTemp = 0;
+        for(int i=0;i<_TableList->rowCount();i++)
+        {
+            if(! (_TableList->item(i,0)->text().isEmpty()))
+            {
+                if( (_TableList->item(i,1)->text().isEmpty()))
+                    _ListaTableSpesa->insertFront(new type_spesa( _TableList->item(i,0)->text(),0,0));
+                else
+                {
+                    // DOUBLE NON FUNZIONA
+                    _ValueTemp = _TableList->item(i,1)->text().toDouble();
+                    _ListaTableSpesa->insertFront(new type_spesa( _TableList->item(i,0)->text(),0,_ValueTemp));
+                }
+            }
+        }
+
+        _nuovoInsert = new spesa(_LineTitolo->text(),_LineDesc->document()->toRawText(),*_ListaTableSpesa);
+
     }
 
     wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
-    _nuovoWAnn->setAttribute(Qt::WA_Hover,true);
     _wA.insertFront(_nuovoWAnn);
     viewGriglia();
 }

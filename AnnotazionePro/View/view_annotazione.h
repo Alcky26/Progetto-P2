@@ -26,7 +26,9 @@
 #include <QGraphicsView>
 #include <QScrollBar>
 #include <QMessageBox>
+#include <QTableWidget>
 #include "Util/metodi_extra.h"
+
 
 
 class view_annotazione : public QWidget
@@ -53,8 +55,9 @@ private:
     QCalendarWidget *_calendario;
     QDateTimeEdit *_ora;
     QComboBox *_tipo;
-    QLabel *_ListHelp;
-    QTextEdit *_LineList;
+
+    QTableWidget *_TableList;
+
     QPushButton *_aggiunta;
     QPushButton *_aggiorna;
 
@@ -81,6 +84,7 @@ private slots:
     void onTextChanged();
     void OnClick();
     void Aggiorna();
+
 
 };
 

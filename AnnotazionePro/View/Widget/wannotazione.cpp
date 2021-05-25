@@ -4,6 +4,9 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 {
     _mainBoxLayout = new QVBoxLayout(this);
 
+    setAttribute(Qt::WA_Hover);
+
+
     QListWidget *_Scatola= new QListWidget();
     _Scatola->setSizeAdjustPolicy(QListWidget::AdjustToContents);
     _Scatola->setStyleSheet("color:white;background-color:rgb(50, 168, 82);");
@@ -65,7 +68,7 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
         _LabDescrizione = new QLabel(dynamic_cast<spesa*>(ann)->getDescrizione());
         _mainVBoxLayout->addWidget(_LabDescrizione);
         _LabDescrizione->setFont(_MainFont);
-        _LabElenco = new QPlainTextEdit(dynamic_cast<spesa*>(ann)->getListAsText());
+        _LabElenco = new QPlainTextEdit(dynamic_cast<spesa*>(ann)->getListSpesaAsText());
         _LabElenco->setFont(_MainFont);
         _LabElenco->setEnabled(false);
         _LabElenco->setFrameStyle(1);
@@ -76,4 +79,10 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     _Scatola->setLayout(_mainVBoxLayout);
     //_Scatola->setStyleSheet("color:white;background-color:rgb(176, 203, 247);");
     _mainBoxLayout->addWidget(_Scatola);
+
 }
+
+
+
+
+

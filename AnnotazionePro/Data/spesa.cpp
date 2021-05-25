@@ -5,12 +5,12 @@ spesa::spesa() : elenco(), _spesa()
 
 }
 
-spesa::spesa(QString titolo, QString descrizione) : elenco(titolo,descrizione), _spesa()
+spesa::spesa(QString titolo, QString descrizione) : annotazione(titolo),elenco(titolo,descrizione), _spesa()
 {
 
 }
 
-spesa::spesa(QString titolo, QString descrizione, const lista<type_spesa*> &spesa) : elenco(titolo,descrizione)
+spesa::spesa(QString titolo, QString descrizione, const lista<type_spesa*> &spesa) : annotazione(titolo),elenco(titolo,descrizione)
 {
     for(lista<type_spesa*>::constiterator ci = spesa.begin(); ci!=spesa.end();ci++)
     {
@@ -60,6 +60,20 @@ double spesa::CostoAttuale() const
 
     }
     return total;
+}
+
+QString spesa::getListSpesaAsText()
+{
+    QString _finalValue="";
+    for( lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
+    {
+        qDebug() << (*ci)->getCost();
+        if( (*ci)->getCost() == 0 )
+            _finalValue = _finalValue + (*ci)->getValue() + " : 0 \n";
+        else
+            _finalValue = _finalValue + (*ci)->getValue() + " : " +  QString::number((*ci)->getCost()) + "\n";
+    }
+    return _finalValue;
 }
 
 void spesa::addElement(const QString &elemento, const double &prezzo)

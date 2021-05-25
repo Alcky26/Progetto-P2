@@ -13,8 +13,8 @@ class metodi_extra
 public:
 
     //Metodi da mettere su file a parte
-    static lista<type_elenco *> TextToTypeElenco(QString &Testo);
+    /*static lista<type_elenco *> TextToTypeElenco(lista<QString*> *temp);
     static lista<type_spesa *> TextToTypeSpesa(QString Testo);
-};
+*/};
 
 #endif // METODI_EXTRA_H

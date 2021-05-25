@@ -1,7 +1,7 @@
 #include "metodi_extra.h"
 
 
-
+/*
 lista<type_elenco *> metodi_extra::TextToTypeElenco(QString &Testo)
 {
 
@@ -47,3 +47,4 @@ lista<type_spesa *> metodi_extra::TextToTypeSpesa(QString Testo)
 
     return _endResult;
 }
+*/

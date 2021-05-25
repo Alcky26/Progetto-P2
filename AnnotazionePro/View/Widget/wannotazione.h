@@ -19,6 +19,9 @@
 #include <QGraphicsView>
 #include <QListWidget>
 #include <QPlainTextEdit >
+#include <QMessageBox>
+#include <QDebug>
+
 
 class wAnnotazione : public QWidget
 {
@@ -36,6 +39,7 @@ private:
     QLabel *_LabRicorrenza;
     QLabel *_LabDescrizione;
     QPlainTextEdit *_LabElenco;
+
 };
 
 #endif // WANNOTAZIONE_H

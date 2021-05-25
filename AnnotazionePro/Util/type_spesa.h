@@ -12,7 +12,7 @@ class type_spesa : virtual public type_elenco
 public:
     //Costruttori e Distruttore
     type_spesa();
-    type_spesa(const QString value,const double costo,const bool isDone=0);
+    type_spesa( QString value,bool isDone ,double costo);
     ~type_spesa();
     //Get and Set
     double getCost() const;
