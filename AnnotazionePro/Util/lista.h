@@ -71,6 +71,9 @@ public:
     //resituisce il constiterator dell'elemento dato t
     constiterator indexOf(const T& t) const;
 
+    //resituisce il constiterator dell'elemento dato t
+    int indexOfInt(const T& t) const;
+
     //restituisce elemento del indice dato
     T index(const lista<T>::constiterator &ci) const;
 
@@ -284,6 +287,19 @@ typename lista<T>::constiterator lista<T>::indexOf(const T &t) const {
             return i;
     }
     return nullptr;
+}
+
+template<class T>
+int lista<T>::indexOfInt(const T &t) const {
+    int j=0;
+    for(constiterator i = begin(); i != end(); i++)
+    {
+        if(*i == t)
+            return j;
+        else
+            j++;
+    }
+    return j;
 }
 
 template<class T>

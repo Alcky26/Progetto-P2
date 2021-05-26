@@ -16,6 +16,25 @@ lista<annotazione *> model_annotazione::getAnnotazioni() const
     return _annotazioni;
 }
 
+annotazione *model_annotazione::getAnnotazione(unsigned int i) const
+{
+    if( _annotazioni.getSize()<i)
+    {
+        return nullptr;
+    }
+    else
+    {
+        unsigned int _counter = 0;
+        for(lista<annotazione*>::constiterator ci=_annotazioni.begin();ci!=_annotazioni.end();ci++)
+        {
+            if(_counter == i)
+                return *ci;
+            _counter++;
+        }
+    }
+    return nullptr;
+}
+
 void model_annotazione::reset()
 {
     _annotazioni.clear();

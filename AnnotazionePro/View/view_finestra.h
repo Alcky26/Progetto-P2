@@ -39,7 +39,7 @@ public:
 private:
     model_annotazione *_model;
 
-    QHBoxLayout *_mainLayout;
+    QVBoxLayout *_mainLayout;
     //Elementi per Visualizzare
     QLineEdit *_LineTitolo;
     QTextEdit *_LineCorpo, *_LineDesc;
@@ -49,6 +49,7 @@ private:
     QComboBox *_tipo;
 
     QPushButton *_elimina,*_modifica;
+
 
 private slots:
 

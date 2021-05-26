@@ -4,6 +4,8 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 {
     _mainBoxLayout = new QVBoxLayout(this);
 
+    _state=0;
+
     setAttribute(Qt::WA_Hover);
 
 
@@ -92,7 +94,32 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 
 }
 
+void wAnnotazione::mousePressEvent(QMouseEvent *)
+{
+    _state = 1;
+    repaint();
+    emit pressed();
+}
 
+void wAnnotazione::mouseReleaseEvent(QMouseEvent *)
+{
+    _state = 0;
+    repaint();
+    emit released();
+    emit clicked();
+}
 
-
+void wAnnotazione::paintEvent(QPaintEvent *)
+{
+    if(_state)
+    {
+        _state=0;
+        update();
+    }
+    else
+    {
+        _state=1;
+        update();
+    }
+}
 

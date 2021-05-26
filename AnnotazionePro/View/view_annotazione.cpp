@@ -1,7 +1,5 @@
 #include "view_annotazione.h"
 
-
-
 view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): QWidget(parent), _model(model)
 {
     _mainLayout = new QHBoxLayout(this);
@@ -23,6 +21,9 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     connect(_aggiunta, SIGNAL(clicked()), this, SLOT(OnClick()));
     connect(_aggiorna,SIGNAL(clicked()), this, SLOT(Aggiorna()));
     connect(_aggiungiRiga,SIGNAL(clicked()), this, SLOT(OnClickRow()));
+    // Signal Mapper per OnClick di wAnnotazione
+    _SignalMapper = new QSignalMapper(this);
+    connect(_SignalMapper, SIGNAL(mapped( int)), this, SLOT(ShowDettagli( int)));
 
 }
 
@@ -179,22 +180,6 @@ void view_annotazione::resizeAnn(wAnnotazione* Ann)
     Ann->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
 }
 
-Tipo view_annotazione::MetodoSupporto(int _index)
-{
-    Tipo _nuovoTipo=Giornaliero;
-    if(_index==0)
-        _nuovoTipo = Giornaliero;
-    else if (_index == 1)
-        _nuovoTipo = Settimanale;
-    else if (_index == 2)
-       _nuovoTipo = Mensile;
-    else if (_index == 3)
-       _nuovoTipo = Annuale;
-
-    return _nuovoTipo;
-}
-
-
 void view_annotazione::tipologiaIndexChanged(int index)
 {
     if(index==0)
@@ -302,6 +287,7 @@ void view_annotazione::aggiornaGriglia(QGridLayout *supplay)
     }
     supplay->setAlignment(Qt::AlignLeft);
     supplay->setAlignment(Qt::AlignTop);
+
 }
 
 void view_annotazione::OnClick()
@@ -317,7 +303,7 @@ void view_annotazione::OnClick()
         _nuovoInsert  = new promemoria(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time());
     //Ricorrenza
     else if (_value == 2)
-        _nuovoInsert  = new ricorrenza(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(), MetodoSupporto(_tipo->currentIndex()));
+        _nuovoInsert  = new ricorrenza(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(), metodi_extra::MetodoSupporto(_tipo->currentIndex()));
     //Elenco
     else if (_value == 3)
     {
@@ -359,7 +345,8 @@ void view_annotazione::OnClick()
 
     wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
     _model->aggiungiAnnotazione(_nuovoInsert);
-    _wA.insertFront(_nuovoWAnn);
+    _wA.insertBack(_nuovoWAnn);
+    SetSignalMapper(_nuovoWAnn);
     viewGriglia();
 }
 
@@ -368,6 +355,7 @@ void view_annotazione::Aggiorna()
     viewGriglia();
 }
 
+// On click Row, Aggiunge linee extra per inserimento nelle tabelle
 void view_annotazione::OnClickRow()
 {
     _TableList->insertRow(_TableList->rowCount());
@@ -378,6 +366,20 @@ void view_annotazione::OnClickRow()
         _TableList->setItem(_TableList->rowCount()-1,0,new QTableWidgetItem(""));
         _TableList->setItem(_TableList->rowCount()-1,1,new QTableWidgetItem(""));
     }
+}
+
+// On Click di wAnnotazione, apre la finestra dettagli
+void view_annotazione::ShowDettagli( int value)
+{
+    view_finestra *_FinestraDescrizione = new view_finestra(_model,_model->getAnnotazione(value));
+    _FinestraDescrizione->show();
+}
+
+// Quando creo un oggetto di tipo wAnnotazione, lo passiamo a questo metodo che aggiunge connette slot e signal
+void view_annotazione::SetSignalMapper(wAnnotazione *_wAnn)
+{
+    _SignalMapper->setMapping(_wAnn,_wA.indexOfInt(_wAnn));
+    connect(_wAnn, SIGNAL(clicked()), _SignalMapper, SLOT(map()));
 }
 
 

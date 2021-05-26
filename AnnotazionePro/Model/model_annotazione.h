@@ -16,6 +16,7 @@ public:
     void aggiungiAnnotazione(annotazione *annotazione);
     // getter
     lista<annotazione*> getAnnotazioni() const;
+    annotazione *getAnnotazione(unsigned int i) const;
     //annotazione* getAnnotazioni(QString Titolo) const;
 
     void reset();

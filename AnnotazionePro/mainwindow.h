@@ -14,11 +14,12 @@
 #include <QTextStream>
 #include <QCloseEvent>
 #include <QInputDialog>
-#include "View/view_annotazione.h"
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QMessageBox>
+#include "View/view_annotazione.h"
 #include "Model/model_annotazione.h"
+
 
 class MainWindow : public QWidget
 {
@@ -31,6 +32,9 @@ public:
 private:
     //
     QVBoxLayout *mainLayout;
+
+    QFile *_File;
+
     model_annotazione *model;
     view_annotazione *wA;
     //load Data when opening the window

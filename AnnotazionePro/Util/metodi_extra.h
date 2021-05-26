@@ -6,15 +6,15 @@
 #include "lista.h"
 #include <QString>
 #include <QStringList>
-
+#include "Data/ricorrenza.h"
 
 class metodi_extra
 {
 public:
 
     //Metodi da mettere su file a parte
-    /*static lista<type_elenco *> TextToTypeElenco(lista<QString*> *temp);
-    static lista<type_spesa *> TextToTypeSpesa(QString Testo);
-*/};
+    static Tipo MetodoSupporto(int _index);
+
+};
 
 #endif // METODI_EXTRA_H

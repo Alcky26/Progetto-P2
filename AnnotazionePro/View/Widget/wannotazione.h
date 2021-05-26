@@ -32,6 +32,11 @@ public:
     wAnnotazione(annotazione *ann, QWidget *parent = 0);
     ~wAnnotazione() = default;
 
+protected:
+    void mousePressEvent(QMouseEvent*);
+    void mouseReleaseEvent(QMouseEvent*);
+    void paintEvent(QPaintEvent*);
+
 private:
     QVBoxLayout *_mainBoxLayout;
     QLabel *_LabTitolo;
@@ -42,6 +47,12 @@ private:
     QLabel *_LabDescrizione;
     QPlainTextEdit *_LabElenco;
 
+    bool _state;
+
+signals :
+    void clicked();
+    void released();
+    void pressed();
 };
 
 #endif // WANNOTAZIONE_H

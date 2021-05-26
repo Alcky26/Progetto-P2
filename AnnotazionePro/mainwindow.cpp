@@ -4,11 +4,15 @@
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
 {
     mainLayout = new QVBoxLayout(this);
+
+    _File = nullptr;
     // Aggiunge bottoni in alto a Sinistra
     addMenuButtons();
     // Dichiarazione wAnnotazione e ModelAnnotazione
     model = new model_annotazione();
     wA= new view_annotazione(model);
+
+
     //
     // Aggiunta di wAnnotazione al mainLayout
     mainLayout->addWidget(wA);
@@ -88,6 +92,15 @@ void MainWindow::setApplicationStyle()
 
 void MainWindow::openClicked()
 {
+    QString _Filter = "XML File (**.xml)";
+    QString _FileName = QFileDialog::getOpenFileName(this, "Seleziona un file da importare",QDir::homePath(),_Filter);
+
+    if(!_FileName.isEmpty()){
+        _File = new QFile(_FileName);
+       // QDomDocument documentoLetto("Documento");
+
+    }
+
 
 }
 

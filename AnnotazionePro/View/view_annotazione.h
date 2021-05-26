@@ -28,8 +28,8 @@
 #include <QMessageBox>
 #include <QTableWidget>
 #include "Util/metodi_extra.h"
-
-
+#include <QSignalMapper>
+#include "view_finestra.h"
 
 class view_annotazione : public QWidget
 {
@@ -58,6 +58,8 @@ private:
 
     QTableWidget *_TableList;
 
+    QSignalMapper *_SignalMapper;
+
     QPushButton *_aggiunta;
     QPushButton *_aggiorna;
     QPushButton *_aggiungiRiga;
@@ -75,9 +77,9 @@ private:
     void aggiornaGriglia(QGridLayout *supplay);
     void clearGriglia();
     void resizeAnn(wAnnotazione* Ann);
-
-    Tipo MetodoSupporto(int _index) ;
     void AggiuntaAnnotazione();
+
+    void SetSignalMapper(wAnnotazione *_wAnn);
 
 private slots:
 
@@ -86,7 +88,7 @@ private slots:
     void OnClick();
     void Aggiorna();
     void OnClickRow();
-
+    void ShowDettagli( int);
 
 };
 
