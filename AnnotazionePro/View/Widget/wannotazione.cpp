@@ -97,7 +97,6 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 wAnnotazione::~wAnnotazione()
 {
     delete _mainBoxLayout;
-    delete _LabTitolo;
     delete  _LabCorpo;
     delete _corpoScroll;
 }
