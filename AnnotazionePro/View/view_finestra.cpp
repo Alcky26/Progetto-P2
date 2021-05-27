@@ -15,10 +15,6 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     _LineTitolo->setEnabled(false);
     _mainLayout->addWidget(_LineTitolo);
 
-    // Font Estemporaneo
-    QFont _TitleFont("Times", 15, QFont::Bold);
-    QFont _MainFont("Times", 12);
-
     // Se è di tipo Promemoria, aggiungiamo Data e Ora
     if(dynamic_cast<promemoria*>(ann))
     {
@@ -186,6 +182,15 @@ annotazione* view_finestra::ReadChangedValues()
     return nullptr;
 }
 
+void view_finestra::closeEvent(QCloseEvent *event)
+{
+    //if (tabellaModel->deviSalvare())
+    //{
+    //    checkUnsavedData();
+    //}
+    event->accept();
+}
+
 void view_finestra::OnClickModifica()
 {
     if(!_StatoModifica)
@@ -205,9 +210,14 @@ void view_finestra::OnClickModifica()
 
 void view_finestra::OnClickElimina()
 {
- /*
-        _model->rimouviElemento(_ann);*/
-    //    this->~view_finestra();
+    int i=0;
+    for(lista<annotazione*>::constiterator ci=_model->getAnnotazioni().begin() ; ci != _model->getAnnotazioni().end() ; ci++)
+    {
+        qDebug() << i;
+        i++;
+    }
+    _model->rimouviElemento(_ann);
+
 }
 
 

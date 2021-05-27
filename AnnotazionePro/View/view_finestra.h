@@ -57,6 +57,8 @@ private:
     void SetAllEnabled(bool _boolean);
     annotazione* ReadChangedValues();
 
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     void OnClickModifica();
     void OnClickElimina();

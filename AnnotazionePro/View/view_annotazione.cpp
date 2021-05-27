@@ -182,13 +182,33 @@ void view_annotazione::resizeAnn(wAnnotazione* Ann)
 
 void view_annotazione::aggiornaValoriGriglia()
 {
-    // Ricontrolla dopo aver fatto elimina
-    int i=0;
-    for(lista<wAnnotazione*>::constiterator cit=_wA.begin(); cit != _wA.end();cit++)
+    if(_wA.getSize()==_model->getAnnotazioni().getSize())
     {
-        (*cit)->aggiornaValori(_model->getAnnotazione(i));
-        i++;
+        int i=0;
+        for(lista<wAnnotazione*>::constiterator cit=_wA.begin(); cit != _wA.end();cit++)
+        {
+            (*cit)->aggiornaValori(_model->getAnnotazione(i));
+            i++;
+        }
     }
+    else
+    {
+        for(lista<wAnnotazione*>::constiterator citt=_wA.begin(); citt != _wA.end();citt++)
+        {
+            _SignalMapper->removeMappings(*citt);
+            qDebug() << "3";
+        }
+        _wA.clear();
+        qDebug() << "1";
+        for(lista<annotazione*>::constiterator ci=_model->getAnnotazioni().begin(); ci != _model->getAnnotazioni().end();ci++)
+        {
+            qDebug() << (*ci)->getTitolo();
+            wAnnotazione *_nuovoWAnn = new wAnnotazione(*ci);
+            _wA.insertBack(_nuovoWAnn);
+            SetSignalMapper(_nuovoWAnn);
+        }
+    }
+    qDebug() << "4";
 }
 
 void view_annotazione::tipologiaIndexChanged(int index)
@@ -290,9 +310,8 @@ void view_annotazione::aggiornaGriglia(QGridLayout *supplay)
     aggiornaValoriGriglia();
     int count = 0;
     for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
-    {
+    {        
         resizeAnn(* cit);
-
         supplay->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
         count++;
     }

@@ -42,11 +42,9 @@ void model_annotazione::reset()
 
 void model_annotazione::rimouviElemento(annotazione *annot)
 {
-
     lista<annotazione *>::constiterator ci = _annotazioni.begin();
     bool _eliminato = false;
-
-    while( ci != _annotazioni.end() || _eliminato == false)
+    while( ci != _annotazioni.end() && _eliminato == false)
     {
         if(*ci == annot)
         {
@@ -55,7 +53,6 @@ void model_annotazione::rimouviElemento(annotazione *annot)
         }
         ci++;
     }
-
 }
 
 void model_annotazione::modificaElemento(int _index,annotazione *annot)
@@ -66,10 +63,7 @@ void model_annotazione::modificaElemento(int _index,annotazione *annot)
 
         if(i==_index)
         {
-            qDebug() << "Titolo di Model annot :" << annot->getTitolo();
-            qDebug() << "Titolo di Model ci prima :" << (*ci)->getTitolo();
             (*ci)->setTitolo(annot->getTitolo());
-            qDebug() << "Titolo di Model ci dopo :" << (*ci)->getTitolo();
             if(dynamic_cast<promemoria*>(*ci))
             {
                dynamic_cast<promemoria*>(*ci)->setDate(dynamic_cast<promemoria*>(annot)->getDate());
