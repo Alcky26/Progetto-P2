@@ -1,5 +1,9 @@
 #include "view_finestra.h"
 
+/*view_finestra::view_finestra():_model()
+{
+
+}*/
 
 view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget *parent) : QWidget(parent),  _model(model)
 {
@@ -41,6 +45,11 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _calendario->setSelectedDate(dynamic_cast<ricorrenza*>(ann)->getDate());
         _calendario->setEnabled(false);
         _mainLayout->addWidget(_calendario);
+        // Tipo
+        _tipo=new QComboBox();
+        _tipo->addItems(ricorrenza::getTipi());
+        _mainLayout->addWidget(_tipo);
+        _tipo->setEnabled(false);
     }
 
     // Se è di tipo Nota, Ricorrenza o Promemoria
@@ -117,13 +126,50 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     _elimina = new QPushButton("Elimina Questo Elemento");
     _modifica = new QPushButton("Modifica Valori di Questo Elemento");
 
-    _mainLayout->addWidget(_elimina);
     _mainLayout->addWidget(_modifica);
+    _mainLayout->addWidget(_elimina);
 
     connect(_elimina,SIGNAL(clicked()),this,SLOT(OnClickElimina()));
     connect(_modifica,SIGNAL(clicked()),this,SLOT(OnClickModifica()));
 
 }
+
+view_finestra::~view_finestra()
+{
+    delete _model;
+    delete _ann;
+    delete _mainLayout;
+    delete _LineTitolo;
+    delete _LineCorpo;
+    delete _LineDesc;
+    delete _calendario;
+    delete _ora;
+    delete _TableList;
+    delete _tipo;
+    delete _elimina;
+    delete _modifica;
+}
+
+/*view_finestra &view_finestra::operator=(const view_finestra &other)
+{
+    if (this == &other)
+        return *this;
+
+    _model=other._model;
+    _ann=other._ann;
+    _StatoModifica=other._StatoModifica;
+    _mainLayout=other._mainLayout;
+    _LineTitolo=other._LineTitolo;
+    _LineCorpo=other._LineCorpo;
+    _LineDesc=other._LineDesc;
+    _calendario=other._calendario;
+    _ora=other._ora;
+    _TableList=other._TableList;
+    _tipo=other._tipo;
+    _elimina=other._elimina;
+    _modifica=other._modifica;
+    return *this;
+}*/
 
 void view_finestra::SetAllEnabled(bool _boolean)
 {
@@ -132,6 +178,7 @@ void view_finestra::SetAllEnabled(bool _boolean)
     {
         _ora->setEnabled(_boolean);
         _calendario->setEnabled(_boolean);
+        _tipo->setEnabled(_boolean);
     }
 
     if(dynamic_cast<promemoria*>(_ann))
@@ -173,7 +220,7 @@ annotazione* view_finestra::ReadChangedValues()
     }
     else if (dynamic_cast<ricorrenza*>(_ann))
     {
-        //return new ricorrenza(_LineTitolo->text(),_LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(),Tipo type);
+        return new ricorrenza(_LineTitolo->text(),_LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(),dynamic_cast<ricorrenza*>(_ann)->QStringToTipo(_tipo->itemData(_tipo->currentIndex()).toString()));
     }
     else if (dynamic_cast<nota*>(_ann))
     {
@@ -195,6 +242,9 @@ void view_finestra::OnClickModifica()
 {
     if(!_StatoModifica)
     {
+        qDebug() <<"dainviare";
+        emit Modificato();
+        qDebug() <<"inviato??";
         _StatoModifica=true;
         _modifica->setText("Conferma Modifica");
         SetAllEnabled(_StatoModifica);
@@ -210,14 +260,10 @@ void view_finestra::OnClickModifica()
 
 void view_finestra::OnClickElimina()
 {
-    int i=0;
-    for(lista<annotazione*>::constiterator ci=_model->getAnnotazioni().begin() ; ci != _model->getAnnotazioni().end() ; ci++)
-    {
-        qDebug() << i;
-        i++;
-    }
+    qDebug() <<"dainviare";
+    emit Eliminato();
+    qDebug() <<"inviato?";
     _model->rimouviElemento(_ann);
-
 }
 
 

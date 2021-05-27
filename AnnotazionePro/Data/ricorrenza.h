@@ -22,6 +22,8 @@ public:
     QTime getTime() const;
     void setTime(const QTime &time);
 
+    static QStringList getTipi();
+
     //Override Operatori di Confronto
     bool operator==(const ricorrenza &r) const;
     bool operator!=(const ricorrenza &r) const;
@@ -29,6 +31,7 @@ public:
     //void operator+(const QString &value);
     //Metodi
     QString typeToQString() const;
+    Tipo QStringToTipo(QString stringa) const;
     void Aggiorna();
     void Posticipa();
 

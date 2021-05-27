@@ -12,12 +12,18 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     model = new model_annotazione();
     wA= new view_annotazione(model);
 
-
-    //
     // Aggiunta di wAnnotazione al mainLayout
     mainLayout->addWidget(wA);
     setApplicationStyle();
     setLayout(mainLayout);
+}
+
+MainWindow::~MainWindow()
+{
+    delete mainLayout;
+    delete _File;
+    delete model;
+    delete wA;
 }
 
 void MainWindow::addMenuButtons()

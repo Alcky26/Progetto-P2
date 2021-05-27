@@ -1,5 +1,6 @@
 #include "view_annotazione.h"
 
+
 view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): QWidget(parent), _model(model)
 {
     _mainLayout = new QHBoxLayout(this);
@@ -21,10 +22,36 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     connect(_aggiunta, SIGNAL(clicked()), this, SLOT(OnClick()));
     connect(_aggiorna,SIGNAL(clicked()), this, SLOT(Aggiorna()));
     connect(_aggiungiRiga,SIGNAL(clicked()), this, SLOT(OnClickRow()));
+
     // Signal Mapper per OnClick di wAnnotazione
     _SignalMapper = new QSignalMapper(this);
-    connect(_SignalMapper, SIGNAL(mapped( int)), this, SLOT(ShowDettagli( int)));
+    connect(_SignalMapper, SIGNAL(mapped(int)), this, SLOT(ShowDettagli(int)));
 
+    /* Signal della View_finestra                                                                   STI MALEDETTI NON VANNO
+    connect(&_FinestraDescrizione, SIGNAL(Modificato()), this, SLOT(UpdateFromFinestra()));
+    connect(&_FinestraDescrizione, SIGNAL(Eliminato()), this, SLOT(UpdateFromFinestra()));*/
+
+}
+
+view_annotazione::~view_annotazione()
+{
+    delete _model;
+    _wA.clear();
+    delete _mainLayout;
+    delete _opzioni;
+    delete _griglia;
+    delete _LineTitolo;
+    delete _LineCorpo;
+    delete _LineDesc;
+    delete _tipologia;
+    delete _calendario;
+    delete _ora;
+    delete _tipo;
+    delete _TableList;
+    delete _SignalMapper;
+    delete _aggiunta;
+    delete _aggiorna;
+    delete _aggiungiRiga;
 }
 
 void view_annotazione::viewOpzioni()
@@ -78,10 +105,7 @@ void view_annotazione::viewOpzioni()
     _calendario->setVisible(false);
 
     //TIPO
-    _tipo->addItem("Giornaliero");
-    _tipo->addItem("Settimanale");
-    _tipo->addItem("Mensile");
-    _tipo->addItem("Annuale");
+    _tipo->addItems(ricorrenza::getTipi());
     _tempLayoutOpzioni->addWidget(_tipo);
     _tipo->setMaximumWidth(500);
     _tipo->setVisible(false);
@@ -196,19 +220,17 @@ void view_annotazione::aggiornaValoriGriglia()
         for(lista<wAnnotazione*>::constiterator citt=_wA.begin(); citt != _wA.end();citt++)
         {
             _SignalMapper->removeMappings(*citt);
-            qDebug() << "3";
         }
         _wA.clear();
-        qDebug() << "1";
-        for(lista<annotazione*>::constiterator ci=_model->getAnnotazioni().begin(); ci != _model->getAnnotazioni().end();ci++)
+        lista<annotazione*> temp=_model->getAnnotazioni();
+        wAnnotazione *_nuovoWAnn;
+        for(lista<annotazione*>::constiterator ci=temp.begin(); ci != temp.end();ci++)
         {
-            qDebug() << (*ci)->getTitolo();
-            wAnnotazione *_nuovoWAnn = new wAnnotazione(*ci);
+            _nuovoWAnn = new wAnnotazione(*ci);
             _wA.insertBack(_nuovoWAnn);
             SetSignalMapper(_nuovoWAnn);
         }
     }
-    qDebug() << "4";
 }
 
 void view_annotazione::tipologiaIndexChanged(int index)
@@ -403,7 +425,7 @@ void view_annotazione::OnClickRow()
 // On Click di wAnnotazione, apre la finestra dettagli
 void view_annotazione::ShowDettagli( int value)
 {
-    view_finestra *_FinestraDescrizione = new view_finestra(_model,_model->getAnnotazione(value));
+    view_finestra* _FinestraDescrizione = new view_finestra(_model,_model->getAnnotazione(value));
     _FinestraDescrizione->show();
 }
 
@@ -412,6 +434,11 @@ void view_annotazione::SetSignalMapper(wAnnotazione *_wAnn)
 {
     _SignalMapper->setMapping(_wAnn,_wA.indexOfInt(_wAnn));
     connect(_wAnn, SIGNAL(clicked()), _SignalMapper, SLOT(map()));
+}
+
+void view_annotazione::UpdateFromFinestra()
+{
+    Aggiorna();
 }
 
 

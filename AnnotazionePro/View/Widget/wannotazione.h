@@ -30,10 +30,9 @@ class wAnnotazione : public QWidget
 public:
 
     wAnnotazione(annotazione *ann, QWidget *parent = 0);
-    ~wAnnotazione() = default;
+    ~wAnnotazione();
+
     void aggiornaValori(annotazione* ann);
-
-
 
 protected:
     void mousePressEvent(QMouseEvent*);
@@ -52,8 +51,6 @@ private:
     QPlainTextEdit *_LabElenco;
 
     bool _state;
-
-
 
 signals :
     void clicked();

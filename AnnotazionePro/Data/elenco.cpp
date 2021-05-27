@@ -12,7 +12,7 @@ elenco::elenco(QString titolo, QString descrizione):annotazione(titolo),_descriz
 
 elenco::~elenco()
 {
-
+    _elenco.clear();
 }
 
 QString elenco::getListAsText()

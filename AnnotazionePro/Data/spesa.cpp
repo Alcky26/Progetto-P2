@@ -20,7 +20,7 @@ spesa::spesa(QString titolo, QString descrizione, const lista<type_spesa*> &spes
 
 spesa::~spesa()
 {
-
+    _spesa.clear();
 }
 
 double spesa::CostoComplessivo() const

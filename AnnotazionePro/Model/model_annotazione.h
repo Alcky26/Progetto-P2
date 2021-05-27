@@ -14,6 +14,7 @@ class model_annotazione
 {
 public:
     model_annotazione();
+    ~model_annotazione();
 
     //void ReadFile();
     //QDomDocument SaveFile();

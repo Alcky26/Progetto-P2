@@ -37,11 +37,13 @@ class view_annotazione : public QWidget
 public:
     // Costruttore
     view_annotazione(model_annotazione *model, QWidget *parent = 0);
+    ~view_annotazione();
 
 private:
     // Modello
     model_annotazione *_model;
     lista<wAnnotazione*> _wA;
+    //view_finestra _FinestraDescrizione;
 
     // GUI
     QHBoxLayout *_mainLayout;
@@ -81,12 +83,15 @@ private:
     void aggiornaValoriGriglia();
     void SetSignalMapper(wAnnotazione *_wAnn);
 
+
+public slots:
+    void UpdateFromFinestra();
 private slots:
 
+    void Aggiorna();
     void tipologiaIndexChanged(int);
     void onTextChanged();
     void OnClick();
-    void Aggiorna();
     void OnClickRow();
     void ShowDettagli( int);
 

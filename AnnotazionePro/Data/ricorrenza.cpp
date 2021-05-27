@@ -41,6 +41,16 @@ void ricorrenza::setTime(const QTime &time)
     _time = time;
 }
 
+QStringList ricorrenza::getTipi()
+{
+    QStringList tipologieItems;
+    tipologieItems.push_back("Giornaliero");
+    tipologieItems.push_back("Settimanale");
+    tipologieItems.push_back("Mensile");
+    tipologieItems.push_back("Annuale");
+    return tipologieItems;
+}
+
 bool ricorrenza::operator==(const ricorrenza &r) const
 {
     return getTitolo()== r.getTitolo() &&
@@ -75,12 +85,33 @@ QString ricorrenza::typeToQString() const
     }
     else return "null";
 }
+
+Tipo ricorrenza::QStringToTipo(QString stringa) const
+{
+    if( stringa == "Giornaliero")
+    {
+        return Giornaliero;
+    }
+    else if( stringa == "Settimanale")
+    {
+        return Settimanale;
+    }
+    else if( stringa == "Mensile")
+    {
+        return Mensile;
+    }
+    else
+    {
+        return Annuale;
+    }
+}
 /*
 void ricorrenza::operator+(const QString &value)
 {
    setCorpo(getCorpo() + " " + value);
 }
 */
+
 
 void ricorrenza::Aggiorna()
 {

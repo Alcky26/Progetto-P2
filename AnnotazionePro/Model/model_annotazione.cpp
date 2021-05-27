@@ -5,6 +5,11 @@ model_annotazione::model_annotazione() : _needToSave(false),_annotazioni()
 
 }
 
+model_annotazione::~model_annotazione()
+{
+    _annotazioni.clear();
+}
+
 void model_annotazione::aggiungiAnnotazione(annotazione *annotazione)
 {
     _annotazioni.insertBack(annotazione);

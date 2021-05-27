@@ -28,17 +28,21 @@
 #include <QMessageBox>
 #include <QTableWidget>
 #include "Util/metodi_extra.h"
+#include "View/view_annotazione.h"
 
 class view_finestra : public QWidget
 {
     Q_OBJECT
 
 public:
+    //view_finestra();
     view_finestra(model_annotazione* model, annotazione* ann, QWidget *parent = nullptr);
-    ~view_finestra()= default;
+    ~view_finestra();
+
+    //view_finestra& operator=(const view_finestra& other);
+
 private:
     model_annotazione *_model;
-
     annotazione *_ann;
 
     bool _StatoModifica;
@@ -58,7 +62,9 @@ private:
     annotazione* ReadChangedValues();
 
     void closeEvent(QCloseEvent *event);
-
+signals:
+    void Modificato();
+    void Eliminato();
 private slots:
     void OnClickModifica();
     void OnClickElimina();
