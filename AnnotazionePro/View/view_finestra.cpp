@@ -5,14 +5,15 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
 {
     _mainLayout = new QVBoxLayout(this);
 
+    _ann = ann;
+
+    _StatoModifica = false;
+
     // Titolo
     _LineTitolo= new QLineEdit();
     _LineTitolo->setText(ann->getTitolo());
     _LineTitolo->setEnabled(false);
     _mainLayout->addWidget(_LineTitolo);
-
-    // Futuri Bottoni
-    ///QPushButton *_elimina,*_modifica;///
 
     // Font Estemporaneo
     QFont _TitleFont("Times", 15, QFont::Bold);
@@ -113,9 +114,100 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
             _TableList->setItem(i,1,new QTableWidgetItem(QString::number(_SupportList.index(ci)->getCost())));
             i++;
         }
-        _TableList->setVisible(false);
+        _TableList->setEnabled(false);
         _mainLayout->addWidget(_TableList);
     }
+
+    _elimina = new QPushButton("Elimina Questo Elemento");
+    _modifica = new QPushButton("Modifica Valori di Questo Elemento");
+
+    _mainLayout->addWidget(_elimina);
+    _mainLayout->addWidget(_modifica);
+
+    connect(_elimina,SIGNAL(clicked()),this,SLOT(OnClickElimina()));
+    connect(_modifica,SIGNAL(clicked()),this,SLOT(OnClickModifica()));
+
+}
+
+void view_finestra::SetAllEnabled(bool _boolean)
+{
+    _LineTitolo->setEnabled(_boolean);
+    if(dynamic_cast<ricorrenza*>(_ann))
+    {
+        _ora->setEnabled(_boolean);
+        _calendario->setEnabled(_boolean);
+    }
+
+    if(dynamic_cast<promemoria*>(_ann))
+    {
+        _ora->setEnabled(_boolean);
+        _calendario->setEnabled(_boolean);
+    }
+
+    if(dynamic_cast<nota*>(_ann))
+    {
+        _LineCorpo->setEnabled(_boolean);
+    }
+
+    if(dynamic_cast<elenco*>(_ann))
+    {
+        _LineDesc->setEnabled(_boolean);
+        _TableList->setEnabled(_boolean);
+    }
+    if(dynamic_cast<spesa*>(_ann))
+    {
+        _LineDesc->setEnabled(_boolean);
+        _TableList->setEnabled(_boolean);
+    }
+}
+
+annotazione* view_finestra::ReadChangedValues()
+{
+    if(dynamic_cast<spesa*>(_ann) )
+    {
+        return new spesa(_LineTitolo->text(),_LineDesc->document()->toRawText());
+    }
+    else if (dynamic_cast<elenco*>(_ann) )
+    {
+        return new elenco(_LineTitolo->text(),_LineDesc->document()->toRawText());
+    }
+    else if (dynamic_cast<promemoria*>(_ann))
+    {
+        return new promemoria(_LineTitolo->text(),_LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time());
+    }
+    else if (dynamic_cast<ricorrenza*>(_ann))
+    {
+        //return new ricorrenza(_LineTitolo->text(),_LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(),Tipo type);
+    }
+    else if (dynamic_cast<nota*>(_ann))
+    {
+       return new nota(_LineTitolo->text(),_LineCorpo->document()->toRawText());
+    }
+    return nullptr;
+}
+
+void view_finestra::OnClickModifica()
+{
+    if(!_StatoModifica)
+    {
+        _StatoModifica=true;
+        _modifica->setText("Conferma Modifica");
+        SetAllEnabled(_StatoModifica);
+    }
+    else
+    {
+        _StatoModifica=false;
+        _modifica->setText("Modifica Valori di Questo Elemento");
+        SetAllEnabled(_StatoModifica);
+        _model->modificaElemento(_model->getAnnotazioni().indexOfInt(_ann),ReadChangedValues());
+    }
+}
+
+void view_finestra::OnClickElimina()
+{
+ /*
+        _model->rimouviElemento(_ann);*/
+    //    this->~view_finestra();
 }
 
 

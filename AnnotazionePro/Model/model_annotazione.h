@@ -3,6 +3,11 @@
 
 #include "Util/lista.h"
 #include "Data/annotazione.h"
+#include "Data/nota.h"
+#include "Data/ricorrenza.h"
+#include "Data/promemoria.h"
+#include "Data/elenco.h"
+#include "Data/spesa.h"
 #include <QStringList>
 
 class model_annotazione
@@ -20,8 +25,11 @@ public:
     //annotazione* getAnnotazioni(QString Titolo) const;
 
     void reset();
-////////////// METODO MODIFICADI UN ELEMENTO ???????!??!?!??!?!?!?!?!?
+
+    /// METODO MODIFICA DI UN ELEMENTO
     void rimouviElemento(annotazione *annot);
+    void modificaElemento(int _index,annotazione *annot);
+
 
     bool deviSalvare() const;
     void salvato();

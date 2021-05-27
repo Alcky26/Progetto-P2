@@ -78,7 +78,7 @@ private:
     void clearGriglia();
     void resizeAnn(wAnnotazione* Ann);
     void AggiuntaAnnotazione();
-
+    void aggiornaValoriGriglia();
     void SetSignalMapper(wAnnotazione *_wAnn);
 
 private slots:

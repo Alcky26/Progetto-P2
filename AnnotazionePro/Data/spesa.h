@@ -19,6 +19,8 @@ public:
 
     double CostoAttuale() const;
 
+
+
     QString getListSpesaAsText();
 
     void addElement(const QString &elemento, const double &prezzo);
@@ -28,6 +30,7 @@ public:
     void Remove(const QString &elemento, const double &prezzo);
 
     lista<type_spesa *> getSpesa() const;
+     void setSpesa( lista<type_spesa*> _newSpesa);
 
 private:
     lista<type_spesa*> _spesa;

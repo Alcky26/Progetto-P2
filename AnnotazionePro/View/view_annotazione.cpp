@@ -180,6 +180,17 @@ void view_annotazione::resizeAnn(wAnnotazione* Ann)
     Ann->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
 }
 
+void view_annotazione::aggiornaValoriGriglia()
+{
+    // Ricontrolla dopo aver fatto elimina
+    int i=0;
+    for(lista<wAnnotazione*>::constiterator cit=_wA.begin(); cit != _wA.end();cit++)
+    {
+        (*cit)->aggiornaValori(_model->getAnnotazione(i));
+        i++;
+    }
+}
+
 void view_annotazione::tipologiaIndexChanged(int index)
 {
     if(index==0)
@@ -276,20 +287,20 @@ void view_annotazione::VisualizzaSpesa()
 
 void view_annotazione::aggiornaGriglia(QGridLayout *supplay)
 {
-
-    lista<wAnnotazione*> supp = _wA;
+    aggiornaValoriGriglia();
     int count = 0;
-    for(lista<wAnnotazione*>::constiterator cit = supp.begin(); cit != supp.end(); cit++)
+    for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
     {
         resizeAnn(* cit);
+
         supplay->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
         count++;
     }
-    supplay->setAlignment(Qt::AlignLeft);
     supplay->setAlignment(Qt::AlignTop);
 
 }
 
+// On Click aggiunge una nuova annotazione
 void view_annotazione::OnClick()
 {
     //if per tipologia
@@ -344,12 +355,14 @@ void view_annotazione::OnClick()
     }
 
     wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
+
     _model->aggiungiAnnotazione(_nuovoInsert);
     _wA.insertBack(_nuovoWAnn);
     SetSignalMapper(_nuovoWAnn);
     viewGriglia();
 }
 
+// Slot per Button Aggiorna, Refresha i valori della Griglia
 void view_annotazione::Aggiorna()
 {
     viewGriglia();

@@ -31,11 +31,15 @@ public:
 
     wAnnotazione(annotazione *ann, QWidget *parent = 0);
     ~wAnnotazione() = default;
+    void aggiornaValori(annotazione* ann);
+
+
 
 protected:
     void mousePressEvent(QMouseEvent*);
     void mouseReleaseEvent(QMouseEvent*);
     void paintEvent(QPaintEvent*);
+
 
 private:
     QVBoxLayout *_mainBoxLayout;
@@ -48,6 +52,8 @@ private:
     QPlainTextEdit *_LabElenco;
 
     bool _state;
+
+
 
 signals :
     void clicked();

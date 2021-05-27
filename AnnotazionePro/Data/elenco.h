@@ -22,6 +22,8 @@ public:
     QString getListAsText();
 
     QString getDescrizione() const;
+
+    void setElenco( lista<type_elenco*> _newElenco);
     void setDescrizione(QString const &descrizione);
 
     void addElemento(const QString* &elemento);

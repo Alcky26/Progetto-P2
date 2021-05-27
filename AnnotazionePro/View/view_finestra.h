@@ -39,6 +39,10 @@ public:
 private:
     model_annotazione *_model;
 
+    annotazione *_ann;
+
+    bool _StatoModifica;
+
     QVBoxLayout *_mainLayout;
     //Elementi per Visualizzare
     QLineEdit *_LineTitolo;
@@ -50,9 +54,12 @@ private:
 
     QPushButton *_elimina,*_modifica;
 
+    void SetAllEnabled(bool _boolean);
+    annotazione* ReadChangedValues();
 
 private slots:
-
+    void OnClickModifica();
+    void OnClickElimina();
 };
 
 #endif // VIEW_FINESTRA_H

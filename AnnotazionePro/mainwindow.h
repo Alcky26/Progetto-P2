@@ -19,7 +19,8 @@
 #include <QMessageBox>
 #include "View/view_annotazione.h"
 #include "Model/model_annotazione.h"
-
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomElement>
 
 class MainWindow : public QWidget
 {

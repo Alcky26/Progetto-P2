@@ -89,7 +89,7 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     }
 
     _Scatola->setLayout(_mainVBoxLayout);
-    //_Scatola->setStyleSheet("color:white;background-color:rgb(176, 203, 247);");
+
     _mainBoxLayout->addWidget(_Scatola);
 
 }
@@ -121,5 +121,36 @@ void wAnnotazione::paintEvent(QPaintEvent *)
         _state=1;
         update();
     }
+}
+
+void wAnnotazione::aggiornaValori(annotazione* ann)
+{
+    _LabTitolo->setText(ann->getTitolo());
+
+    if(dynamic_cast<promemoria*>(ann))
+    {
+        _LabDateTime->setText("Data : "+dynamic_cast<promemoria*>(ann)->getDate().toString() + "\n"+"Ora : " +  dynamic_cast<promemoria*>(ann)->getTime().toString());
+    }
+    if(dynamic_cast<ricorrenza*>(ann))
+    {
+        _LabDateTime->setText("Data : "+dynamic_cast<ricorrenza*>(ann)->getDate().toString() + "\n"+"Ora : " +  dynamic_cast<ricorrenza*>(ann)->getTime().toString());
+        //_LabRicorrenza->setFont(_MainFont);
+    }
+    if(dynamic_cast<nota*>(ann))
+    {
+        _LabCorpo->document()->setPlainText( dynamic_cast<nota*>(ann)->getCorpo());
+    }
+    if(dynamic_cast<elenco*>(ann) && !dynamic_cast<spesa*>(ann))
+    {
+        _LabDescrizione->setText(dynamic_cast<elenco*>(ann)->getDescrizione());
+
+        _LabElenco->document()->setPlainText( dynamic_cast<elenco*>(ann)->getListAsText());
+    }
+    if(dynamic_cast<spesa*>(ann))
+    {
+        _LabDescrizione->setText(dynamic_cast<spesa*>(ann)->getDescrizione());
+        _LabElenco->document()->setPlainText( dynamic_cast<elenco*>(ann)->getListAsText());
+    }
+
 }
 

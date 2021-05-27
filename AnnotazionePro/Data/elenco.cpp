@@ -51,6 +51,15 @@ QString elenco::getDescrizione() const
     return _descrizione;
 }
 
+void elenco::setElenco(lista<type_elenco *> _newElenco)
+{
+    _elenco.clear();
+    for( lista<type_elenco*>::constiterator ci = _newElenco.begin(); ci!=_newElenco.end();ci++)
+    {
+        _elenco.insertFront(*ci);
+    }
+}
+
 void elenco::setDescrizione(const QString &descrizione)
 {
     _descrizione = descrizione;

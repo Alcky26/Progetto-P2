@@ -289,6 +289,8 @@ typename lista<T>::constiterator lista<T>::indexOf(const T &t) const {
     return nullptr;
 }
 
+
+
 template<class T>
 int lista<T>::indexOfInt(const T &t) const {
     int j=0;

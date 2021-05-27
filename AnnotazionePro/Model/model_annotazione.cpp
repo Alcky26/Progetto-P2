@@ -58,6 +58,48 @@ void model_annotazione::rimouviElemento(annotazione *annot)
 
 }
 
+void model_annotazione::modificaElemento(int _index,annotazione *annot)
+{
+    int i=0;
+    for(lista<annotazione*>::constiterator ci=_annotazioni.begin();ci!=_annotazioni.end();ci++)
+    {
+
+        if(i==_index)
+        {
+            qDebug() << "Titolo di Model annot :" << annot->getTitolo();
+            qDebug() << "Titolo di Model ci prima :" << (*ci)->getTitolo();
+            (*ci)->setTitolo(annot->getTitolo());
+            qDebug() << "Titolo di Model ci dopo :" << (*ci)->getTitolo();
+            if(dynamic_cast<promemoria*>(*ci))
+            {
+               dynamic_cast<promemoria*>(*ci)->setDate(dynamic_cast<promemoria*>(annot)->getDate());
+               dynamic_cast<promemoria*>(*ci)->setTime(dynamic_cast<promemoria*>(annot)->getTime());
+            }
+            else if(dynamic_cast<ricorrenza*>(*ci))
+            {
+                dynamic_cast<ricorrenza*>(*ci)->setDate(dynamic_cast<ricorrenza*>(annot)->getDate());
+                dynamic_cast<ricorrenza*>(*ci)->setTime(dynamic_cast<ricorrenza*>(annot)->getTime());
+            }
+            else if(dynamic_cast<elenco*>(*ci))
+            {
+                dynamic_cast<elenco*>(*ci)->setDescrizione(dynamic_cast<elenco*>(annot)->getDescrizione());
+                dynamic_cast<elenco*>(*ci)->setElenco(dynamic_cast<elenco*>(annot)->getElenco());
+            }
+            else if(dynamic_cast<spesa*>(*ci))
+            {
+                dynamic_cast<spesa*>(*ci)->setDescrizione(dynamic_cast<spesa*>(annot)->getDescrizione());
+                dynamic_cast<spesa*>(*ci)->setElenco(dynamic_cast<spesa*>(annot)->getElenco());
+            }
+
+            if(dynamic_cast<nota*>(*ci))
+            {
+                dynamic_cast<nota*>(*ci)->setCorpo(dynamic_cast<nota*>(annot)->getCorpo());
+            }
+        }
+        i++;
+    }
+}
+
 bool model_annotazione::deviSalvare() const
 {
     return _needToSave;

@@ -105,6 +105,15 @@ lista<type_spesa *> spesa::getSpesa() const
     return _spesa;
 }
 
+void spesa::setSpesa(lista<type_spesa *> _newSpesa)
+{
+    _spesa.clear();
+    for( lista<type_spesa*>::constiterator ci = _newSpesa.begin(); ci!=_newSpesa.end();ci++)
+    {
+        _spesa.insertFront(*ci);
+    }
+}
+
 
 
 
