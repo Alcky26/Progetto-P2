@@ -243,19 +243,17 @@ void view_finestra::OnClickModifica()
 {
     if(!_StatoModifica)
     {
-        qDebug() <<"dainviare";
-        emit Modificato();
-        qDebug() <<"inviato??";
         _StatoModifica=true;
         _modifica->setText("Conferma Modifica");
         SetAllEnabled(_StatoModifica);
     }
     else
     {
-        _StatoModifica=false;
+        _StatoModifica=false; 
         _modifica->setText("Modifica Valori di Questo Elemento");
         SetAllEnabled(_StatoModifica);
         _model->modificaElemento(_model->getAnnotazioni().indexOfInt(_ann),ReadChangedValues());
+        emit Modificato();
     }
 }
 

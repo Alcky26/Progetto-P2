@@ -432,6 +432,7 @@ void view_annotazione::ShowDettagli( int value)
         (*ci)->setEnabled(false);
     }
     connect(_FinestraDescrizione ,SIGNAL( ClosedWindow() ), this , SLOT( SetGrigliaEnabled() ) );
+    connect(_FinestraDescrizione, SIGNAL(Modificato()), this, SLOT(Aggiorna()));
     _FinestraDescrizione->show();
 }
 
