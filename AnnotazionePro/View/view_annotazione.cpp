@@ -20,16 +20,13 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     connect(_LineDesc, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
     //Bottone
     connect(_aggiunta, SIGNAL(clicked()), this, SLOT(OnClick()));
-    connect(_aggiorna,SIGNAL(clicked()), this, SLOT(Aggiorna()));
+    //connect(_aggiorna,SIGNAL(clicked()), this, SLOT(Aggiorna()));
     connect(_aggiungiRiga,SIGNAL(clicked()), this, SLOT(OnClickRow()));
 
     // Signal Mapper per OnClick di wAnnotazione
     _SignalMapper = new QSignalMapper(this);
     connect(_SignalMapper, SIGNAL(mapped(int)), this, SLOT(ShowDettagli(int)));
 
-    /* Signal della View_finestra                                                                   STI MALEDETTI NON VANNO
-    connect(&_FinestraDescrizione, SIGNAL(Modificato()), this, SLOT(UpdateFromFinestra()));
-    connect(&_FinestraDescrizione, SIGNAL(Eliminato()), this, SLOT(UpdateFromFinestra()));*/
     //connect(,SIGNAL(Modificato()),,SLOT(Aggiorna()));
 
 }
@@ -51,7 +48,7 @@ view_annotazione::~view_annotazione()
     delete _TableList;
     delete _SignalMapper;
     delete _aggiunta;
-    delete _aggiorna;
+    //delete _aggiorna;
     delete _aggiungiRiga;
 }
 
@@ -129,9 +126,9 @@ void view_annotazione::viewOpzioni()
     _tempLayoutOpzioni->addWidget(_aggiunta);
 
     //BOTTONE 2 ( AGGIORNA )
-    _aggiorna = new QPushButton("Aggiorna");
-    _aggiorna->setMaximumWidth(500);
-    _tempLayoutOpzioni->addWidget(_aggiorna);
+    //_aggiorna = new QPushButton("Aggiorna");
+    //_aggiorna->setMaximumWidth(500);
+    //_tempLayoutOpzioni->addWidget(_aggiorna);
 
 
 
@@ -144,8 +141,16 @@ void view_annotazione::viewOpzioni()
 
 void view_annotazione::onTextChanged()
 {
-    QSize size = _LineCorpo->document()->size().toSize();
-    _LineCorpo->setFixedHeight( size.height() + 3 );
+    if(_LineCorpo->isVisible())
+    {
+        QSize size = _LineCorpo->document()->size().toSize();
+        _LineCorpo->setFixedHeight( size.height() + 3 );
+    }
+    else
+    {
+        QSize size = _LineDesc->document()->size().toSize();
+        _LineDesc->setFixedHeight( size.height() + 3 );
+    }
 }
 
 void view_annotazione::viewGriglia()
@@ -431,8 +436,9 @@ void view_annotazione::ShowDettagli( int value)
     {
         (*ci)->setEnabled(false);
     }
-    connect(_FinestraDescrizione ,SIGNAL( ClosedWindow() ), this , SLOT( SetGrigliaEnabled() ) );
+    connect(_FinestraDescrizione ,SIGNAL(ClosedWindow()), this , SLOT(SetGrigliaEnabled()));
     connect(_FinestraDescrizione, SIGNAL(Modificato()), this, SLOT(Aggiorna()));
+    connect(_FinestraDescrizione, SIGNAL(Eliminato()), this, SLOT(Aggiorna()));
     _FinestraDescrizione->show();
 }
 
@@ -443,6 +449,15 @@ void view_annotazione::SetSignalMapper(wAnnotazione *_wAnn)
     connect(_wAnn, SIGNAL(clicked()), _SignalMapper, SLOT(map()));
 }
 
+void view_annotazione::resizeEvent(QResizeEvent *event)
+{
+    for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
+    {
+        resizeAnn(*cit);
+    }
+    QWidget::resizeEvent(event);
+}
+
 void view_annotazione::SetGrigliaEnabled()
 {
     for(lista<wAnnotazione*>::constiterator ci=_wA.begin();ci!=_wA.end();ci++)
@@ -450,10 +465,4 @@ void view_annotazione::SetGrigliaEnabled()
         (*ci)->setEnabled(true);
     }
 }
-
-void view_annotazione::UpdateFromFinestra()
-{
-    Aggiorna();
-}
-
 

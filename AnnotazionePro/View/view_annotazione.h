@@ -43,7 +43,6 @@ private:
     // Modello
     model_annotazione *_model;
     lista<wAnnotazione*> _wA;
-    //view_finestra _FinestraDescrizione;
 
     // GUI
     QHBoxLayout *_mainLayout;
@@ -63,7 +62,7 @@ private:
     QSignalMapper *_SignalMapper;
 
     QPushButton *_aggiunta;
-    QPushButton *_aggiorna;
+    //QPushButton *_aggiorna;
     QPushButton *_aggiungiRiga;
 
     // Metodi
@@ -82,10 +81,8 @@ private:
     void AggiuntaAnnotazione();
     void aggiornaValoriGriglia();
     void SetSignalMapper(wAnnotazione *_wAnn);
+    void resizeEvent(QResizeEvent *event);
 
-
-public slots:
-    void UpdateFromFinestra();
 private slots:
     void SetGrigliaEnabled();
     void Aggiorna();

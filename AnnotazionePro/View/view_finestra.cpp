@@ -259,10 +259,8 @@ void view_finestra::OnClickModifica()
 
 void view_finestra::OnClickElimina()
 {
-    qDebug() <<"dainviare";
-    emit Eliminato();
-    qDebug() <<"inviato?";
     _model->rimouviElemento(_ann);
+    emit Eliminato();
 }
 
 
