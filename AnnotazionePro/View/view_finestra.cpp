@@ -235,6 +235,7 @@ void view_finestra::closeEvent(QCloseEvent *event)
     //{
     //    checkUnsavedData();
     //}
+    emit ClosedWindow();
     event->accept();
 }
 

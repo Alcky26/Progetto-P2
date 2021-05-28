@@ -30,6 +30,7 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     /* Signal della View_finestra                                                                   STI MALEDETTI NON VANNO
     connect(&_FinestraDescrizione, SIGNAL(Modificato()), this, SLOT(UpdateFromFinestra()));
     connect(&_FinestraDescrizione, SIGNAL(Eliminato()), this, SLOT(UpdateFromFinestra()));*/
+    //connect(,SIGNAL(Modificato()),,SLOT(Aggiorna()));
 
 }
 
@@ -426,6 +427,11 @@ void view_annotazione::OnClickRow()
 void view_annotazione::ShowDettagli( int value)
 {
     view_finestra* _FinestraDescrizione = new view_finestra(_model,_model->getAnnotazione(value));
+    for(lista<wAnnotazione*>::constiterator ci=_wA.begin();ci!=_wA.end();ci++)
+    {
+        (*ci)->setEnabled(false);
+    }
+    connect(_FinestraDescrizione ,SIGNAL( ClosedWindow() ), this , SLOT( SetGrigliaEnabled() ) );
     _FinestraDescrizione->show();
 }
 
@@ -434,6 +440,14 @@ void view_annotazione::SetSignalMapper(wAnnotazione *_wAnn)
 {
     _SignalMapper->setMapping(_wAnn,_wA.indexOfInt(_wAnn));
     connect(_wAnn, SIGNAL(clicked()), _SignalMapper, SLOT(map()));
+}
+
+void view_annotazione::SetGrigliaEnabled()
+{
+    for(lista<wAnnotazione*>::constiterator ci=_wA.begin();ci!=_wA.end();ci++)
+    {
+        (*ci)->setEnabled(true);
+    }
 }
 
 void view_annotazione::UpdateFromFinestra()

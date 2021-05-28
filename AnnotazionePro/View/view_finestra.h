@@ -65,6 +65,7 @@ private:
 signals:
     void Modificato();
     void Eliminato();
+    void ClosedWindow();
 private slots:
     void OnClickModifica();
     void OnClickElimina();

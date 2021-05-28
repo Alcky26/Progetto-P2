@@ -87,7 +87,7 @@ private:
 public slots:
     void UpdateFromFinestra();
 private slots:
-
+    void SetGrigliaEnabled();
     void Aggiorna();
     void tipologiaIndexChanged(int);
     void onTextChanged();
