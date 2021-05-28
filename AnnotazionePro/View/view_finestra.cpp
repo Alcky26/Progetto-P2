@@ -259,8 +259,14 @@ void view_finestra::OnClickModifica()
 
 void view_finestra::OnClickElimina()
 {
-    _model->rimouviElemento(_ann);
-    emit Eliminato();
+    QMessageBox::StandardButton response= QMessageBox::question(this, "Elimina?",
+                                                                "Sei sicuro di voler elimina questa annotazione?", QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes);
+    if(response == QMessageBox::Yes)
+    {
+        _model->rimouviElemento(_ann);
+        emit Eliminato();
+        this->close();
+    }
 }
 
 
