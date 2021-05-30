@@ -48,6 +48,7 @@ private:
     bool _StatoModifica;
 
     QVBoxLayout *_mainLayout;
+    QGroupBox *_BoxTitolo,*_BoxDataOra,*_BoxCorpo,*_BoxDesc,*_BoxTable;
     //Elementi per Visualizzare
     QLineEdit *_LineTitolo;
     QTextEdit *_LineCorpo, *_LineDesc;
@@ -60,8 +61,12 @@ private:
 
     void SetAllEnabled(bool _boolean);
     annotazione* ReadChangedValues();
-
     void closeEvent(QCloseEvent *event);
+
+    void setupTitolo();
+    void setupDataOra();
+    void setupDescrizione();
+
 signals:
     void Modificato();
     void Eliminato();

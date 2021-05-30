@@ -1,10 +1,6 @@
 #include "view_finestra.h"
 
-/*view_finestra::view_finestra():_model()
-{
-
-}*/
-
+// Costruttore
 view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget *parent) : QWidget(parent),  _model(model)
 {
     _mainLayout = new QVBoxLayout(this);
@@ -13,24 +9,17 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
 
     _StatoModifica = false;
 
-    // Titolo
-    _LineTitolo= new QLineEdit();
-    _LineTitolo->setText(ann->getTitolo());
-    _LineTitolo->setEnabled(false);
-    _mainLayout->addWidget(_LineTitolo);
+    setupTitolo();
 
     // Se è di tipo Promemoria, aggiungiamo Data e Ora
     if(dynamic_cast<promemoria*>(ann))
     {
-        // Ora
+        //Ora
         _ora = new QDateTimeEdit(dynamic_cast<promemoria*>(ann)->getTime());
-        _ora->setEnabled(false);
-        _mainLayout->addWidget(_ora);
-        // Calendario
+        //Calendario
         _calendario = new QCalendarWidget();
         _calendario->setSelectedDate(dynamic_cast<promemoria*>(ann)->getDate());
-        _calendario->setEnabled(false);
-        _mainLayout->addWidget(_calendario);
+        setupDataOra();
     }
 
     // Se è di tipo Ricorrenza, aggiungiamo Data, Ora e Tipo
@@ -38,36 +27,39 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     {
         // Ora
         _ora = new QDateTimeEdit(dynamic_cast<ricorrenza*>(ann)->getTime());
-        _ora->setEnabled(false);
-        _mainLayout->addWidget(_ora);
         // Calendario
         _calendario = new QCalendarWidget();
         _calendario->setSelectedDate(dynamic_cast<ricorrenza*>(ann)->getDate());
-        _calendario->setEnabled(false);
-        _mainLayout->addWidget(_calendario);
+        setupDataOra();
         // Tipo
         _tipo=new QComboBox();
         _tipo->addItems(ricorrenza::getTipi());
         _mainLayout->addWidget(_tipo);
         _tipo->setEnabled(false);
+
     }
 
     // Se è di tipo Nota, Ricorrenza o Promemoria
     if(dynamic_cast<nota*>(ann))
     {
         // Corpo
+        _BoxCorpo = new QGroupBox("Corpo");
+        QVBoxLayout *_CorpoLayout = new QVBoxLayout();
         _LineCorpo = new QTextEdit(dynamic_cast<nota*>(ann)->getCorpo());
         _LineCorpo->setEnabled(false);
-        _mainLayout->addWidget(_LineCorpo);
+        _CorpoLayout->addWidget(_LineCorpo);
+        _BoxCorpo->setLayout(_CorpoLayout);
+        _mainLayout->addWidget(_BoxCorpo);
     }
 
     // Se è di tipo Elenco ( Escludiamo Spesa che è figlia )
     if(dynamic_cast<elenco*>(ann) && !dynamic_cast<spesa*>(ann))
     {
-        // Descrizione
         _LineDesc = new QTextEdit(dynamic_cast<elenco*>(ann)->getDescrizione());
-        _LineDesc->setEnabled(false);
-        _mainLayout->addWidget(_LineDesc);
+        setupDescrizione();
+
+        _BoxTable = new QGroupBox(" Lista Elementi ");
+        QVBoxLayout *_TableLayout = new QVBoxLayout();
 
         // Tabella
         _TableList = new QTableWidget();
@@ -88,7 +80,9 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
             i++;
         }
         _TableList->setEnabled(false);
-        _mainLayout->addWidget(_TableList);
+        _TableLayout->addWidget(_TableList);
+        _BoxTable->setLayout(_TableLayout);
+        _mainLayout->addWidget(_BoxTable);
     }
 
     // Se è di tipo Spesa
@@ -96,8 +90,10 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     {
         // Descrizione
         _LineDesc = new QTextEdit(dynamic_cast<spesa*>(ann)->getDescrizione());
-        _LineDesc->setEnabled(false);
-        _mainLayout->addWidget(_LineDesc);
+        setupDescrizione();
+
+        _BoxTable = new QGroupBox(" Lista Elementi ");
+        QVBoxLayout *_TableLayout = new QVBoxLayout();
 
         // Tabella
         _TableList = new QTableWidget();
@@ -120,7 +116,9 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
             i++;
         }
         _TableList->setEnabled(false);
-        _mainLayout->addWidget(_TableList);
+        _TableLayout->addWidget(_TableList);
+        _BoxTable->setLayout(_TableLayout);
+        _mainLayout->addWidget(_BoxTable);
     }
 
     _elimina = new QPushButton("Elimina Questo Elemento");
@@ -134,6 +132,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
 
 }
 
+// Distruttore
 view_finestra::~view_finestra()
 {
     delete _model;
@@ -150,27 +149,7 @@ view_finestra::~view_finestra()
     delete _modifica;
 }
 
-/*view_finestra &view_finestra::operator=(const view_finestra &other)
-{
-    if (this == &other)
-        return *this;
-
-    _model=other._model;
-    _ann=other._ann;
-    _StatoModifica=other._StatoModifica;
-    _mainLayout=other._mainLayout;
-    _LineTitolo=other._LineTitolo;
-    _LineCorpo=other._LineCorpo;
-    _LineDesc=other._LineDesc;
-    _calendario=other._calendario;
-    _ora=other._ora;
-    _TableList=other._TableList;
-    _tipo=other._tipo;
-    _elimina=other._elimina;
-    _modifica=other._modifica;
-    return *this;
-}*/
-
+// Setta tutti i widget a interagibile o non interagibile
 void view_finestra::SetAllEnabled(bool _boolean)
 {
     _LineTitolo->setEnabled(_boolean);
@@ -204,6 +183,7 @@ void view_finestra::SetAllEnabled(bool _boolean)
     }
 }
 
+// Legge i valori modificati per modificare mandari i valori al Model
 annotazione* view_finestra::ReadChangedValues()
 {
     if(dynamic_cast<spesa*>(_ann) )
@@ -229,6 +209,7 @@ annotazione* view_finestra::ReadChangedValues()
     return nullptr;
 }
 
+// Evento chiusura di una finestra
 void view_finestra::closeEvent(QCloseEvent *event)
 {
     //if (tabellaModel->deviSalvare())
@@ -239,6 +220,45 @@ void view_finestra::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
+void view_finestra::setupTitolo()
+{
+    // Titolo
+    _BoxTitolo = new QGroupBox(" Titolo ");
+    QVBoxLayout *_TitoloLayout = new QVBoxLayout();
+    _LineTitolo= new QLineEdit();
+    _LineTitolo->setText(_ann->getTitolo());
+    _LineTitolo->setEnabled(false);
+
+    _TitoloLayout->addWidget(_LineTitolo);
+    _BoxTitolo->setLayout(_TitoloLayout);
+    _mainLayout->addWidget(_BoxTitolo);
+    //_mainLayout->addWidget(_LineTitolo);
+}
+
+void view_finestra::setupDataOra()
+{
+    _BoxDataOra = new QGroupBox("Data & Ora");
+    QVBoxLayout *_DataOraLayout = new QVBoxLayout();
+    _ora->setEnabled(false);
+    _DataOraLayout->addWidget(_ora);
+    _calendario->setEnabled(false);
+    _DataOraLayout->addWidget(_calendario);
+    _BoxDataOra->setLayout(_DataOraLayout);
+    _mainLayout->addWidget(_BoxDataOra);
+}
+
+void view_finestra::setupDescrizione()
+{
+    // Descrizione
+    _BoxDesc = new QGroupBox("Descrizione");
+    QVBoxLayout *_DescrizioneLayout = new QVBoxLayout();
+    _LineDesc->setEnabled(false);
+    _DescrizioneLayout->addWidget(_LineDesc);
+    _BoxDesc->setLayout(_DescrizioneLayout);
+    _mainLayout->addWidget(_BoxDesc);
+}
+
+// Slot per il bottone di Modifica
 void view_finestra::OnClickModifica()
 {
     if(!_StatoModifica)
@@ -257,6 +277,7 @@ void view_finestra::OnClickModifica()
     }
 }
 
+// Slot per il bottone di Elimina
 void view_finestra::OnClickElimina()
 {
     QMessageBox::StandardButton response= QMessageBox::question(this, "Elimina?",

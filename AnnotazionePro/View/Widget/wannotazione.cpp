@@ -6,7 +6,7 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 
     _state=0;
 
-    setAttribute(Qt::WA_Hover);
+    //setAttribute(Qt::WA_Hover);
 
 
     QListWidget *_Scatola= new QListWidget();
@@ -156,7 +156,7 @@ void wAnnotazione::aggiornaValori(annotazione* ann)
     if(dynamic_cast<spesa*>(ann))
     {
         _LabDescrizione->setText(dynamic_cast<spesa*>(ann)->getDescrizione());
-        _LabElenco->document()->setPlainText( dynamic_cast<elenco*>(ann)->getListAsText());
+        _LabElenco->document()->setPlainText( dynamic_cast<spesa*>(ann)->getListSpesaAsText());
     }
 
 }

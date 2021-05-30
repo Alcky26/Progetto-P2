@@ -65,15 +65,14 @@ double spesa::CostoAttuale() const
 QString spesa::getListSpesaAsText()
 {
     QString _finalValue="";
+    QString temp;
     for( lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
     {
-        qDebug() << (*ci)->getCost();
-        if( (*ci)->getCost() == 0 )
-            _finalValue = _finalValue + (*ci)->getValue() + " : 0 \n";
-        else
-            _finalValue = _finalValue + (*ci)->getValue() + " : " +  QString::number((*ci)->getCost()) + "\n";
+        temp = (*ci)->getValue() + " : " +  QString::number((*ci)->getCost()) + "\n";
+        _finalValue+= temp;
     }
     return _finalValue;
+
 }
 
 void spesa::addElement(const QString &elemento, const double &prezzo)

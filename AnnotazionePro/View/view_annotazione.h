@@ -62,7 +62,6 @@ private:
     QSignalMapper *_SignalMapper;
 
     QPushButton *_aggiunta;
-    //QPushButton *_aggiorna;
     QPushButton *_aggiungiRiga;
 
     // Metodi
