@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     //a.setWindowIcon(QIcon("dog.png"));
-    a.setApplicationName("Annotazioni");
+    a.setApplicationName("AnnotazionePro");
 
     MainWindow w;
 

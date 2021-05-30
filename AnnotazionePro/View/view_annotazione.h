@@ -39,6 +39,7 @@ public:
     view_annotazione(model_annotazione *model, QWidget *parent = 0);
     ~view_annotazione();
 
+    void viewGriglia();
 private:
     // Modello
     model_annotazione *_model;
@@ -66,7 +67,7 @@ private:
 
     // Metodi
     void viewOpzioni();
-    void viewGriglia();
+
 
     void VisualizzaNota();
     void VisualizzaPromemoria();

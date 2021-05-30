@@ -10,6 +10,62 @@ model_annotazione::~model_annotazione()
     _annotazioni.clear();
 }
 
+void model_annotazione::readFromFile(const QDomDocument &doc)
+{
+    reset();
+    QDomElement root = doc.firstChildElement();
+    if(root.nodeName()!= "Annotazioni")
+        throw new std::invalid_argument("La root non ha nome \"Annotazioni\"");
+    for (int i=0;i<root.childNodes().size();++i)
+    {
+        if(root.childNodes().at(i).nodeName()=="Nota")
+        {
+            QDomElement no=root.childNodes().at(i).toElement();
+           aggiungiAnnotazione(new nota(no));
+        }
+        else if(root.childNodes().at(i).nodeName()=="Promemoria")
+        {
+            QDomElement prom=root.childNodes().at(i).toElement();
+            aggiungiAnnotazione(new promemoria(prom));
+        }
+        else if(root.childNodes().at(i).nodeName()=="Ricorrenza")
+        {
+            QDomElement ricorr=root.childNodes().at(i).toElement();
+            aggiungiAnnotazione(new ricorrenza(ricorr));
+        }
+        else if(root.childNodes().at(i).nodeName()=="Elenco")
+        {
+            QDomElement elenc=root.childNodes().at(i).toElement();
+            aggiungiAnnotazione(new elenco(elenc));
+        }
+        else if(root.childNodes().at(i).nodeName()=="Spesa")
+        {
+            QDomElement spes=root.childNodes().at(i).toElement();
+            aggiungiAnnotazione(new spesa(spes));
+        }
+        else
+        {
+            throw new std::runtime_error("Impossibile processare il contenuto");
+        }
+
+    }
+    _needToSave = false;
+
+}
+
+QDomDocument model_annotazione::saveFile()
+{
+    QDomDocument doc("Annotazioni");
+    QDomElement root = doc.createElement("Annotazioni");
+
+    for (lista<annotazione*>::constiterator cit = _annotazioni.begin(); cit != _annotazioni.end(); ++cit)
+    {
+        root.appendChild((*cit)->XmlSerialize(doc));
+    }
+    doc.appendChild(root);
+    return doc;
+}
+
 void model_annotazione::aggiungiAnnotazione(annotazione *annotazione)
 {
     _annotazioni.insertBack(annotazione);
@@ -43,6 +99,7 @@ annotazione *model_annotazione::getAnnotazione(unsigned int i) const
 void model_annotazione::reset()
 {
     _annotazioni.clear();
+    _needToSave=true;
 }
 
 void model_annotazione::rimouviElemento(annotazione *annot)
@@ -58,6 +115,7 @@ void model_annotazione::rimouviElemento(annotazione *annot)
         }
         ci++;
     }
+    _needToSave=true;
 }
 
 void model_annotazione::modificaElemento(int _index,annotazione *annot)
@@ -97,6 +155,7 @@ void model_annotazione::modificaElemento(int _index,annotazione *annot)
         }
         i++;
     }
+    _needToSave=true;
 }
 
 bool model_annotazione::deviSalvare() const

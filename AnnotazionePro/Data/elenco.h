@@ -5,7 +5,8 @@
 #include "Util/lista.h"
 #include "annotazione.h"
 #include "Util/type_elenco.h"
-
+#include <QDomDocument>
+#include <QDomElement>
 
 class elenco: virtual public annotazione
 {
@@ -14,10 +15,14 @@ public:
     elenco(QString titolo, QString descrizione);
     elenco(QString titolo, QString descrizione,lista<QString*> &elenco);
     elenco(QString titolo, QString descrizione,lista<type_elenco*> elenco);
+    elenco(QDomElement elenco);
     virtual ~elenco();
 
     ///Override Operatore di Somma
     ///void operator+(const QString &value);
+
+
+    virtual QDomElement XmlSerialize(QDomDocument doc) const;
 
     QString getListAsText();
 

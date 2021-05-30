@@ -18,9 +18,41 @@ spesa::spesa(QString titolo, QString descrizione, const lista<type_spesa*> &spes
     }
 }
 
+spesa::spesa(QDomElement spesa):
+    annotazione(spesa.childNodes().at(0).toElement().childNodes().at(0).toElement()),
+    elenco(spesa.childNodes().at(0).toElement())
+{
+    int count=1;
+    type_spesa *ts=new type_spesa();
+    while(spesa.childNodes().at(count).isElement())
+    {
+        ts->setValue(spesa.childNodes().at(count).toElement().attribute("Value"));
+        ts->setIsDone(spesa.childNodes().at(count).toElement().attribute("IsDone")=="0" ? 0:1);
+        ts->setCost(spesa.childNodes().at(count).toElement().attribute("Cost").toDouble());
+        _spesa.insertFront(ts);
+        count++;
+    }
+    delete ts;
+}
+
 spesa::~spesa()
 {
     _spesa.clear();
+}
+
+QDomElement spesa::XmlSerialize(QDomDocument doc) const
+{
+    QDomElement spesa = doc.createElement("Spesa");
+    spesa.appendChild(elenco::XmlSerialize(doc));
+    for( lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
+    {
+        QDomElement elemento= doc.createElement("Elemento");
+        elemento.setAttribute("Value",(*ci)->getValue());
+        elemento.setAttribute("IsDone",(*ci)->getIsDone());
+        elemento.setAttribute("Cost",(*ci)->getCost());
+        spesa.appendChild(elemento);
+    }
+    return spesa;
 }
 
 double spesa::CostoComplessivo() const

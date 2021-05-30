@@ -5,9 +5,24 @@ nota::nota(QString titolo, QString corpo): annotazione(titolo), _corpo(corpo)
 
 }
 
+nota::nota(QDomElement nota):
+    annotazione(nota.childNodes().at(0).toElement()),
+    _corpo(nota.attribute("Corpo"))
+{
+
+}
+
 nota::~nota()
 {
 
+}
+
+QDomElement nota::XmlSerialize(QDomDocument doc) const
+{
+    QDomElement nota = doc.createElement("Nota");
+    nota.appendChild(annotazione::XmlSerialize(doc));
+    nota.setAttribute("Corpo", _corpo);
+    return nota;
 }
 
 QString nota::getCorpo() const

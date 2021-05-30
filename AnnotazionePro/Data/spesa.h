@@ -4,6 +4,8 @@
 #include "elenco.h"
 #include <QDebug>
 #include "Util/type_spesa.h"
+#include <QDomDocument>
+#include <QDomElement>
 
 class spesa : virtual public elenco
 {
@@ -11,7 +13,10 @@ public:
     spesa();
     spesa(QString titolo, QString descrizione);
     spesa(QString titolo, QString descrizione,const lista<type_spesa*> &spesa);
+    spesa(QDomElement spesa);
     ~spesa();
+
+    virtual QDomElement XmlSerialize(QDomDocument doc) const;
 
     double CostoComplessivo() const;
 

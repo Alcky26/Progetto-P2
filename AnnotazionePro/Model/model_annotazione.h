@@ -9,6 +9,8 @@
 #include "Data/elenco.h"
 #include "Data/spesa.h"
 #include <QStringList>
+#include <QDomDocument>
+#include <QDomElement>
 
 class model_annotazione
 {
@@ -16,8 +18,8 @@ public:
     model_annotazione();
     ~model_annotazione();
 
-    //void ReadFile();
-    //QDomDocument SaveFile();
+    void readFromFile(const QDomDocument& doc);
+    QDomDocument saveFile();
 
     void aggiungiAnnotazione(annotazione *annotazione);
     // getter

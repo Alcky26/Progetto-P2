@@ -51,7 +51,7 @@ private:
 
 private slots:
     void openClicked();
-    void saveClicked();
+    void salvaClicked();
     void saveNameClicked();
 
     // Metodi Per Help!

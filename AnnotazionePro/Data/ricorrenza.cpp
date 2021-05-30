@@ -6,9 +6,39 @@ ricorrenza::ricorrenza(QString titolo, QString corpo, QDate date, QTime time, Ti
 
 }
 
+ricorrenza::ricorrenza(QDomElement ric):
+    annotazione(ric.childNodes().at(0).toElement().childNodes().at(0).toElement()),
+    nota(ric.childNodes().at(0).toElement()),
+    _date(strToItaDate(ric.attribute("Data"))),
+    _time(ric.attribute("Ora").split(":")[0].toInt(),ric.attribute("Ora").split(":")[1].toInt(),ric.attribute("Ora").split(":")[2].toInt()),
+    _type(QStringToTipo(ric.attribute("Tipo")))
+{
+
+}
+
 ricorrenza::~ricorrenza()
 {
 
+}
+
+QDate ricorrenza::strToItaDate(const QString& date)
+{
+    return QDate::fromString(date,"dd/MM/yyyy");
+}
+
+QString ricorrenza::dateToItaStr(const QDate& date)
+{
+    return date.toString("dd/MM/yyyy");
+}
+
+QDomElement ricorrenza::XmlSerialize(QDomDocument doc) const
+{
+    QDomElement ricor = doc.createElement("Ricorrenza");
+    ricor.appendChild(nota::XmlSerialize(doc));
+    ricor.setAttribute("Data", _date.toString());
+    ricor.setAttribute("Ora", _time.toString());
+    ricor.setAttribute("Tipo", typeToQString());
+    return ricor;
 }
 
 Tipo ricorrenza::getType() const

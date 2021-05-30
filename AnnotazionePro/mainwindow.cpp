@@ -50,7 +50,7 @@ void MainWindow::addMenuButtons()
     analizzaStipendio->setShortcut(Qt::CTRL | Qt::Key_A);*/
 
     connect(apri, SIGNAL(triggered()), this, SLOT(openClicked()));
-    connect(salva, SIGNAL(triggered()), this, SLOT(saveClicked()));
+    connect(salva, SIGNAL(triggered()), this, SLOT(salvaClicked()));
     connect(salvaConNome, SIGNAL(triggered()), this, SLOT(saveNameClicked()));
     connect(chiudi, SIGNAL(triggered()), this, SLOT(close()));
     /*connect(esportaStipendio, SIGNAL(triggered()), this, SLOT(esportaStipendio()));
@@ -96,28 +96,92 @@ void MainWindow::setApplicationStyle()
     mainLayout->setMargin(0);
 }
 
-void MainWindow::openClicked()
+void MainWindow::checkUnsavedData()
 {
-    QString _Filter = "XML File (**.xml)";
-    QString _FileName = QFileDialog::getOpenFileName(this, "Seleziona un file da importare",QDir::homePath(),_Filter);
-
-    if(!_FileName.isEmpty()){
-        _File = new QFile(_FileName);
-       // QDomDocument documentoLetto("Documento");
-
-    }
-
-
+    if(model->deviSalvare())
+        {
+            QMessageBox::StandardButton response= QMessageBox::question(this, "Salvare i dati?", "Vuoi salvare i dati modificati prima di continuare?", QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes);
+            if(response == QMessageBox::Yes)
+                salvaClicked();
+        }
 }
 
-void MainWindow::saveClicked()
+void MainWindow::openClicked()
 {
+    checkUnsavedData();
 
+    QString filter = "XML File (*.xml)";
+    QString fileName = QFileDialog::getOpenFileName(this, "Seleziona un file da importare", QDir::homePath(), filter);
+
+    if(!fileName.isEmpty())
+    {
+        _File = new QFile(fileName);
+        QDomDocument documentoLetto("Documento");
+        if(!_File->open(QIODevice::ReadWrite | QIODevice::Text) || !documentoLetto.setContent(_File))
+        {
+            QMessageBox::information(this, "Impossibile aprire il file", _File->errorString());
+            return;
+        }
+        _File->close();
+        try
+        {
+            model->readFromFile(documentoLetto);
+            wA->viewGriglia();
+        }
+        catch (std::exception *e)
+        {
+            model->reset();
+            model->salvato();
+            QMessageBox::warning(this, "Impossibile leggere il file", e->what());
+        }
+
+    }
+}
+
+void MainWindow::salvaClicked()
+{
+    if (_File != nullptr)
+    {
+       if(!_File->open(QIODevice::ReadWrite | QIODevice::Text|QIODevice::Truncate))
+       {
+           QMessageBox::information(this, "Impossibile salvare nel file", _File->errorString());
+           return;
+       }
+       if(_File->fileName().endsWith(".xml"))
+       {
+           QDomDocument annotazioni = model->saveFile();
+           QTextStream stream(_File);
+           stream << annotazioni.toString();
+           _File->close();
+           model->salvato();
+       }
+    }
+    else
+    {
+       MainWindow::saveNameClicked();
+    }
 }
 
 void MainWindow::saveNameClicked()
 {
+    QString filter = "XML File (*.xml)";
+    QString fileName = QFileDialog::getSaveFileName(this, "Salva con nome", QDir::homePath(), filter);
 
+    if(!fileName.isEmpty())
+    {
+       delete _File;
+       _File = new QFile(fileName);
+       if(!_File->open(QIODevice::ReadWrite | QIODevice::Text))
+       {
+           QMessageBox::information(this, "Impossibile salvare nel file", _File->errorString());
+           return;
+       }
+       QDomDocument annotazioni = model->saveFile();
+       QTextStream stream(_File);
+       stream << annotazioni.toString();
+       _File->close();
+       model->salvato();
+    }
 }
 
 void MainWindow::openInfos() const
@@ -140,8 +204,11 @@ void MainWindow::openAboutUs() const
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    //serve il Model
-    event->setAccepted(true);
+    if (model->deviSalvare())
+    {
+        checkUnsavedData();
+    }
+    event->accept();
 }
 
 

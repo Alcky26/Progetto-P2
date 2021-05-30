@@ -4,15 +4,46 @@ elenco::elenco() : annotazione()
 {
 
 }
-
 elenco::elenco(QString titolo, QString descrizione):annotazione(titolo),_descrizione(descrizione),_elenco()
 {
     //_elenco = new lista<type_elenco*>();
 }
 
+elenco::elenco(QDomElement elen):
+    annotazione(elen.childNodes().at(0).toElement()),
+    _descrizione(elen.attribute("Descrizione"))
+{
+    int count=1;
+    type_elenco *te=new type_elenco();
+    while(elen.childNodes().at(count).isElement())
+    {
+        te->setValue(elen.childNodes().at(count).toElement().attribute("Value"));
+        te->setIsDone(elen.childNodes().at(count).toElement().attribute("IsDone")=="0" ? 0:1);
+        _elenco.insertFront(te);
+        count++;
+    }
+    delete te;
+}
+
 elenco::~elenco()
 {
     _elenco.clear();
+}
+
+QDomElement elenco::XmlSerialize(QDomDocument doc) const
+{
+    QDomElement elenco = doc.createElement("Elenco");
+    elenco.appendChild(annotazione::XmlSerialize(doc));
+    elenco.setAttribute("Descrizione", _descrizione);
+
+    for( lista<type_elenco*>::constiterator ci = _elenco.begin(); ci!=_elenco.end();ci++)
+    {
+        QDomElement elemento=doc.createElement("Elemento");
+        elemento.setAttribute("Value",(*ci)->getValue());
+        elemento.setAttribute("IsDone",(*ci)->getIsDone());
+        elenco.appendChild(elemento);
+    }
+    return elenco;
 }
 
 QString elenco::getListAsText()
