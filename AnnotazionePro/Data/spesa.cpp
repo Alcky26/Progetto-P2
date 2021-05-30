@@ -14,7 +14,7 @@ spesa::spesa(QString titolo, QString descrizione, const lista<type_spesa*> &spes
 {
     for(lista<type_spesa*>::constiterator ci = spesa.begin(); ci!=spesa.end();ci++)
     {
-        _spesa.insertBack(*ci);
+        _spesa.insertFront(*ci);
     }
 }
 
