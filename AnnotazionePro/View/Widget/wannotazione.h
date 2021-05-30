@@ -44,7 +44,6 @@ private:
     QVBoxLayout *_mainBoxLayout;
     QLabel *_LabTitolo;
     QPlainTextEdit  * _LabCorpo;
-    QScrollArea *_corpoScroll;
     QLabel *_LabDateTime;
     QLabel *_LabRicorrenza;
     QLabel *_LabDescrizione;

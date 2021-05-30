@@ -88,7 +88,6 @@ wAnnotazione::~wAnnotazione()
 {
     delete _mainBoxLayout;
     delete  _LabCorpo;
-    delete _corpoScroll;
 }
 
 void wAnnotazione::mousePressEvent(QMouseEvent *)

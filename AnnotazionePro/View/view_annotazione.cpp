@@ -13,7 +13,7 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     viewGriglia();
 
     _mainLayout->addLayout(_griglia,70);
-    _mainLayout->addLayout(_opzioni,30);
+    _mainLayout->addLayout(_opzioni,25);
 
     connect(_tipologia, SIGNAL(currentIndexChanged(int)), this, SLOT(tipologiaIndexChanged(int)));
     connect(_LineCorpo, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
@@ -25,8 +25,6 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     // Signal Mapper per OnClick di wAnnotazione
     _SignalMapper = new QSignalMapper(this);
     connect(_SignalMapper, SIGNAL(mapped(int)), this, SLOT(ShowDettagli(int)));
-
-    //connect(,SIGNAL(Modificato()),,SLOT(Aggiorna()));
 
 }
 
@@ -48,7 +46,6 @@ view_annotazione::~view_annotazione()
     delete _TableList;
     delete _SignalMapper;
     delete _aggiunta;
-    //delete _aggiorna;
     delete _aggiungiRiga;
 }
 
@@ -57,7 +54,10 @@ void view_annotazione::viewOpzioni()
 {
 
     QVBoxLayout *_tempLayoutOpzioni = new QVBoxLayout();
-    QGroupBox *suppLayoutOpzioni = new QGroupBox("Opzioni");
+    QGroupBox *_GroupBoxInserimento = new QGroupBox("Inserimento");
+    QGroupBox *_GroupBoxFiltro = new QGroupBox("Filtro");
+    QGroupBox *_GroupBoxOrdinamento = new QGroupBox("Ordinamento");
+
 
     _LineTitolo = new QLineEdit();
     _LineCorpo = new QTextEdit();
@@ -128,11 +128,13 @@ void view_annotazione::viewOpzioni()
     _aggiunta->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_aggiunta);
 
-    suppLayoutOpzioni->setLayout(_tempLayoutOpzioni);
-    suppLayoutOpzioni->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Maximum);
+    _GroupBoxInserimento->setLayout(_tempLayoutOpzioni);
+    _GroupBoxInserimento->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Maximum);
 
-    _opzioni->addWidget(suppLayoutOpzioni);
-    _opzioni->setAlignment(suppLayoutOpzioni,Qt::AlignTop);
+    _opzioni->addWidget(_GroupBoxInserimento);
+    _opzioni->addWidget(_GroupBoxFiltro);
+    _opzioni->addWidget(_GroupBoxOrdinamento);
+    _opzioni->setAlignment(Qt::AlignTop);
 }
 
 void view_annotazione::onTextChanged()
