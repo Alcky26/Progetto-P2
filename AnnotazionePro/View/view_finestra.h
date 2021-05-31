@@ -29,6 +29,10 @@
 #include <QTableWidget>
 #include "Util/metodi_extra.h"
 #include "View/view_annotazione.h"
+#include "Util/lista.h"
+#include "Util/type_elenco.h"
+#include "Util/type_spesa.h"
+
 
 class view_finestra : public QWidget
 {
