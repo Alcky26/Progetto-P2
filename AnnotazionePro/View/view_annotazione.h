@@ -30,6 +30,8 @@
 #include "Util/metodi_extra.h"
 #include <QSignalMapper>
 #include "view_finestra.h"
+#include <QCheckBox>
+#include <QRadioButton>
 
 class view_annotazione : public QWidget
 {
@@ -65,6 +67,8 @@ private:
     QPushButton *_aggiunta;
     QPushButton *_aggiungiRiga;
 
+    QCheckBox *_checkAnn,*_checkProm,*_checkRic,*_checkEle,*_checkSpes;
+
     // Metodi
     void viewOpzioni();
 
@@ -82,6 +86,7 @@ private:
     void aggiornaValoriGriglia();
     void SetSignalMapper(wAnnotazione *_wAnn);
     void resizeEvent(QResizeEvent *event);
+    void AggiornaConFiltro();
 
 private slots:
     void SetGrigliaEnabled();

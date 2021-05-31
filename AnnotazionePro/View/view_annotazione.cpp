@@ -131,6 +131,38 @@ void view_annotazione::viewOpzioni()
     _GroupBoxInserimento->setLayout(_tempLayoutOpzioni);
     _GroupBoxInserimento->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Maximum);
 
+    //Filtro
+    QVBoxLayout *_VBoxFiltro = new QVBoxLayout;
+    _checkAnn = new QCheckBox(" Filtra le Annotazioni ");
+    _checkProm = new QCheckBox(" Filtra i Promemoria");
+    _checkRic = new QCheckBox(" Filtra le Ricorrenze ");
+    _checkEle = new QCheckBox(" Filtra gli Elenchi ");
+    _checkSpes = new QCheckBox(" Filtra le Spese");
+
+    _VBoxFiltro->addWidget(_checkAnn);
+    _VBoxFiltro->addWidget(_checkProm);
+    _VBoxFiltro->addWidget(_checkRic);
+    _VBoxFiltro->addWidget(_checkEle);
+    _VBoxFiltro->addWidget(_checkSpes);
+
+    _GroupBoxFiltro->setLayout(_VBoxFiltro);
+
+    //Ordinamento
+    QVBoxLayout *_VBoxOrdinamento = new QVBoxLayout;
+    QRadioButton *_RadioNormale = new QRadioButton("Normale");
+    QRadioButton *_RadioInverso = new QRadioButton("Inverso");
+    QRadioButton *_RadioData = new QRadioButton("Per Data (dal più recente)");
+    QRadioButton *_RadioDataInverso = new QRadioButton("Per Data (dal meno recente)");
+    QRadioButton *_RadioTipo = new QRadioButton("Per tipo");
+
+    _VBoxOrdinamento->addWidget(_RadioNormale);
+    _VBoxOrdinamento->addWidget(_RadioInverso);
+    _VBoxOrdinamento->addWidget(_RadioData);
+    _VBoxOrdinamento->addWidget(_RadioDataInverso);
+    _VBoxOrdinamento->addWidget(_RadioTipo);
+
+    _GroupBoxOrdinamento->setLayout(_VBoxOrdinamento);
+
     _opzioni->addWidget(_GroupBoxInserimento);
     _opzioni->addWidget(_GroupBoxFiltro);
     _opzioni->addWidget(_GroupBoxOrdinamento);
@@ -463,6 +495,17 @@ void view_annotazione::resizeEvent(QResizeEvent *event)
         resizeAnn(*cit);
     }
     QWidget::resizeEvent(event);
+}
+
+void view_annotazione::AggiornaConFiltro()
+{
+    clearGriglia();
+
+    for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
+    {
+
+    }
+
 }
 
 // Abilità la griglia dopo una chiusura di finestra aggiuntiva
