@@ -37,7 +37,7 @@ private:
     QFile *_File;
 
     model_annotazione *model;
-    view_annotazione *wA;
+    view_annotazione *viewA;
     //load Data when opening the window
     void loadData();
 
@@ -48,6 +48,8 @@ private:
     void checkUnsavedData();
 
     void closeEvent(QCloseEvent *event);
+signals:
+    void ApriFile();
 
 private slots:
     void openClicked();

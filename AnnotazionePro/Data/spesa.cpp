@@ -10,12 +10,9 @@ spesa::spesa(QString titolo, QString descrizione) : annotazione(titolo),elenco(t
 
 }
 
-spesa::spesa(QString titolo, QString descrizione, const lista<type_spesa*> &spesa) : annotazione(titolo),elenco(titolo,descrizione)
+spesa::spesa(QString titolo, QString descrizione, const lista<type_spesa*> &spesa) : annotazione(titolo),elenco(titolo,descrizione),_spesa(spesa)
 {
-    for(lista<type_spesa*>::constiterator ci = spesa.begin(); ci!=spesa.end();ci++)
-    {
-        _spesa.insertFront(*ci);
-    }
+
 }
 
 spesa::spesa(QDomElement spesa):
@@ -23,16 +20,21 @@ spesa::spesa(QDomElement spesa):
     elenco(spesa.childNodes().at(0).toElement())
 {
     int count=1;
-    type_spesa *ts=new type_spesa();
+    type_spesa *ts;
     while(spesa.childNodes().at(count).isElement())
     {
+        ts=new type_spesa();
         ts->setValue(spesa.childNodes().at(count).toElement().attribute("Value"));
         ts->setIsDone(spesa.childNodes().at(count).toElement().attribute("IsDone")=="0" ? 0:1);
         ts->setCost(spesa.childNodes().at(count).toElement().attribute("Cost").toDouble());
         _spesa.insertFront(ts);
         count++;
     }
-    delete ts;
+}
+
+spesa::spesa(const spesa &spes):annotazione(spes.getTitolo()),elenco(spes.getTitolo(),spes.getDescrizione()),_spesa(spes.getSpesa())
+{
+
 }
 
 spesa::~spesa()

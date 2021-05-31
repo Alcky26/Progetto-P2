@@ -6,7 +6,7 @@ elenco::elenco() : annotazione()
 }
 elenco::elenco(QString titolo, QString descrizione):annotazione(titolo),_descrizione(descrizione),_elenco()
 {
-    //_elenco = new lista<type_elenco*>();
+
 }
 
 elenco::elenco(QDomElement elen):
@@ -14,15 +14,15 @@ elenco::elenco(QDomElement elen):
     _descrizione(elen.attribute("Descrizione"))
 {
     int count=1;
-    type_elenco *te=new type_elenco();
+    type_elenco *te;
     while(elen.childNodes().at(count).isElement())
     {
+        te=new type_elenco();
         te->setValue(elen.childNodes().at(count).toElement().attribute("Value"));
         te->setIsDone(elen.childNodes().at(count).toElement().attribute("IsDone")=="0" ? 0:1);
         _elenco.insertFront(te);
         count++;
     }
-    delete te;
 }
 
 elenco::~elenco()
@@ -53,9 +53,9 @@ QString elenco::getListAsText()
     {
         _finalValue += (*ci)->getValue();
         if( (*ci)->getIsDone())
-            _finalValue += "    Confermato ";
+            _finalValue += "    V ";
         else
-            _finalValue += "    Non Confermato ";
+            _finalValue += "    X ";
         _finalValue+="\n";
     }
     return _finalValue;
@@ -72,13 +72,14 @@ elenco::elenco(QString titolo, QString descrizione, lista<QString*> &elenco):ann
     }
 }
 
-elenco::elenco(QString titolo, QString descrizione, lista<type_elenco*> elenco):annotazione(titolo),_descrizione(descrizione)
+elenco::elenco(QString titolo, QString descrizione, lista<type_elenco*> elenco):annotazione(titolo),_descrizione(descrizione),_elenco(elenco)
 {
-    //_elenco = new lista<type_elenco*>();
-    for( lista<type_elenco*>::constiterator ci = elenco.begin(); ci!=elenco.end();ci++)
-    {
-        _elenco.insertFront(*ci);
-    }
+
+}
+
+elenco::elenco(const elenco &elen):annotazione(elen.getTitolo()),_descrizione(elen.getDescrizione()),_elenco(elen.getElenco())
+{
+
 }
 
 QString elenco::getDescrizione() const

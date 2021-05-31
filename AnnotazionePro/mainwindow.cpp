@@ -10,10 +10,10 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     addMenuButtons();
     // Dichiarazione wAnnotazione e ModelAnnotazione
     model = new model_annotazione();
-    wA= new view_annotazione(model);
+    viewA= new view_annotazione(model);
 
-    // Aggiunta di wAnnotazione al mainLayout
-    mainLayout->addWidget(wA);
+    // Aggiunta di viewAnnotazione al mainLayout
+    mainLayout->addWidget(viewA);
     setApplicationStyle();
     setLayout(mainLayout);
 }
@@ -23,7 +23,7 @@ MainWindow::~MainWindow()
     delete mainLayout;
     delete _File;
     delete model;
-    delete wA;
+    delete viewA;
 }
 
 void MainWindow::addMenuButtons()
@@ -102,7 +102,10 @@ void MainWindow::checkUnsavedData()
         {
             QMessageBox::StandardButton response= QMessageBox::question(this, "Salvare i dati?", "Vuoi salvare i dati modificati prima di continuare?", QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes);
             if(response == QMessageBox::Yes)
+            {
                 salvaClicked();
+                QMessageBox::information(this, "File salvato","Il File è stato salvato correttamente!");
+            }
         }
 }
 
@@ -126,7 +129,7 @@ void MainWindow::openClicked()
         try
         {
             model->readFromFile(documentoLetto);
-            wA->viewGriglia();
+            viewA->viewGriglia();
         }
         catch (std::exception *e)
         {

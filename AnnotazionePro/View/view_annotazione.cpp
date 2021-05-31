@@ -6,7 +6,6 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     _mainLayout = new QHBoxLayout(this);
     _griglia = new QVBoxLayout();
     _opzioni = new QVBoxLayout();
-
     // Setup Opzioni
     viewOpzioni();
     // Setup Griglia
@@ -21,6 +20,8 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     //Bottone
     connect(_aggiunta, SIGNAL(clicked()), this, SLOT(OnClick()));
     connect(_aggiungiRiga,SIGNAL(clicked()), this, SLOT(OnClickRow()));
+    connect(_svuotaGriglia,SIGNAL(clicked()), this, SLOT(dumpGriglia()));
+
 
     // Signal Mapper per OnClick di wAnnotazione
     _SignalMapper = new QSignalMapper(this);
@@ -47,6 +48,7 @@ view_annotazione::~view_annotazione()
     delete _SignalMapper;
     delete _aggiunta;
     delete _aggiungiRiga;
+    delete _svuotaGriglia;
 }
 
 // Creazione di Opzioni ( Parte a Destra )
@@ -156,6 +158,7 @@ void view_annotazione::viewOpzioni()
     QRadioButton *_RadioTipo = new QRadioButton("Per tipo");
 
     _VBoxOrdinamento->addWidget(_RadioNormale);
+    _RadioNormale->setChecked(true);
     _VBoxOrdinamento->addWidget(_RadioInverso);
     _VBoxOrdinamento->addWidget(_RadioData);
     _VBoxOrdinamento->addWidget(_RadioDataInverso);
@@ -163,10 +166,16 @@ void view_annotazione::viewOpzioni()
 
     _GroupBoxOrdinamento->setLayout(_VBoxOrdinamento);
 
+    // Bottone Clear
+    _svuotaGriglia = new QPushButton("Svuota");
+    _svuotaGriglia->setMaximumWidth(500);
+
     _opzioni->addWidget(_GroupBoxInserimento);
     _opzioni->addWidget(_GroupBoxFiltro);
     _opzioni->addWidget(_GroupBoxOrdinamento);
+    _opzioni->addWidget(_svuotaGriglia);
     _opzioni->setAlignment(Qt::AlignTop);
+    _opzioni->setAlignment(_svuotaGriglia,Qt::AlignBottom);
 }
 
 void view_annotazione::onTextChanged()
@@ -195,18 +204,6 @@ void view_annotazione::viewGriglia()
 
     QRect geometry = _griglia->geometry();
     int width = geometry.width();
-
-    //////////////////////////////////////
-    /*
-    WIDTH 100
-    SP - T - SP - T - SP - T - SP - T - SP
-    5 * SP + 4 * T = 100
-    20 (T) * 4 + X (SP) * 5 = 100
-    5 * X = 28
-    T è 20
-    SP è 4
-    */
-    /////////////////////////////////////
     _tempLayoutGriglia->setSpacing(width/25);
 
     aggiornaGriglia(_tempLayoutGriglia);
@@ -230,6 +227,16 @@ void view_annotazione::clearGriglia()
     }
 }
 
+void view_annotazione::dumpGriglia()
+{
+    QMessageBox::StandardButton response= QMessageBox::question(this, "Svuotare la griglia?", "Vuoi svuotare la griglia?", QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes);
+    if(response == QMessageBox::Yes)
+    {
+        _model->reset();
+        viewGriglia();
+    }
+}
+
 // Ridimensionamento delle wAnnotazioni in base alla dimensione della finestra
 void view_annotazione::resizeAnn(wAnnotazione* Ann)
 {
@@ -244,7 +251,7 @@ void view_annotazione::resizeAnn(wAnnotazione* Ann)
 // Aggiornamento valori di wAnnotazioni in caso di modifica degli elementi
 void view_annotazione::aggiornaValoriGriglia()
 {
-    if(_wA.getSize()==_model->getAnnotazioni().getSize())
+    if(_wA.getSize()==_model->getAnnotazioni().getSize())/////////////////////////////PROBLEMONEEEEEEEEEEE
     {
         int i=0;
         for(lista<wAnnotazione*>::constiterator cit=_wA.begin(); cit != _wA.end();cit++)
@@ -505,6 +512,11 @@ void view_annotazione::AggiornaConFiltro()
     {
 
     }
+
+}
+
+void view_annotazione::AggiornaConOrdinamento()
+{
 
 }
 

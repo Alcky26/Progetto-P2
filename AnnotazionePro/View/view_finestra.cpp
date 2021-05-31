@@ -244,10 +244,6 @@ annotazione* view_finestra::ReadChangedValues()
 // Evento chiusura di una finestra
 void view_finestra::closeEvent(QCloseEvent *event)
 {
-    //if (tabellaModel->deviSalvare())
-    //{
-    //    checkUnsavedData();
-    //}
     emit ClosedWindow();
     event->accept();
 }

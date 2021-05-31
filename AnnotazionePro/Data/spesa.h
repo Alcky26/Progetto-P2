@@ -14,6 +14,7 @@ public:
     spesa(QString titolo, QString descrizione);
     spesa(QString titolo, QString descrizione,const lista<type_spesa*> &spesa);
     spesa(QDomElement spesa);
+    spesa(const spesa& spes);
     ~spesa();
 
     virtual QDomElement XmlSerialize(QDomDocument doc) const;

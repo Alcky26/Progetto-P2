@@ -15,6 +15,7 @@ public:
     elenco(QString titolo, QString descrizione);
     elenco(QString titolo, QString descrizione,lista<QString*> &elenco);
     elenco(QString titolo, QString descrizione,lista<type_elenco*> elenco);
+    elenco(const elenco& elen);
     elenco(QDomElement elenco);
     virtual ~elenco();
 

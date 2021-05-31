@@ -66,6 +66,7 @@ private:
 
     QPushButton *_aggiunta;
     QPushButton *_aggiungiRiga;
+    QPushButton *_svuotaGriglia;
 
     QCheckBox *_checkAnn,*_checkProm,*_checkRic,*_checkEle,*_checkSpes;
 
@@ -79,16 +80,22 @@ private:
     void VisualizzaElenco();
     void VisualizzaSpesa();
 
+
     void aggiornaGriglia(QGridLayout *supplay);
-    void clearGriglia();
     void resizeAnn(wAnnotazione* Ann);
-    void AggiuntaAnnotazione();
     void aggiornaValoriGriglia();
+    void AggiornaConFiltro();
+    void AggiornaConOrdinamento();
+
+    void AggiuntaAnnotazione();
+
     void SetSignalMapper(wAnnotazione *_wAnn);
     void resizeEvent(QResizeEvent *event);
-    void AggiornaConFiltro();
+
+    void clearGriglia();
 
 private slots:
+    void dumpGriglia();
     void SetGrigliaEnabled();
     void Aggiorna();
     void tipologiaIndexChanged(int);
