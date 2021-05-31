@@ -122,7 +122,6 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
             _TableList->setItem(i,1,new QTableWidgetItem(QString::number(_SupportList.index(ci)->getCost())));
             QTableWidgetItem *checkBoxItem = new QTableWidgetItem();
             checkBoxItem->setCheckState(Qt::Unchecked);
-            checkBoxItem->setText("is done");
             _TableList->setItem(i,2,checkBoxItem);
             i++;
         }
@@ -212,7 +211,7 @@ annotazione* view_finestra::ReadChangedValues()
         for(int i=0;i<_TableList->rowCount();i++)
         {
             _ValueTemp = _TableList->item(i,1)->text().toDouble();
-            _ListaTableSpesa->insertFront(new type_spesa( _TableList->item(i,0)->text(),_TableList->item(i,2),_ValueTemp));
+            _ListaTableSpesa->insertBack(new type_spesa( _TableList->item(i,0)->text(),_TableList->item(i,2)->checkState(),_ValueTemp));
 
         }
         return new spesa(_LineTitolo->text(),_LineDesc->document()->toRawText(),*_ListaTableSpesa);
@@ -222,7 +221,7 @@ annotazione* view_finestra::ReadChangedValues()
         lista<type_elenco*> *_ListaTableElenco = new lista<type_elenco*>();
         for(int i=0;i<_TableList->rowCount();i++)
         {
-            _ListaTableElenco->insertFront(new type_elenco( _TableList->item(i,0)->text(),_TableList->item(i,1)));
+            _ListaTableElenco->insertBack(new type_elenco( _TableList->item(i,0)->text(),_TableList->item(i,1)->checkState() ));
 
         }
         return new elenco(_LineTitolo->text(),_LineDesc->document()->toRawText(),*_ListaTableElenco);

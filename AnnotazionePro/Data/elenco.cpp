@@ -52,6 +52,10 @@ QString elenco::getListAsText()
     for( lista<type_elenco*>::constiterator ci = _elenco.begin(); ci!=_elenco.end();ci++)
     {
         _finalValue += (*ci)->getValue();
+        if( (*ci)->getIsDone())
+            _finalValue += "    Confermato ";
+        else
+            _finalValue += "    Non Confermato ";
         _finalValue+="\n";
     }
     return _finalValue;
