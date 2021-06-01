@@ -422,6 +422,7 @@ void view_annotazione::OpenWindowDetails( int value)
     connect(_FinestraDescrizione ,SIGNAL(ClosedWindow()), this , SLOT(GridEnable()));
     connect(_FinestraDescrizione, SIGNAL(Modificato()), this, SLOT(UpdateGrid()));
     connect(_FinestraDescrizione, SIGNAL(Eliminato()), this, SLOT(UpdateGrid()));
+    _FinestraDescrizione->setMinimumSize(400,400);
     _FinestraDescrizione->show();
 }
 

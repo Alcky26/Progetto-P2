@@ -191,7 +191,7 @@ void MainWindow::saveNameClicked()
 
 void MainWindow::openInfos() const
 {
-    QMessageBox box(QMessageBox::Information, "Info", QString("Informazioni - "), QMessageBox::Ok);
+    QMessageBox box(QMessageBox::Information, "Informazione", QString("Questo Software può essere utilizzato per gestire un insieme di annotazioni e promemoria!"), QMessageBox::Ok);
     box.exec();
 }
 
@@ -203,7 +203,7 @@ void MainWindow::openHelp() const
 
 void MainWindow::openAboutUs() const
 {
-    QMessageBox box(QMessageBox::Information, "About Us", QString("About Us - "), QMessageBox::Ok);
+    QMessageBox box(QMessageBox::Information, "Software Made By", QString("Software creato da :         \n Matteo Vignaga       \n Tommaso Berlaffa     "), QMessageBox::Ok);
     box.exec();
 }
 
