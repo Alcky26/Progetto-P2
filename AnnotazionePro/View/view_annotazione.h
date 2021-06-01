@@ -43,66 +43,49 @@ public:
 
     void viewGriglia();
 private:
+
     // Modello
-    model_annotazione *_model;
+    model_annotazione *_Model;
+    // Lista di Widget wAnnotazione
     lista<wAnnotazione*> _wA;
 
     // GUI
-    QHBoxLayout *_mainLayout;
+    QHBoxLayout *_MainLayout;
+
     // 2 Aree Principali
-    QVBoxLayout *_opzioni;
-    QVBoxLayout *_griglia;
+    QVBoxLayout *_InsertAndOptions;
+    QVBoxLayout *_Grid;
+
     //Elementi per Inserimento
     QLineEdit *_LineTitolo;
     QTextEdit *_LineCorpo, *_LineDesc;
-    QComboBox *_tipologia;   
-    QCalendarWidget *_calendario;
-    QDateTimeEdit *_ora;
-    QComboBox *_tipo;
-
+    QComboBox *_Tipologia;
+    QCalendarWidget *_Calendario;
+    QDateTimeEdit *_Ora;
+    QComboBox *_Ricorrenza;
     QTableWidget *_TableList;
 
+    // Mapper per Lista di Widget
     QSignalMapper *_SignalMapper;
 
-    QPushButton *_aggiunta;
-    QPushButton *_aggiungiRiga;
-    QPushButton *_svuotaGriglia;
-
-    QCheckBox *_checkAnn,*_checkProm,*_checkRic,*_checkEle,*_checkSpes;
+    // Bottoni
+    QPushButton *_BtnAdd, *_BtnAddRow, *_BtnDeleteGrid;
 
     // Metodi
     void viewOpzioni();
-
-
-    void VisualizzaNota();
-    void VisualizzaPromemoria();
-    void VisualizzaRicorrenza();
-    void VisualizzaElenco();
-    void VisualizzaSpesa();
-
-
-    void aggiornaGriglia(QGridLayout *supplay);
     void resizeAnn(wAnnotazione* Ann);
-    void aggiornaValoriGriglia();
-    void AggiornaConFiltro();
-    void AggiornaConOrdinamento();
-
-    void AggiuntaAnnotazione();
-
     void SetSignalMapper(wAnnotazione *_wAnn);
     void resizeEvent(QResizeEvent *event);
 
-    void clearGriglia();
-
 private slots:
-    void dumpGriglia();
-    void SetGrigliaEnabled();
-    void Aggiorna();
-    void tipologiaIndexChanged(int);
-    void onTextChanged();
-    void OnClick();
+    void OnClickBtnAggiungi();
+    void UpdateGrid();
+    void GridEnable();
     void OnClickRow();
-    void ShowDettagli( int);
+    void ComboBoxTypeChanged(int);
+    void OnTextChanged();
+    void DeleteGrid();
+    void OpenWindowDetails( int);
 
 };
 

@@ -1,54 +1,53 @@
 #include "view_annotazione.h"
 
 // Costruttore
-view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): QWidget(parent), _model(model)
+view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): QWidget(parent), _Model(model)
 {
-    _mainLayout = new QHBoxLayout(this);
-    _griglia = new QVBoxLayout();
-    _opzioni = new QVBoxLayout();
+    _MainLayout = new QHBoxLayout(this);
+    _Grid = new QVBoxLayout();
+    _InsertAndOptions = new QVBoxLayout();
     // Setup Opzioni
     viewOpzioni();
     // Setup Griglia
     viewGriglia();
 
-    _mainLayout->addLayout(_griglia,70);
-    _mainLayout->addLayout(_opzioni,25);
+    _MainLayout->addLayout(_Grid,70);
+    _MainLayout->addLayout(_InsertAndOptions,25);
 
-    connect(_tipologia, SIGNAL(currentIndexChanged(int)), this, SLOT(tipologiaIndexChanged(int)));
-    connect(_LineCorpo, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
-    connect(_LineDesc, SIGNAL(textChanged()), this, SLOT( onTextChanged() ) );
+    connect(_Tipologia, SIGNAL(currentIndexChanged(int)), this, SLOT(ComboBoxTypeChanged(int)));
+    connect(_LineCorpo, SIGNAL(textChanged()), this, SLOT( OnTextChanged() ) );
+    connect(_LineDesc, SIGNAL(textChanged()), this, SLOT( OnTextChanged() ) );
     //Bottone
-    connect(_aggiunta, SIGNAL(clicked()), this, SLOT(OnClick()));
-    connect(_aggiungiRiga,SIGNAL(clicked()), this, SLOT(OnClickRow()));
-    connect(_svuotaGriglia,SIGNAL(clicked()), this, SLOT(dumpGriglia()));
-
+    connect(_BtnAdd, SIGNAL(clicked()), this, SLOT(OnClickBtnAggiungi()));
+    connect(_BtnAddRow,SIGNAL(clicked()), this, SLOT(OnClickRow()));
+    connect(_BtnDeleteGrid,SIGNAL(clicked()), this, SLOT(DeleteGrid()));
 
     // Signal Mapper per OnClick di wAnnotazione
     _SignalMapper = new QSignalMapper(this);
-    connect(_SignalMapper, SIGNAL(mapped(int)), this, SLOT(ShowDettagli(int)));
+    connect(_SignalMapper, SIGNAL(mapped(int)), this, SLOT(OpenWindowDetails(int)));
 
 }
 
 // Distruttore
 view_annotazione::~view_annotazione()
 {
-    delete _model;
+    delete _Model;
     _wA.clear();
-    delete _mainLayout;
-    delete _opzioni;
-    delete _griglia;
+    delete _MainLayout;
+    delete _InsertAndOptions;
+    delete _Grid;
     delete _LineTitolo;
     delete _LineCorpo;
     delete _LineDesc;
-    delete _tipologia;
-    delete _calendario;
-    delete _ora;
-    delete _tipo;
+    delete _Tipologia;
+    delete _Calendario;
+    delete _Ora;
+    delete _Ricorrenza;
     delete _TableList;
     delete _SignalMapper;
-    delete _aggiunta;
-    delete _aggiungiRiga;
-    delete _svuotaGriglia;
+    delete _BtnAdd;
+    delete _BtnAddRow;
+    delete _BtnDeleteGrid;
 }
 
 // Creazione di Opzioni ( Parte a Destra )
@@ -57,22 +56,19 @@ void view_annotazione::viewOpzioni()
 
     QVBoxLayout *_tempLayoutOpzioni = new QVBoxLayout();
     QGroupBox *_GroupBoxInserimento = new QGroupBox("Inserimento");
-    QGroupBox *_GroupBoxFiltro = new QGroupBox("Filtro");
-    QGroupBox *_GroupBoxOrdinamento = new QGroupBox("Ordinamento");
-
 
     _LineTitolo = new QLineEdit();
     _LineCorpo = new QTextEdit();
     _LineDesc = new QTextEdit();
-    _tipologia = new QComboBox();
-    _calendario = new QCalendarWidget();
-    _tipo = new QComboBox();
+    _Tipologia = new QComboBox();
+    _Calendario = new QCalendarWidget();
+    _Ricorrenza = new QComboBox();
 
     _tempLayoutOpzioni->addWidget(new QLabel("Tipologia"));
-    _tipologia->addItems(model_annotazione::categorie());
+    _Tipologia->addItems(model_annotazione::categorie());
 
-    _tipologia->setMaximumWidth(500);
-    _tempLayoutOpzioni->addWidget(_tipologia);
+    _Tipologia->setMaximumWidth(500);
+    _tempLayoutOpzioni->addWidget(_Tipologia);
 
 
     _LineTitolo->setPlaceholderText("Titolo");
@@ -93,25 +89,25 @@ void view_annotazione::viewOpzioni()
     _LineDesc->setVisible(false);
 
     //ORA
-    _ora = new QDateTimeEdit(QDate::currentDate());
-    _ora->setDisplayFormat("hh:mm:ss");
-    _ora->setMaximumWidth(500);
-    _tempLayoutOpzioni->addWidget(_ora);
-    _ora->setVisible(false);
-    _ora->setTime(QTime::currentTime());
+    _Ora = new QDateTimeEdit(QDate::currentDate());
+    _Ora->setDisplayFormat("hh:mm:ss");
+    _Ora->setMaximumWidth(500);
+    _tempLayoutOpzioni->addWidget(_Ora);
+    _Ora->setVisible(false);
+    _Ora->setTime(QTime::currentTime());
 
     //DATA
-    _calendario->setMaximumWidth(500);
-    _calendario->setGridVisible(true);
-    _tempLayoutOpzioni->addWidget(_calendario);
-    _calendario->setVisible(false);
-    _calendario->setSelectedDate(QDate::currentDate());
+    _Calendario->setMaximumWidth(500);
+    _Calendario->setGridVisible(true);
+    _tempLayoutOpzioni->addWidget(_Calendario);
+    _Calendario->setVisible(false);
+    _Calendario->setSelectedDate(QDate::currentDate());
 
     //TIPO
-    _tipo->addItems(ricorrenza::getTipi());
-    _tempLayoutOpzioni->addWidget(_tipo);
-    _tipo->setMaximumWidth(500);
-    _tipo->setVisible(false);
+    _Ricorrenza->addItems(ricorrenza::getTipi());
+    _tempLayoutOpzioni->addWidget(_Ricorrenza);
+    _Ricorrenza->setMaximumWidth(500);
+    _Ricorrenza->setVisible(false);
 
     //LISTA
     _TableList = new QTableWidget();
@@ -120,76 +116,27 @@ void view_annotazione::viewOpzioni()
     _TableList->setVisible(false);
 
     //BOTTONE 3 ( AGGIUNGI ROW )
-    _aggiungiRiga = new QPushButton("Aggiungi Riga");
-    _aggiungiRiga->setMaximumWidth(500);
-    _tempLayoutOpzioni->addWidget(_aggiungiRiga);
-    _aggiungiRiga->setVisible(false);
+    _BtnAddRow = new QPushButton("Aggiungi Riga");
+    _BtnAddRow->setMaximumWidth(500);
+    _tempLayoutOpzioni->addWidget(_BtnAddRow);
+    _BtnAddRow->setVisible(false);
 
     //BOTTONE 1 ( AGGIUNGI )
-    _aggiunta = new QPushButton("Aggiungi Nuova Annotazione");
-    _aggiunta->setMaximumWidth(500);
-    _tempLayoutOpzioni->addWidget(_aggiunta);
+    _BtnAdd = new QPushButton("Aggiungi Nuova Annotazione");
+    _BtnAdd->setMaximumWidth(500);
+    _tempLayoutOpzioni->addWidget(_BtnAdd);
 
     _GroupBoxInserimento->setLayout(_tempLayoutOpzioni);
     _GroupBoxInserimento->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Maximum);
 
-    //Filtro
-    QVBoxLayout *_VBoxFiltro = new QVBoxLayout;
-    _checkAnn = new QCheckBox(" Filtra le Annotazioni ");
-    _checkProm = new QCheckBox(" Filtra i Promemoria");
-    _checkRic = new QCheckBox(" Filtra le Ricorrenze ");
-    _checkEle = new QCheckBox(" Filtra gli Elenchi ");
-    _checkSpes = new QCheckBox(" Filtra le Spese");
-
-    _VBoxFiltro->addWidget(_checkAnn);
-    _VBoxFiltro->addWidget(_checkProm);
-    _VBoxFiltro->addWidget(_checkRic);
-    _VBoxFiltro->addWidget(_checkEle);
-    _VBoxFiltro->addWidget(_checkSpes);
-
-    _GroupBoxFiltro->setLayout(_VBoxFiltro);
-
-    //Ordinamento
-    QVBoxLayout *_VBoxOrdinamento = new QVBoxLayout;
-    QRadioButton *_RadioNormale = new QRadioButton("Normale");
-    QRadioButton *_RadioInverso = new QRadioButton("Inverso");
-    QRadioButton *_RadioData = new QRadioButton("Per Data (dal più recente)");
-    QRadioButton *_RadioDataInverso = new QRadioButton("Per Data (dal meno recente)");
-    QRadioButton *_RadioTipo = new QRadioButton("Per tipo");
-
-    _VBoxOrdinamento->addWidget(_RadioNormale);
-    _RadioNormale->setChecked(true);
-    _VBoxOrdinamento->addWidget(_RadioInverso);
-    _VBoxOrdinamento->addWidget(_RadioData);
-    _VBoxOrdinamento->addWidget(_RadioDataInverso);
-    _VBoxOrdinamento->addWidget(_RadioTipo);
-
-    _GroupBoxOrdinamento->setLayout(_VBoxOrdinamento);
+    _InsertAndOptions->addWidget(_GroupBoxInserimento);
 
     // Bottone Clear
-    _svuotaGriglia = new QPushButton("Svuota");
-    _svuotaGriglia->setMaximumWidth(500);
+    _BtnDeleteGrid = new QPushButton("Svuota");
+    _BtnDeleteGrid->setMaximumWidth(500);
 
-    _opzioni->addWidget(_GroupBoxInserimento);
-    _opzioni->addWidget(_GroupBoxFiltro);
-    _opzioni->addWidget(_GroupBoxOrdinamento);
-    _opzioni->addWidget(_svuotaGriglia);
-    _opzioni->setAlignment(Qt::AlignTop);
-    _opzioni->setAlignment(_svuotaGriglia,Qt::AlignBottom);
-}
-
-void view_annotazione::onTextChanged()
-{
-    if(_LineCorpo->isVisible())
-    {
-        QSize size = _LineCorpo->document()->size().toSize();
-        _LineCorpo->setFixedHeight( size.height() + 3 );
-    }
-    else
-    {
-        QSize size = _LineDesc->document()->size().toSize();
-        _LineDesc->setFixedHeight( size.height() + 3 );
-    }
+    _InsertAndOptions->addWidget(_BtnDeleteGrid);
+    _InsertAndOptions->setAlignment(_BtnDeleteGrid,Qt::AlignBottom);
 }
 
 // Creazione della Griglia di wAnnotazioni
@@ -200,65 +147,26 @@ void view_annotazione::viewGriglia()
 
     QScrollArea *_scrollAreaAnnot = new QScrollArea;
 
-    clearGriglia();
+    // Pulisce la Griglia dalle wAnnotazioni
+    for (int i = 0; i < _Grid->count(); i++)
+    {
+       _Grid->itemAt(i)->widget()->deleteLater();
+    }
 
-    QRect geometry = _griglia->geometry();
+    QRect geometry = _Grid->geometry();
     int width = geometry.width();
     _tempLayoutGriglia->setSpacing(width/25);
 
-    aggiornaGriglia(_tempLayoutGriglia);
-
-    _suppLayoutGriglia->setLayout(_tempLayoutGriglia);
-    _scrollAreaAnnot->setWidget(_suppLayoutGriglia);
-
-    // TO FIX
-    //_scrollAreaAnnot->setMinimumSize(200,200);
-    //_scrollAreaAnnot->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::MinimumExpanding);
-    _griglia->addWidget(_scrollAreaAnnot);
-
-}
-
-// Pulisce la Griglia dalle wAnnotazioni
-void view_annotazione::clearGriglia()
-{
-    for (int i = 0; i < _griglia->count(); i++)
-    {
-       _griglia->itemAt(i)->widget()->deleteLater();
-    }
-}
-
-void view_annotazione::dumpGriglia()
-{
-    QMessageBox::StandardButton response= QMessageBox::question(this, "Svuotare la griglia?", "Vuoi svuotare la griglia?", QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes);
-    if(response == QMessageBox::Yes)
-    {
-        _model->reset();
-        viewGriglia();
-    }
-}
-
-// Ridimensionamento delle wAnnotazioni in base alla dimensione della finestra
-void view_annotazione::resizeAnn(wAnnotazione* Ann)
-{
-    QRect geometry = _griglia->geometry();
-    int width = geometry.width();
-    int height = geometry.height();
-    Ann->setMaximumSize(width/5,height/5);
-    Ann->setFixedSize(width/5,height/5);
-    Ann->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
-}
-
-// Aggiornamento valori di wAnnotazioni in caso di modifica degli elementi
-void view_annotazione::aggiornaValoriGriglia()
-{
-    if(_wA.getSize()==_model->getAnnotazioni().getSize())/////////////////////////////PROBLEMONEEEEEEEEEEE
+    // Aggiornamento della Griglia
+    if(_wA.getSize()==_Model->getAnnotazioni().getSize())/////////////////////////////PROBLEMONEEEEEEEEEEE
     {
         int i=0;
         for(lista<wAnnotazione*>::constiterator cit=_wA.begin(); cit != _wA.end();cit++)
         {
-            (*cit)->aggiornaValori(_model->getAnnotazione(i));
+            (*cit)->aggiornaValori(_Model->getAnnotazione(i));
             i++;
         }
+
     }
     else
     {
@@ -267,7 +175,7 @@ void view_annotazione::aggiornaValoriGriglia()
             _SignalMapper->removeMappings(*citt);
         }
         _wA.clear();
-        lista<annotazione*> temp=_model->getAnnotazioni();
+        lista<annotazione*> temp=_Model->getAnnotazioni();
         wAnnotazione *_nuovoWAnn;
         for(lista<annotazione*>::constiterator ci=temp.begin(); ci != temp.end();ci++)
         {
@@ -276,138 +184,67 @@ void view_annotazione::aggiornaValoriGriglia()
             SetSignalMapper(_nuovoWAnn);
         }
     }
-}
-
-// Index Change di Tipo di annotazione
-void view_annotazione::tipologiaIndexChanged(int index)
-{
-    if(index==0)
-        VisualizzaNota();
-    else if (index == 1)
-        VisualizzaPromemoria();
-    else if (index == 2)
-        VisualizzaRicorrenza();
-    else if (index == 3)
-        VisualizzaElenco();
-    else if (index == 4)
-        VisualizzaSpesa();
-}
-
-// As Title
-void view_annotazione::VisualizzaNota()
-{
-    _LineCorpo->setVisible(true);
-    _LineDesc->setVisible(false);
-    _ora->setVisible(false);
-    _calendario->setVisible(false);
-    _tipo->setVisible(false);
-    _TableList->setVisible(false);
-    _aggiungiRiga->setVisible(false);
-}
-
-// As Title
-void view_annotazione::VisualizzaPromemoria()
-{
-    _LineCorpo->setVisible(true);
-    _LineDesc->setVisible(false);
-    _ora->setVisible(true);
-    _calendario->setVisible(true);
-    _tipo->setVisible(false);
-    _TableList->setVisible(false);
-    _aggiungiRiga->setVisible(false);
-}
-
-// As Title
-void view_annotazione::VisualizzaRicorrenza()
-{
-    _LineCorpo->setVisible(true);
-    _LineDesc->setVisible(false);
-    _ora->setVisible(true);
-    _calendario->setVisible(true);
-    _tipo->setVisible(true);
-    _TableList->setVisible(false);
-    _aggiungiRiga->setVisible(false);
-}
-
-// As Title
-void view_annotazione::VisualizzaElenco()
-{
-    _LineCorpo->setVisible(false);
-    _LineDesc->setVisible(true);
-    _ora->setVisible(false);
-    _calendario->setVisible(false);
-    _tipo->setVisible(false);
-    _TableList->setVisible(true);
-    _aggiungiRiga->setVisible(true);
-    //SETUP TABLEVIEW
-    _TableList->setColumnCount(1);
-    _TableList->setRowCount(5);
-    for(int i=0;i<5;i++)
-    {
-        _TableList->setItem(i,0,new QTableWidgetItem(""));
-    }
-
-    _TableList->setColumnWidth(0,_TableList->width()-20);
-    _TableList->setShowGrid(true);
-    _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
-}
-
-// As Title
-void view_annotazione::VisualizzaSpesa()
-{
-    _LineCorpo->setVisible(false);
-    _LineDesc->setVisible(true);
-    _ora->setVisible(false);
-    _calendario->setVisible(false);
-    _tipo->setVisible(false);
-    _TableList->setVisible(true);
-    _aggiungiRiga->setVisible(true);
-
-    //SETUP TABLEVIEW
-    _TableList->setColumnCount(2);
-    _TableList->setRowCount(5);
-    _TableList->setColumnWidth(0,(_TableList->width()/2)-10);
-    _TableList->setShowGrid(true);
-    _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
-    _TableList->setColumnWidth(1,(_TableList->width()/2)-10);
-    for(int i=0;i<5;i++)
-    {
-        _TableList->setItem(i,0,new QTableWidgetItem(""));
-        _TableList->setItem(i,1,new QTableWidgetItem(""));
-    }
-    _TableList->setHorizontalHeaderItem(1,new QTableWidgetItem("Costo"));
-}
-
-// Aggiornamento della Griglia
-void view_annotazione::aggiornaGriglia(QGridLayout *supplay)
-{
-    aggiornaValoriGriglia();
     int count = 0;
     for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
-    {        
+    {
         resizeAnn(* cit);
-        supplay->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
+        _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
         count++;
     }
-    supplay->setAlignment(Qt::AlignTop);
+    _tempLayoutGriglia->setAlignment(Qt::AlignTop);
+
+    _suppLayoutGriglia->setLayout(_tempLayoutGriglia);
+    _scrollAreaAnnot->setWidget(_suppLayoutGriglia);
+
+    _Grid->addWidget(_scrollAreaAnnot);
 
 }
 
+// Quando creo un oggetto di tipo wAnnotazione, lo passiamo a questo metodo che aggiunge connette slot e signal
+void view_annotazione::SetSignalMapper(wAnnotazione *_wAnn)
+{
+    _SignalMapper->setMapping(_wAnn,_wA.indexOfInt(_wAnn));
+    connect(_wAnn, SIGNAL(clicked()), _SignalMapper, SLOT(map()));
+}
+
+// Ridimensionamento delle wAnnotazioni in base alla dimensione della finestra
+void view_annotazione::resizeAnn(wAnnotazione* Ann)
+{
+    QRect geometry = _Grid->geometry();
+    int width = geometry.width();
+    int height = geometry.height();
+    Ann->setMaximumSize(width/5,height/5);
+    Ann->setFixedSize(width/5,height/5);
+    Ann->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
+}
+
+// Evento Resize della Finestra
+void view_annotazione::resizeEvent(QResizeEvent *event)
+{
+    for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
+    {
+        resizeAnn(*cit);
+    }
+    QWidget::resizeEvent(event);
+}
+
+////// S L O T
+
 // On Click aggiunge una nuova annotazione
-void view_annotazione::OnClick()
+void view_annotazione::OnClickBtnAggiungi()
 {
     //if per tipologia
-    int _value = _tipologia->currentIndex();
+    int _value = _Tipologia->currentIndex();
     annotazione *_nuovoInsert =nullptr;
     //Nota
     if(_value==0)
         _nuovoInsert  = new nota(_LineTitolo->text(), _LineCorpo->document()->toRawText());
     //Promemoria
     else if (_value == 1)
-        _nuovoInsert  = new promemoria(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time());
+        _nuovoInsert  = new promemoria(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_Calendario->selectedDate(),_Ora->time());
     //Ricorrenza
     else if (_value == 2)
-        _nuovoInsert  = new ricorrenza(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(), metodi_extra::MetodoSupporto(_tipo->currentIndex()));
+        _nuovoInsert  = new ricorrenza(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_Calendario->selectedDate(),_Ora->time(), metodi_extra::MetodoSupporto(_Ricorrenza->currentIndex()));
     //Elenco
     else if (_value == 3)
     {
@@ -448,14 +285,23 @@ void view_annotazione::OnClick()
     }
 
     wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
-    _model->aggiungiAnnotazione(_nuovoInsert);
+    _Model->aggiungiAnnotazione(_nuovoInsert);
     _wA.insertBack(_nuovoWAnn);
     SetSignalMapper(_nuovoWAnn);
     viewGriglia();
 }
 
-// Slot per Button Aggiorna, Refresha i valori della Griglia
-void view_annotazione::Aggiorna()
+// Slot per abilitare la griglia dopo averla disabilitata con l'apertura di una finestra
+void view_annotazione::GridEnable()
+{
+    for(lista<wAnnotazione*>::constiterator ci=_wA.begin();ci!=_wA.end();ci++)
+       {
+           (*ci)->setEnabled(true);
+       }
+}
+
+// Slot per refresh della Griglia
+void view_annotazione::UpdateGrid()
 {
     viewGriglia();
 }
@@ -473,59 +319,123 @@ void view_annotazione::OnClickRow()
     }
 }
 
-// On Click di wAnnotazione, apre la finestra dettagli
-void view_annotazione::ShowDettagli( int value)
+// Index Change di Tipo di annotazione
+void view_annotazione::ComboBoxTypeChanged(int index)
 {
-    view_finestra* _FinestraDescrizione = new view_finestra(_model,_model->getAnnotazione(value));
+    if(index==0)
+    {
+        _LineCorpo->setVisible(true);
+        _LineDesc->setVisible(false);
+        _Ora->setVisible(false);
+        _Calendario->setVisible(false);
+        _Ricorrenza->setVisible(false);
+        _TableList->setVisible(false);
+        _BtnAddRow->setVisible(false);
+    }
+    else if (index == 1)
+    {
+        _LineCorpo->setVisible(true);
+        _LineDesc->setVisible(false);
+        _Ora->setVisible(true);
+        _Calendario->setVisible(true);
+        _Ricorrenza->setVisible(false);
+        _TableList->setVisible(false);
+        _BtnAddRow->setVisible(false);
+    }
+    else if (index == 2)
+    {
+        _LineCorpo->setVisible(true);
+        _LineDesc->setVisible(false);
+        _Ora->setVisible(true);
+        _Calendario->setVisible(true);
+        _Ricorrenza->setVisible(true);
+        _TableList->setVisible(false);
+        _BtnAddRow->setVisible(false);
+    }
+    else if (index == 3)
+    {
+        _LineCorpo->setVisible(false);
+        _LineDesc->setVisible(true);
+        _Ora->setVisible(false);
+        _Calendario->setVisible(false);
+        _Ricorrenza->setVisible(false);
+        _TableList->setVisible(true);
+        _BtnAddRow->setVisible(true);
+        //SETUP TABLEVIEW
+        _TableList->setColumnCount(1);
+        _TableList->setRowCount(5);
+        for(int i=0;i<5;i++)
+        {
+            _TableList->setItem(i,0,new QTableWidgetItem(""));
+        }
+        _TableList->setColumnWidth(0,_TableList->width()-20);
+        _TableList->setShowGrid(true);
+        _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
+    }
+    else if (index == 4){
+        _LineCorpo->setVisible(false);
+        _LineDesc->setVisible(true);
+        _Ora->setVisible(false);
+        _Calendario->setVisible(false);
+        _Ricorrenza->setVisible(false);
+        _TableList->setVisible(true);
+        _BtnAddRow->setVisible(true);
+
+        //SETUP TABLEVIEW
+        _TableList->setColumnCount(2);
+        _TableList->setRowCount(5);
+        _TableList->setColumnWidth(0,(_TableList->width()/2)-10);
+        _TableList->setShowGrid(true);
+        _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
+        _TableList->setColumnWidth(1,(_TableList->width()/2)-10);
+        for(int i=0;i<5;i++)
+        {
+            _TableList->setItem(i,0,new QTableWidgetItem(""));
+            _TableList->setItem(i,1,new QTableWidgetItem(""));
+        }
+        _TableList->setHorizontalHeaderItem(1,new QTableWidgetItem("Costo"));
+
+        }
+}
+
+// Slot per aggiungere spazio nel _LineCorpo o nel _LineDesc
+void view_annotazione::OnTextChanged()
+{
+    if(_LineCorpo->isVisible())
+    {
+        QSize size = _LineCorpo->document()->size().toSize();
+        _LineCorpo->setFixedHeight( size.height() + 3 );
+    }
+    else
+    {
+        QSize size = _LineDesc->document()->size().toSize();
+        _LineDesc->setFixedHeight( size.height() + 3 );
+    }
+}
+
+// Slot per svuotare la griglia
+void view_annotazione::DeleteGrid()
+{
+    QMessageBox::StandardButton response= QMessageBox::question(this, "Svuotare la griglia?", "Vuoi svuotare la griglia?", QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes);
+    if(response == QMessageBox::Yes)
+    {
+        _Model->reset();
+        viewGriglia();
+    }
+}
+
+// On Click di wAnnotazione, apre la finestra dettagli
+void view_annotazione::OpenWindowDetails( int value)
+{
+    view_finestra* _FinestraDescrizione = new view_finestra(_Model,_Model->getAnnotazione(value));
     for(lista<wAnnotazione*>::constiterator ci=_wA.begin();ci!=_wA.end();ci++)
     {
         (*ci)->setEnabled(false);
     }
-    connect(_FinestraDescrizione ,SIGNAL(ClosedWindow()), this , SLOT(SetGrigliaEnabled()));
-    connect(_FinestraDescrizione, SIGNAL(Modificato()), this, SLOT(Aggiorna()));
-    connect(_FinestraDescrizione, SIGNAL(Eliminato()), this, SLOT(Aggiorna()));
+    connect(_FinestraDescrizione ,SIGNAL(ClosedWindow()), this , SLOT(GridEnable()));
+    connect(_FinestraDescrizione, SIGNAL(Modificato()), this, SLOT(UpdateGrid()));
+    connect(_FinestraDescrizione, SIGNAL(Eliminato()), this, SLOT(UpdateGrid()));
     _FinestraDescrizione->show();
 }
 
-// Quando creo un oggetto di tipo wAnnotazione, lo passiamo a questo metodo che aggiunge connette slot e signal
-void view_annotazione::SetSignalMapper(wAnnotazione *_wAnn)
-{
-    _SignalMapper->setMapping(_wAnn,_wA.indexOfInt(_wAnn));
-    connect(_wAnn, SIGNAL(clicked()), _SignalMapper, SLOT(map()));
-}
-
-// Evento Resize della Finestra
-void view_annotazione::resizeEvent(QResizeEvent *event)
-{
-    for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
-    {
-        resizeAnn(*cit);
-    }
-    QWidget::resizeEvent(event);
-}
-
-void view_annotazione::AggiornaConFiltro()
-{
-    clearGriglia();
-
-    for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
-    {
-
-    }
-
-}
-
-void view_annotazione::AggiornaConOrdinamento()
-{
-
-}
-
-// Abilità la griglia dopo una chiusura di finestra aggiuntiva
-void view_annotazione::SetGrigliaEnabled()
-{
-    for(lista<wAnnotazione*>::constiterator ci=_wA.begin();ci!=_wA.end();ci++)
-    {
-        (*ci)->setEnabled(true);
-    }
-}
 
