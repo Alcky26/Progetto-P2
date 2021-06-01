@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
 {
     mainLayout = new QVBoxLayout(this);
 
+    setMinimumSize(1280,720);
+
     _File = nullptr;
     // Aggiunge bottoni in alto a Sinistra
     addMenuButtons();

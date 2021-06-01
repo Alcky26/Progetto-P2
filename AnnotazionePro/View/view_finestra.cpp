@@ -1,9 +1,9 @@
 #include "view_finestra.h"
 
 // Costruttore
-view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget *parent) : QWidget(parent),  _model(model)
+view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget *parent) : QWidget(parent),  _Model(model)
 {
-    _mainLayout = new QVBoxLayout(this);
+    _MainLayout = new QVBoxLayout(this);
 
     _ann = ann;
 
@@ -34,7 +34,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         // Tipo
         _tipo=new QComboBox();
         _tipo->addItems(ricorrenza::getTipi());
-        _mainLayout->addWidget(_tipo);
+        _MainLayout->addWidget(_tipo);
         _tipo->setEnabled(false);
 
     }
@@ -49,7 +49,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _LineCorpo->setEnabled(false);
         _CorpoLayout->addWidget(_LineCorpo);
         _BoxCorpo->setLayout(_CorpoLayout);
-        _mainLayout->addWidget(_BoxCorpo);
+        _MainLayout->addWidget(_BoxCorpo);
     }
 
     // Se è di tipo Elenco ( Escludiamo Spesa che è figlia )
@@ -87,7 +87,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         //  _TableList->setEnabled(false);
         _TableLayout->addWidget(_TableList);
         _BoxTable->setLayout(_TableLayout);
-        _mainLayout->addWidget(_BoxTable);
+        _MainLayout->addWidget(_BoxTable);
     }
 
     // Se è di tipo Spesa
@@ -128,14 +128,14 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         //_TableList->setEnabled(false);
         _TableLayout->addWidget(_TableList);
         _BoxTable->setLayout(_TableLayout);
-        _mainLayout->addWidget(_BoxTable);
+        _MainLayout->addWidget(_BoxTable);
     }
 
     _elimina = new QPushButton("Elimina Questo Elemento");
     _modifica = new QPushButton("Modifica Valori di Questo Elemento");
 
-    _mainLayout->addWidget(_modifica);
-    _mainLayout->addWidget(_elimina);
+    _MainLayout->addWidget(_modifica);
+    _MainLayout->addWidget(_elimina);
 
     connect(_elimina,SIGNAL(clicked()),this,SLOT(OnClickElimina()));
     connect(_modifica,SIGNAL(clicked()),this,SLOT(OnClickModifica()));
@@ -145,9 +145,9 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
 // Distruttore
 view_finestra::~view_finestra()
 {
-    delete _model;
+    delete _Model;
     delete _ann;
-    delete _mainLayout;
+    delete _MainLayout;
     delete _LineTitolo;
     delete _LineCorpo;
     delete _LineDesc;
@@ -188,8 +188,8 @@ void view_finestra::SetAllEnabled(bool _boolean)
             _TableList->setEditTriggers(QAbstractItemView::AllEditTriggers);
         else
             _TableList->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        //_TableList->setEnabled(_boolean);
     }
+
     if(dynamic_cast<spesa*>(_ann))
     {
         _LineDesc->setReadOnly(_boolean);
@@ -197,7 +197,6 @@ void view_finestra::SetAllEnabled(bool _boolean)
             _TableList->setEditTriggers(QAbstractItemView::AllEditTriggers);
         else
             _TableList->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        //_TableList->setEnabled(_boolean);
     }
 }
 
@@ -216,6 +215,7 @@ annotazione* view_finestra::ReadChangedValues()
         }
         return new spesa(_LineTitolo->text(),_LineDesc->document()->toRawText(),*_ListaTableSpesa);
     }
+
     else if (dynamic_cast<elenco*>(_ann) )
     {
         lista<type_elenco*> *_ListaTableElenco = new lista<type_elenco*>();
@@ -226,18 +226,22 @@ annotazione* view_finestra::ReadChangedValues()
         }
         return new elenco(_LineTitolo->text(),_LineDesc->document()->toRawText(),*_ListaTableElenco);
     }
+
     else if (dynamic_cast<promemoria*>(_ann))
     {
         return new promemoria(_LineTitolo->text(),_LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time());
     }
+
     else if (dynamic_cast<ricorrenza*>(_ann))
     {
         return new ricorrenza(_LineTitolo->text(),_LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(),dynamic_cast<ricorrenza*>(_ann)->QStringToTipo(_tipo->itemData(_tipo->currentIndex()).toString()));
     }
+
     else if (dynamic_cast<nota*>(_ann))
     {
        return new nota(_LineTitolo->text(),_LineCorpo->document()->toRawText());
     }
+
     return nullptr;
 }
 
@@ -256,11 +260,9 @@ void view_finestra::setupTitolo()
     _LineTitolo= new QLineEdit();
     _LineTitolo->setText(_ann->getTitolo());
     _LineTitolo->setEnabled(false);
-
     _TitoloLayout->addWidget(_LineTitolo);
     _BoxTitolo->setLayout(_TitoloLayout);
-    _mainLayout->addWidget(_BoxTitolo);
-    //_mainLayout->addWidget(_LineTitolo);
+    _MainLayout->addWidget(_BoxTitolo);
 }
 
 void view_finestra::setupDataOra()
@@ -272,7 +274,7 @@ void view_finestra::setupDataOra()
     _calendario->setEnabled(false);
     _DataOraLayout->addWidget(_calendario);
     _BoxDataOra->setLayout(_DataOraLayout);
-    _mainLayout->addWidget(_BoxDataOra);
+    _MainLayout->addWidget(_BoxDataOra);
 }
 
 void view_finestra::setupDescrizione()
@@ -283,7 +285,7 @@ void view_finestra::setupDescrizione()
     _LineDesc->setEnabled(false);
     _DescrizioneLayout->addWidget(_LineDesc);
     _BoxDesc->setLayout(_DescrizioneLayout);
-    _mainLayout->addWidget(_BoxDesc);
+    _MainLayout->addWidget(_BoxDesc);
 }
 
 // Slot per il bottone di Modifica
@@ -300,7 +302,7 @@ void view_finestra::OnClickModifica()
         _StatoModifica=false; 
         _modifica->setText("Modifica Valori di Questo Elemento");
         SetAllEnabled(_StatoModifica);
-        _model->modificaElemento(_model->getAnnotazioni().indexOfInt(_ann),ReadChangedValues());
+        _Model->modificaElemento(_Model->getAnnotazioni().indexOfInt(_ann),ReadChangedValues());
         emit Modificato();
     }
 }
@@ -312,7 +314,7 @@ void view_finestra::OnClickElimina()
                                                                 "Sei sicuro di voler elimina questa annotazione?", QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes);
     if(response == QMessageBox::Yes)
     {
-        _model->rimouviElemento(_ann);
+        _Model->rimouviElemento(_ann);
         emit Eliminato();
         this->close();
     }

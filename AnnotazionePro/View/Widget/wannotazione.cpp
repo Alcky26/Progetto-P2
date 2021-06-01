@@ -9,8 +9,8 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     //setAttribute(Qt::WA_Hover);
 
 
-    QListWidget *_Scatola= new QListWidget();
-    _Scatola->setSizeAdjustPolicy(QListWidget::AdjustToContents);
+    QListWidget *_MainWidgetList= new QListWidget();
+    _MainWidgetList->setSizeAdjustPolicy(QListWidget::AdjustToContents);
 
     QVBoxLayout *_mainVBoxLayout = new QVBoxLayout();
 
@@ -55,7 +55,6 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     {
         _LabDescrizione = new QLabel(dynamic_cast<elenco*>(ann)->getDescrizione());
         _mainVBoxLayout->addWidget(_LabDescrizione);
-
         _LabElenco = new QPlainTextEdit (dynamic_cast<elenco*>(ann)->getListAsText());
         _LabElenco->setFrameStyle(1);
         _LabElenco->setReadOnly(true);
@@ -68,19 +67,17 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     {
         _LabDescrizione = new QLabel(dynamic_cast<spesa*>(ann)->getDescrizione());
         _mainVBoxLayout->addWidget(_LabDescrizione);
-
         _LabElenco = new QPlainTextEdit(dynamic_cast<spesa*>(ann)->getListSpesaAsText());
         _LabElenco->setFrameStyle(1);
         _LabElenco->setReadOnly(true);
         _LabElenco->setVerticalScrollBar(new QScrollBar());
         _LabElenco->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         _mainVBoxLayout->addWidget(_LabElenco);
-
     }
 
-    _Scatola->setLayout(_mainVBoxLayout);
+    _MainWidgetList->setLayout(_mainVBoxLayout);
 
-    _mainBoxLayout->addWidget(_Scatola);
+    _mainBoxLayout->addWidget(_MainWidgetList);
 
 }
 
@@ -126,21 +123,25 @@ void wAnnotazione::aggiornaValori(annotazione* ann)
     {
         _LabDateTime->setText("Data : "+dynamic_cast<promemoria*>(ann)->getDate().toString() + "\n"+"Ora : " +  dynamic_cast<promemoria*>(ann)->getTime().toString());
     }
+
     if(dynamic_cast<ricorrenza*>(ann))
     {
         _LabDateTime->setText("Data : "+dynamic_cast<ricorrenza*>(ann)->getDate().toString() + "\n"+"Ora : " +  dynamic_cast<ricorrenza*>(ann)->getTime().toString());
         //_LabRicorrenza->setFont(_MainFont);
     }
+
     if(dynamic_cast<nota*>(ann))
     {
         _LabCorpo->document()->setPlainText( dynamic_cast<nota*>(ann)->getCorpo());
     }
+
     if(dynamic_cast<elenco*>(ann) && !dynamic_cast<spesa*>(ann))
     {
         _LabDescrizione->setText(dynamic_cast<elenco*>(ann)->getDescrizione());
 
         _LabElenco->document()->setPlainText( dynamic_cast<elenco*>(ann)->getListAsText());
     }
+
     if(dynamic_cast<spesa*>(ann))
     {
         _LabDescrizione->setText(dynamic_cast<spesa*>(ann)->getDescrizione());

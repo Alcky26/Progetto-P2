@@ -10,7 +10,6 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     viewOpzioni();
     // Setup Griglia
     viewGriglia();
-
     _MainLayout->addLayout(_Grid,70);
     _MainLayout->addLayout(_InsertAndOptions,25);
 
@@ -20,7 +19,7 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     //Bottone
     connect(_BtnAdd, SIGNAL(clicked()), this, SLOT(OnClickBtnAggiungi()));
     connect(_BtnAddRow,SIGNAL(clicked()), this, SLOT(OnClickRow()));
-    connect(_BtnDeleteGrid,SIGNAL(clicked()), this, SLOT(DeleteGrid()));
+    connect(_BtnDeleteGrid,SIGNAL   (clicked()), this, SLOT(DeleteGrid()));
 
     // Signal Mapper per OnClick di wAnnotazione
     _SignalMapper = new QSignalMapper(this);
@@ -66,24 +65,19 @@ void view_annotazione::viewOpzioni()
 
     _tempLayoutOpzioni->addWidget(new QLabel("Tipologia"));
     _Tipologia->addItems(model_annotazione::categorie());
-
-    _Tipologia->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_Tipologia);
 
-
+    // TITOLO
     _LineTitolo->setPlaceholderText("Titolo");
-    _LineTitolo->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_LineTitolo);
 
-    //NOTA
+    // NOTA
     _LineCorpo->setPlaceholderText("Corpo");
-    _LineCorpo->setMaximumWidth(500);
     _LineCorpo->setMaximumHeight(23);
     _tempLayoutOpzioni->addWidget(_LineCorpo);
 
     //DESCRIZIONE
     _LineDesc->setPlaceholderText("Descrizione");
-    _LineDesc->setMaximumWidth(500);
     _LineDesc->setMaximumHeight(23);
     _tempLayoutOpzioni->addWidget(_LineDesc);
     _LineDesc->setVisible(false);
@@ -91,13 +85,11 @@ void view_annotazione::viewOpzioni()
     //ORA
     _Ora = new QDateTimeEdit(QDate::currentDate());
     _Ora->setDisplayFormat("hh:mm:ss");
-    _Ora->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_Ora);
     _Ora->setVisible(false);
     _Ora->setTime(QTime::currentTime());
 
     //DATA
-    _Calendario->setMaximumWidth(500);
     _Calendario->setGridVisible(true);
     _tempLayoutOpzioni->addWidget(_Calendario);
     _Calendario->setVisible(false);
@@ -106,24 +98,20 @@ void view_annotazione::viewOpzioni()
     //TIPO
     _Ricorrenza->addItems(ricorrenza::getTipi());
     _tempLayoutOpzioni->addWidget(_Ricorrenza);
-    _Ricorrenza->setMaximumWidth(500);
     _Ricorrenza->setVisible(false);
 
     //LISTA
     _TableList = new QTableWidget();
-    _TableList->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_TableList);
     _TableList->setVisible(false);
 
     //BOTTONE 3 ( AGGIUNGI ROW )
     _BtnAddRow = new QPushButton("Aggiungi Riga");
-    _BtnAddRow->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_BtnAddRow);
     _BtnAddRow->setVisible(false);
 
     //BOTTONE 1 ( AGGIUNGI )
     _BtnAdd = new QPushButton("Aggiungi Nuova Annotazione");
-    _BtnAdd->setMaximumWidth(500);
     _tempLayoutOpzioni->addWidget(_BtnAdd);
 
     _GroupBoxInserimento->setLayout(_tempLayoutOpzioni);
@@ -133,7 +121,6 @@ void view_annotazione::viewOpzioni()
 
     // Bottone Clear
     _BtnDeleteGrid = new QPushButton("Svuota");
-    _BtnDeleteGrid->setMaximumWidth(500);
 
     _InsertAndOptions->addWidget(_BtnDeleteGrid);
     _InsertAndOptions->setAlignment(_BtnDeleteGrid,Qt::AlignBottom);

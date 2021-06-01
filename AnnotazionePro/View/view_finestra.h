@@ -46,12 +46,12 @@ public:
     //view_finestra& operator=(const view_finestra& other);
 
 private:
-    model_annotazione *_model;
+    model_annotazione *_Model;
     annotazione *_ann;
 
     bool _StatoModifica;
 
-    QVBoxLayout *_mainLayout;
+    QVBoxLayout *_MainLayout;
     QGroupBox *_BoxTitolo,*_BoxDataOra,*_BoxCorpo,*_BoxDesc,*_BoxTable;
     //Elementi per Visualizzare
     QLineEdit *_LineTitolo;
