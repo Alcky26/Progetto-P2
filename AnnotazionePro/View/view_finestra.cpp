@@ -35,6 +35,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _tipo=new QComboBox();
         _tipo->addItems(ricorrenza::getTipi());
         _MainLayout->addWidget(_tipo);
+        _tipo->setCurrentIndex(dynamic_cast<ricorrenza*>(ann)->getType());
         _tipo->setEnabled(false);
 
     }
@@ -107,8 +108,11 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         //_TableList->setColumnWidth(0,125);
         //_TableList->setColumnWidth(0,125);
         _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
+        _TableList->setColumnWidth(0,130);
         _TableList->setHorizontalHeaderItem(1,new QTableWidgetItem("Costo"));
+        _TableList->setColumnWidth(1,130);
         _TableList->setHorizontalHeaderItem(2,new QTableWidgetItem("Conferma"));
+        _TableList->setColumnWidth(2,80);
 
         // Riempimento Tabella
         int i=0;
@@ -183,7 +187,7 @@ void view_finestra::SetAllEnabled(bool _boolean)
 
     if(dynamic_cast<elenco*>(_ann))
     {
-        _LineDesc->setReadOnly(_boolean);
+        _LineDesc->setEnabled(_boolean);
         if(_boolean)
             _TableList->setEditTriggers(QAbstractItemView::AllEditTriggers);
         else
@@ -192,7 +196,7 @@ void view_finestra::SetAllEnabled(bool _boolean)
 
     if(dynamic_cast<spesa*>(_ann))
     {
-        _LineDesc->setReadOnly(_boolean);
+        _LineDesc->setEnabled(_boolean);
         if(_boolean)
             _TableList->setEditTriggers(QAbstractItemView::AllEditTriggers);
         else
@@ -234,7 +238,9 @@ annotazione* view_finestra::ReadChangedValues()
 
     else if (dynamic_cast<ricorrenza*>(_ann))
     {
-        return new ricorrenza(_LineTitolo->text(),_LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(),dynamic_cast<ricorrenza*>(_ann)->QStringToTipo(_tipo->itemData(_tipo->currentIndex()).toString()));
+        // metodi_extra::MetodoSupporto(_Ricorrenza->currentIndex()
+        qDebug() << metodi_extra::MetodoSupporto(_tipo->currentIndex()) << "     " << _tipo->currentIndex();
+        return new ricorrenza(_LineTitolo->text(),_LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(),metodi_extra::MetodoSupporto(_tipo->currentIndex()) );
     }
 
     else if (dynamic_cast<nota*>(_ann))

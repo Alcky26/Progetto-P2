@@ -127,7 +127,8 @@ void wAnnotazione::aggiornaValori(annotazione* ann)
     if(dynamic_cast<ricorrenza*>(ann))
     {
         _LabDateTime->setText("Data : "+dynamic_cast<ricorrenza*>(ann)->getDate().toString() + "\n"+"Ora : " +  dynamic_cast<ricorrenza*>(ann)->getTime().toString());
-        //_LabRicorrenza->setFont(_MainFont);
+        qDebug() << (dynamic_cast<ricorrenza*>(ann)->typeToQString());
+        _LabRicorrenza->setText((dynamic_cast<ricorrenza*>(ann)->typeToQString()));
     }
 
     if(dynamic_cast<nota*>(ann))

@@ -55,6 +55,7 @@ void view_annotazione::viewOpzioni()
 
     QVBoxLayout *_tempLayoutOpzioni = new QVBoxLayout();
     QGroupBox *_GroupBoxInserimento = new QGroupBox("Inserimento");
+    QGroupBox *_GroupBoxSpostamento = new QGroupBox("Sposta Elemento");
 
     _LineTitolo = new QLineEdit();
     _LineCorpo = new QTextEdit();
@@ -118,6 +119,14 @@ void view_annotazione::viewOpzioni()
     _GroupBoxInserimento->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Maximum);
 
     _InsertAndOptions->addWidget(_GroupBoxInserimento);
+
+    QGridLayout *_GridLayoutSpostamento = new QGridLayout();
+    _BtnLeft = new QPushButton("⟸");
+    _GridLayoutSpostamento->addWidget(_BtnLeft,0,0,Qt::AlignBottom);
+    _BtnRight = new QPushButton("⟹");
+    _GridLayoutSpostamento->addWidget(_BtnRight,0,1,Qt::AlignBottom);
+    _GroupBoxSpostamento->setLayout(_GridLayoutSpostamento);
+    _InsertAndOptions->addWidget(_GroupBoxSpostamento);
 
     // Bottone Clear
     _BtnDeleteGrid = new QPushButton("Svuota");
@@ -241,7 +250,7 @@ void view_annotazione::OnClickBtnAggiungi()
         {
             if(! (_TableList->item(i,0)->text().isEmpty()) )
             {
-                _ListaTableElenco->insertFront(new type_elenco(_TableList->item(i,0)->text()));
+                _ListaTableElenco->insertBack(new type_elenco(_TableList->item(i,0)->text()));
             }
 
         }
@@ -258,11 +267,11 @@ void view_annotazione::OnClickBtnAggiungi()
             if(! (_TableList->item(i,0)->text().isEmpty()))
             {
                 if(_TableList->item(i,1)->text().isEmpty())
-                    _ListaTableSpesa->insertFront(new type_spesa( _TableList->item(i,0)->text(),0,0));
+                    _ListaTableSpesa->insertBack(new type_spesa( _TableList->item(i,0)->text(),0,0));
                 else
                 {
                     _ValueTemp = _TableList->item(i,1)->text().toDouble();
-                    _ListaTableSpesa->insertFront(new type_spesa( _TableList->item(i,0)->text(),0,_ValueTemp));
+                    _ListaTableSpesa->insertBack(new type_spesa( _TableList->item(i,0)->text(),0,_ValueTemp));
                 }
             }
         }

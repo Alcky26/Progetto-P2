@@ -136,6 +136,7 @@ void model_annotazione::modificaElemento(int _index,annotazione *annot)
             {
                 dynamic_cast<ricorrenza*>(*ci)->setDate(dynamic_cast<ricorrenza*>(annot)->getDate());
                 dynamic_cast<ricorrenza*>(*ci)->setTime(dynamic_cast<ricorrenza*>(annot)->getTime());
+                dynamic_cast<ricorrenza*>(*ci)->setType(dynamic_cast<ricorrenza*>(annot)->getType());
             }
             else if(dynamic_cast<elenco*>(*ci))
             {

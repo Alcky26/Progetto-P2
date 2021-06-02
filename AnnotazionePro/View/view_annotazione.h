@@ -32,6 +32,7 @@
 #include "view_finestra.h"
 #include <QCheckBox>
 #include <QRadioButton>
+#include <QGraphicsItem>
 
 class view_annotazione : public QWidget
 {
@@ -70,6 +71,8 @@ private:
 
     // Bottoni
     QPushButton *_BtnAdd, *_BtnAddRow, *_BtnDeleteGrid;
+
+    QPushButton *_BtnLeft,*_BtnRight;
 
     // Metodi
     void viewOpzioni();
