@@ -58,6 +58,8 @@ private:
     QVBoxLayout *_InsertAndOptions;
     QVBoxLayout *_Grid;
 
+    QScrollArea *_scrollAreaAnnot;
+
     //Elementi per Inserimento
     QLineEdit *_LineTitolo;
     QTextEdit *_LineCorpo, *_LineDesc;

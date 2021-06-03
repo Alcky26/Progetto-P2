@@ -150,7 +150,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     connect(_elimina,SIGNAL(clicked()),this,SLOT(OnClickElimina()));
     connect(_modifica,SIGNAL(clicked()),this,SLOT(OnClickModifica()));
     connect(_BtnLeft, SIGNAL( clicked() ), this, SLOT( MoveWAnnLeft() ));
-    connect(_BtnLeft, SIGNAL( clicked() ), this, SLOT( MoveWAnnRight() ));
+    connect(_BtnRight, SIGNAL( clicked() ), this, SLOT( MoveWAnnRight() ));
 }
 
 // Distruttore
@@ -245,8 +245,6 @@ annotazione* view_finestra::ReadChangedValues()
 
     else if (dynamic_cast<ricorrenza*>(_ann))
     {
-        // metodi_extra::MetodoSupporto(_Ricorrenza->currentIndex()
-        qDebug() << metodi_extra::MetodoSupporto(_tipo->currentIndex()) << "     " << _tipo->currentIndex();
         return new ricorrenza(_LineTitolo->text(),_LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(),metodi_extra::MetodoSupporto(_tipo->currentIndex()) );
     }
 
@@ -316,7 +314,7 @@ void view_finestra::OnClickModifica()
         _modifica->setText("Modifica Valori di Questo Elemento");
         SetAllEnabled(_StatoModifica);
         _Model->modificaElemento(_Model->getAnnotazioni().indexOfInt(_ann),ReadChangedValues());
-        emit Modificato();
+        emit AggiornaGriglia();
     }
 }
 
@@ -328,19 +326,37 @@ void view_finestra::OnClickElimina()
     if(response == QMessageBox::Yes)
     {
         _Model->rimouviElemento(_ann);
-        emit Eliminato();
+        emit AggiornaGriglia();
         this->close();
     }
 }
 
 void view_finestra::MoveWAnnLeft()
 {
-
+    lista<annotazione*> temp=_Model->getAnnotazioni();
+    for(lista<annotazione*>::constiterator ci=temp.begin();ci!=temp.end();ci++)
+    {
+        if((*ci)==_ann)
+        {
+            if(_Model->muoviElementoSx(ci))
+                emit AggiornaGriglia();
+            else
+                QMessageBox::information(this, "Limite Sinistro","Limite sinistro raggiunto!");
+        }
+    }
 }
 
 void view_finestra::MoveWAnnRight()
 {
-
+    lista<annotazione*> temp=_Model->getAnnotazioni();
+    for(lista<annotazione*>::constiterator ci=temp.begin();ci!=temp.end();ci++)
+    {
+        if((*ci)==_ann)
+        {
+            if(_Model->muoviElementoDx(ci))
+                emit AggiornaGriglia();
+            else
+                QMessageBox::information(this, "Limite Destro","Limite destro raggiunto!");
+        }
+    }
 }
-
-

@@ -135,7 +135,8 @@ void view_annotazione::viewGriglia()
     QGridLayout *_tempLayoutGriglia = new QGridLayout();
     QGroupBox *_suppLayoutGriglia = new QGroupBox();
 
-    QScrollArea *_scrollAreaAnnot = new QScrollArea;
+    _scrollAreaAnnot = new QScrollArea;
+    _scrollAreaAnnot->setWidgetResizable(true);
 
     // Pulisce la Griglia dalle wAnnotazioni
     for (int i = 0; i < _Grid->count(); i++)
@@ -148,20 +149,19 @@ void view_annotazione::viewGriglia()
     _tempLayoutGriglia->setSpacing(width/25);
 
     // Aggiornamento della Griglia
-        for(lista<wAnnotazione*>::constiterator citt=_wA.begin(); citt != _wA.end();citt++)
-        {
-            _SignalMapper->removeMappings(*citt);
-        }
-        _wA.clear();
-        lista<annotazione*> temp=_Model->getAnnotazioni();
-        wAnnotazione *_nuovoWAnn;
-        for(lista<annotazione*>::constiterator ci=temp.begin(); ci != temp.end();ci++)
-        {
-            _nuovoWAnn = new wAnnotazione(*ci);
-            _wA.insertBack(_nuovoWAnn);
-            SetSignalMapper(_nuovoWAnn);
-        }
-
+      for(lista<wAnnotazione*>::constiterator citt=_wA.begin(); citt != _wA.end();citt++)
+    {
+        _SignalMapper->removeMappings(*citt);
+    }
+    _wA.clear();
+    lista<annotazione*> temp=_Model->getAnnotazioni();
+    wAnnotazione *_nuovoWAnn;
+    for(lista<annotazione*>::constiterator ci=temp.begin(); ci != temp.end();ci++)
+    {
+        _nuovoWAnn = new wAnnotazione(*ci);
+        _wA.insertBack(_nuovoWAnn);
+        SetSignalMapper(_nuovoWAnn);
+    }
     int count = 0;
     for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
     {
@@ -407,8 +407,8 @@ void view_annotazione::OpenWindowDetails( int value)
         (*ci)->setEnabled(false);
     }
     connect(_FinestraDescrizione ,SIGNAL(ClosedWindow()), this , SLOT(GridEnable()));
-    connect(_FinestraDescrizione, SIGNAL(Modificato()), this, SLOT(UpdateGrid()));
-    connect(_FinestraDescrizione, SIGNAL(Eliminato()), this, SLOT(UpdateGrid()));
+    connect(_FinestraDescrizione, SIGNAL(AggiornaGriglia()), this, SLOT(UpdateGrid()));
+
     _FinestraDescrizione->setMinimumSize(400,400);
     _FinestraDescrizione->show();
 }

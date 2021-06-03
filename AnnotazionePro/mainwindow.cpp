@@ -46,26 +46,15 @@ void MainWindow::addMenuButtons()
     salvaConNome->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_S);
     QAction* chiudi = new QAction("Chiudi", file);
 
-    /*QAction* esportaStipendio = new QAction("Esporta stipendi", file);
-    esportaStipendio->setShortcut(Qt::CTRL | Qt::Key_E);
-    QAction* analizzaStipendio = new QAction("Analizza stipendio", file);
-    analizzaStipendio->setShortcut(Qt::CTRL | Qt::Key_A);*/
-
     connect(apri, SIGNAL(triggered()), this, SLOT(openClicked()));
     connect(salva, SIGNAL(triggered()), this, SLOT(salvaClicked()));
     connect(salvaConNome, SIGNAL(triggered()), this, SLOT(saveNameClicked()));
     connect(chiudi, SIGNAL(triggered()), this, SLOT(close()));
-    /*connect(esportaStipendio, SIGNAL(triggered()), this, SLOT(esportaStipendio()));
-    connect(analizzaStipendio, SIGNAL(triggered()), this, SLOT(analizzaStipendio()));
-    */
 
     file->addAction(apri);
     file->addAction(salva);
     file->addAction(salvaConNome);
     file->addAction(chiudi);
-    /*file->addAction(esportaStipendio);
-    file->addAction(analizzaStipendio);
-    */
 
     // ORA FACCIO IO HELP HAHAHAHAHA
 

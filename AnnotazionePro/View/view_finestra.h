@@ -72,14 +72,14 @@ private:
     void setupDescrizione();
 
 signals:
-    void Modificato();
-    void Eliminato();
+    void AggiornaGriglia();
     void ClosedWindow();
 private slots:
     void OnClickModifica();
     void OnClickElimina();
     void MoveWAnnLeft();
     void MoveWAnnRight();
+
 };
 
 #endif // VIEW_FINESTRA_H

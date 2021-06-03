@@ -159,15 +159,64 @@ void model_annotazione::modificaElemento(int _index,annotazione *annot)
     _needToSave=true;
 }
 
-bool model_annotazione::muoviElementoDx(lista<annotazione*>::constiterator *ci)
+bool model_annotazione::muoviElementoDx(lista<annotazione*>::constiterator ci)
 {
-
-    return true;
+    int i = _annotazioni.indexOfInt(_annotazioni.index(ci));
+    bool trovato=false;
+    if(i!=int(_annotazioni.getSize()-1))
+    {
+        int count=0;
+        lista<annotazione*> temp;
+        for(lista<annotazione*>::constiterator cit=_annotazioni.begin();cit!=_annotazioni.end();cit++)
+        {
+            if(count==i)
+            {
+                temp.insertBack(*(++cit));
+                temp.insertBack(*(--cit));
+                cit++;
+                trovato=true;
+            }
+            else
+            {
+                temp.insertBack(*cit);
+            }
+            count++;
+        }
+        _annotazioni.clear();
+        _annotazioni=temp;
+        return trovato;
+    }
+    return trovato;
 }
 
-bool model_annotazione::muoviElementoSx(lista<annotazione*>::constiterator *ci)
+bool model_annotazione::muoviElementoSx(lista<annotazione*>::constiterator ci)
 {
-    return true;
+    int i = _annotazioni.indexOfInt(_annotazioni.index(ci));
+    bool trovato=false;
+    if(i!=0)
+    {
+        int count=0;
+        lista<annotazione*> temp;
+        for(lista<annotazione*>::constiterator cit=_annotazioni.begin();cit!=_annotazioni.end();cit++)
+        {
+            if((count+1)==i)
+            {
+                temp.insertBack(*(++cit));
+                temp.insertBack(*(--cit));
+                cit++;
+                trovato=true;
+            }
+            else
+            {
+                temp.insertBack(*cit);
+            }
+            count++;
+        }
+        _annotazioni.clear();
+        _annotazioni=temp;
+        return trovato;
+    }
+    return trovato;
 }
 
 bool model_annotazione::deviSalvare() const

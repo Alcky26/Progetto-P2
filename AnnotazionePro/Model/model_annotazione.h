@@ -33,8 +33,8 @@ public:
     void rimouviElemento(annotazione *annot);
     void modificaElemento(int _index,annotazione *annot);
 
-    bool muoviElementoDx(lista<annotazione*>::constiterator *ci);
-    bool muoviElementoSx(lista<annotazione*>::constiterator *ci);
+    bool muoviElementoDx(lista<annotazione*>::constiterator ci);
+    bool muoviElementoSx(lista<annotazione*>::constiterator ci);
 
     bool deviSalvare() const;
     void salvato();
