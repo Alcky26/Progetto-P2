@@ -60,7 +60,7 @@ private:
     QDateTimeEdit *_ora;
     QTableWidget *_TableList;
     QComboBox *_tipo;
-
+    QPushButton *_BtnLeft,*_BtnRight;
     QPushButton *_elimina,*_modifica;
 
     void SetAllEnabled(bool _boolean);
@@ -78,6 +78,8 @@ signals:
 private slots:
     void OnClickModifica();
     void OnClickElimina();
+    void MoveWAnnLeft();
+    void MoveWAnnRight();
 };
 
 #endif // VIEW_FINESTRA_H

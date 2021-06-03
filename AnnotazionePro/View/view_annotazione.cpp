@@ -17,9 +17,9 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     connect(_LineCorpo, SIGNAL(textChanged()), this, SLOT( OnTextChanged() ) );
     connect(_LineDesc, SIGNAL(textChanged()), this, SLOT( OnTextChanged() ) );
     //Bottone
-    connect(_BtnAdd, SIGNAL(clicked()), this, SLOT(OnClickBtnAggiungi()));
-    connect(_BtnAddRow,SIGNAL(clicked()), this, SLOT(OnClickRow()));
-    connect(_BtnDeleteGrid,SIGNAL   (clicked()), this, SLOT(DeleteGrid()));
+    connect(_BtnAdd, SIGNAL( clicked() ), this, SLOT( OnClickBtnAggiungi() ));
+    connect(_BtnAddRow, SIGNAL( clicked() ), this, SLOT( OnClickRow() ));
+    connect(_BtnDeleteGrid, SIGNAL( clicked() ), this, SLOT( DeleteGrid() ));
 
     // Signal Mapper per OnClick di wAnnotazione
     _SignalMapper = new QSignalMapper(this);
@@ -55,7 +55,6 @@ void view_annotazione::viewOpzioni()
 
     QVBoxLayout *_tempLayoutOpzioni = new QVBoxLayout();
     QGroupBox *_GroupBoxInserimento = new QGroupBox("Inserimento");
-    QGroupBox *_GroupBoxSpostamento = new QGroupBox("Sposta Elemento");
 
     _LineTitolo = new QLineEdit();
     _LineCorpo = new QTextEdit();
@@ -91,10 +90,13 @@ void view_annotazione::viewOpzioni()
     _Ora->setTime(QTime::currentTime());
 
     //DATA
-    _Calendario->setGridVisible(true);
+
     _tempLayoutOpzioni->addWidget(_Calendario);
     _Calendario->setVisible(false);
     _Calendario->setSelectedDate(QDate::currentDate());
+    _Calendario->setHorizontalHeaderFormat(QCalendarWidget::NoHorizontalHeader);
+    _Calendario->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+   // _Calendario->setStyleSheet();
 
     //TIPO
     _Ricorrenza->addItems(ricorrenza::getTipi());
@@ -119,14 +121,6 @@ void view_annotazione::viewOpzioni()
     _GroupBoxInserimento->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Maximum);
 
     _InsertAndOptions->addWidget(_GroupBoxInserimento);
-
-    QGridLayout *_GridLayoutSpostamento = new QGridLayout();
-    _BtnLeft = new QPushButton("⟸");
-    _GridLayoutSpostamento->addWidget(_BtnLeft,0,0,Qt::AlignBottom);
-    _BtnRight = new QPushButton("⟹");
-    _GridLayoutSpostamento->addWidget(_BtnRight,0,1,Qt::AlignBottom);
-    _GroupBoxSpostamento->setLayout(_GridLayoutSpostamento);
-    _InsertAndOptions->addWidget(_GroupBoxSpostamento);
 
     // Bottone Clear
     _BtnDeleteGrid = new QPushButton("Svuota");
@@ -154,18 +148,6 @@ void view_annotazione::viewGriglia()
     _tempLayoutGriglia->setSpacing(width/25);
 
     // Aggiornamento della Griglia
-    if(_wA.getSize()==_Model->getAnnotazioni().getSize())/////////////////////////////PROBLEMONEEEEEEEEEEE
-    {
-        int i=0;
-        for(lista<wAnnotazione*>::constiterator cit=_wA.begin(); cit != _wA.end();cit++)
-        {
-            (*cit)->aggiornaValori(_Model->getAnnotazione(i));
-            i++;
-        }
-
-    }
-    else
-    {
         for(lista<wAnnotazione*>::constiterator citt=_wA.begin(); citt != _wA.end();citt++)
         {
             _SignalMapper->removeMappings(*citt);
@@ -179,11 +161,12 @@ void view_annotazione::viewGriglia()
             _wA.insertBack(_nuovoWAnn);
             SetSignalMapper(_nuovoWAnn);
         }
-    }
+
     int count = 0;
     for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
     {
         resizeAnn(* cit);
+
         _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
         count++;
     }
@@ -193,7 +176,6 @@ void view_annotazione::viewGriglia()
     _scrollAreaAnnot->setWidget(_suppLayoutGriglia);
 
     _Grid->addWidget(_scrollAreaAnnot);
-
 }
 
 // Quando creo un oggetto di tipo wAnnotazione, lo passiamo a questo metodo che aggiunge connette slot e signal
@@ -252,9 +234,7 @@ void view_annotazione::OnClickBtnAggiungi()
             {
                 _ListaTableElenco->insertBack(new type_elenco(_TableList->item(i,0)->text()));
             }
-
         }
-
         _nuovoInsert = new elenco(_LineTitolo->text(),_LineDesc->document()->toRawText(),*_ListaTableElenco);
     }
     //Spesa
@@ -275,9 +255,7 @@ void view_annotazione::OnClickBtnAggiungi()
                 }
             }
         }
-
         _nuovoInsert = new spesa(_LineTitolo->text(),_LineDesc->document()->toRawText(),*_ListaTableSpesa);
-
     }
 
     wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
@@ -434,5 +412,6 @@ void view_annotazione::OpenWindowDetails( int value)
     _FinestraDescrizione->setMinimumSize(400,400);
     _FinestraDescrizione->show();
 }
+
 
 

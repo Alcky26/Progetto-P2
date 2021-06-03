@@ -115,39 +115,3 @@ void wAnnotazione::paintEvent(QPaintEvent *)
     }
 }
 
-void wAnnotazione::aggiornaValori(annotazione* ann)
-{
-    _LabTitolo->setText(ann->getTitolo());
-
-    if(dynamic_cast<promemoria*>(ann))
-    {
-        _LabDateTime->setText("Data : "+dynamic_cast<promemoria*>(ann)->getDate().toString() + "\n"+"Ora : " +  dynamic_cast<promemoria*>(ann)->getTime().toString());
-    }
-
-    if(dynamic_cast<ricorrenza*>(ann))
-    {
-        _LabDateTime->setText("Data : "+dynamic_cast<ricorrenza*>(ann)->getDate().toString() + "\n"+"Ora : " +  dynamic_cast<ricorrenza*>(ann)->getTime().toString());
-        qDebug() << (dynamic_cast<ricorrenza*>(ann)->typeToQString());
-        _LabRicorrenza->setText((dynamic_cast<ricorrenza*>(ann)->typeToQString()));
-    }
-
-    if(dynamic_cast<nota*>(ann))
-    {
-        _LabCorpo->document()->setPlainText( dynamic_cast<nota*>(ann)->getCorpo());
-    }
-
-    if(dynamic_cast<elenco*>(ann) && !dynamic_cast<spesa*>(ann))
-    {
-        _LabDescrizione->setText(dynamic_cast<elenco*>(ann)->getDescrizione());
-
-        _LabElenco->document()->setPlainText( dynamic_cast<elenco*>(ann)->getListAsText());
-    }
-
-    if(dynamic_cast<spesa*>(ann))
-    {
-        _LabDescrizione->setText(dynamic_cast<spesa*>(ann)->getDescrizione());
-        _LabElenco->document()->setPlainText( dynamic_cast<spesa*>(ann)->getListSpesaAsText());
-    }
-
-}
-

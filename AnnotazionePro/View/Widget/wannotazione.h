@@ -32,8 +32,6 @@ public:
     wAnnotazione(annotazione *ann, QWidget *parent = 0);
     ~wAnnotazione();
 
-    void aggiornaValori(annotazione* ann);
-
 protected:
     void mousePressEvent(QMouseEvent*);
     void mouseReleaseEvent(QMouseEvent*);

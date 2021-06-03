@@ -33,6 +33,7 @@
 #include <QCheckBox>
 #include <QRadioButton>
 #include <QGraphicsItem>
+#include <QHeaderView>
 
 class view_annotazione : public QWidget
 {
@@ -65,14 +66,11 @@ private:
     QDateTimeEdit *_Ora;
     QComboBox *_Ricorrenza;
     QTableWidget *_TableList;
-
     // Mapper per Lista di Widget
     QSignalMapper *_SignalMapper;
 
     // Bottoni
     QPushButton *_BtnAdd, *_BtnAddRow, *_BtnDeleteGrid;
-
-    QPushButton *_BtnLeft,*_BtnRight;
 
     // Metodi
     void viewOpzioni();
@@ -89,7 +87,6 @@ private slots:
     void OnTextChanged();
     void DeleteGrid();
     void OpenWindowDetails( int);
-
 };
 
 #endif // VIEW_ANNOTAZIONE_H

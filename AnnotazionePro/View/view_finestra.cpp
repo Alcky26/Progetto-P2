@@ -137,13 +137,20 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
 
     _elimina = new QPushButton("Elimina Questo Elemento");
     _modifica = new QPushButton("Modifica Valori di Questo Elemento");
+    _BtnLeft = new QPushButton("⟸ Sposta a Sinistra");
+    _BtnRight = new QPushButton("Sposta a Destra ⟹");
+    QGridLayout *_LayoutLeftRight = new QGridLayout();
+    _LayoutLeftRight->addWidget(_BtnLeft,1,0,Qt::AlignTop);
+    _LayoutLeftRight->addWidget(_BtnRight,1,1,Qt::AlignTop);
+    _MainLayout->addLayout(_LayoutLeftRight);
 
     _MainLayout->addWidget(_modifica);
     _MainLayout->addWidget(_elimina);
 
     connect(_elimina,SIGNAL(clicked()),this,SLOT(OnClickElimina()));
     connect(_modifica,SIGNAL(clicked()),this,SLOT(OnClickModifica()));
-
+    connect(_BtnLeft, SIGNAL( clicked() ), this, SLOT( MoveWAnnLeft() ));
+    connect(_BtnLeft, SIGNAL( clicked() ), this, SLOT( MoveWAnnRight() ));
 }
 
 // Distruttore
@@ -324,6 +331,16 @@ void view_finestra::OnClickElimina()
         emit Eliminato();
         this->close();
     }
+}
+
+void view_finestra::MoveWAnnLeft()
+{
+
+}
+
+void view_finestra::MoveWAnnRight()
+{
+
 }
 
 

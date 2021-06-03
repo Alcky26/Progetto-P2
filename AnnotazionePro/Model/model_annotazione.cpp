@@ -159,6 +159,17 @@ void model_annotazione::modificaElemento(int _index,annotazione *annot)
     _needToSave=true;
 }
 
+bool model_annotazione::muoviElementoDx(lista<annotazione*>::constiterator *ci)
+{
+
+    return true;
+}
+
+bool model_annotazione::muoviElementoSx(lista<annotazione*>::constiterator *ci)
+{
+    return true;
+}
+
 bool model_annotazione::deviSalvare() const
 {
     return _needToSave;
