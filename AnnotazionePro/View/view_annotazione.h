@@ -89,6 +89,7 @@ private slots:
     void OnTextChanged();
     void DeleteGrid();
     void OpenWindowDetails( int);
+    void viewGrigliaAlternativo(int i);
 };
 
 #endif // VIEW_ANNOTAZIONE_H

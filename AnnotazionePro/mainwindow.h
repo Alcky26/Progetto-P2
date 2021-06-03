@@ -50,6 +50,7 @@ private:
     void closeEvent(QCloseEvent *event);
 signals:
     void ApriFile();
+    void stoChiudendo();
 
 private slots:
     void openClicked();

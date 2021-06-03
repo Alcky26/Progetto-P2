@@ -151,6 +151,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     connect(_modifica,SIGNAL(clicked()),this,SLOT(OnClickModifica()));
     connect(_BtnLeft, SIGNAL( clicked() ), this, SLOT( MoveWAnnLeft() ));
     connect(_BtnRight, SIGNAL( clicked() ), this, SLOT( MoveWAnnRight() ));
+    //connect(this,SIGNAL(stoChiudendo()),this,SLOT(ChiudoTutto()));
 }
 
 // Distruttore
@@ -314,7 +315,7 @@ void view_finestra::OnClickModifica()
         _modifica->setText("Modifica Valori di Questo Elemento");
         SetAllEnabled(_StatoModifica);
         _Model->modificaElemento(_Model->getAnnotazioni().indexOfInt(_ann),ReadChangedValues());
-        emit AggiornaGriglia();
+        emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
     }
 }
 
@@ -339,7 +340,10 @@ void view_finestra::MoveWAnnLeft()
         if((*ci)==_ann)
         {
             if(_Model->muoviElementoSx(ci))
-                emit AggiornaGriglia();
+            {
+
+                emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
+            }
             else
                 QMessageBox::information(this, "Limite Sinistro","Limite sinistro raggiunto!");
         }
@@ -354,9 +358,14 @@ void view_finestra::MoveWAnnRight()
         if((*ci)==_ann)
         {
             if(_Model->muoviElementoDx(ci))
-                emit AggiornaGriglia();
+                emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
             else
                 QMessageBox::information(this, "Limite Destro","Limite destro raggiunto!");
         }
     }
+}
+
+void view_finestra::ChiudoTutto()
+{
+    this->close();
 }

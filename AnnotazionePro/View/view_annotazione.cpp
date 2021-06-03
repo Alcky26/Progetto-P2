@@ -166,7 +166,59 @@ void view_annotazione::viewGriglia()
     for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
     {
         resizeAnn(* cit);
+        (*cit)->setStyleSheet("background-color:White");
+        _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
+        count++;
+    }
+    _tempLayoutGriglia->setAlignment(Qt::AlignTop);
 
+    _suppLayoutGriglia->setLayout(_tempLayoutGriglia);
+    _scrollAreaAnnot->setWidget(_suppLayoutGriglia);
+
+    _Grid->addWidget(_scrollAreaAnnot);
+}
+
+void view_annotazione::viewGrigliaAlternativo(int i)
+{
+    QGridLayout *_tempLayoutGriglia = new QGridLayout();
+    QGroupBox *_suppLayoutGriglia = new QGroupBox();
+
+    _scrollAreaAnnot = new QScrollArea;
+    _scrollAreaAnnot->setWidgetResizable(true);
+
+    // Pulisce la Griglia dalle wAnnotazioni
+    for (int i = 0; i < _Grid->count(); i++)
+    {
+       _Grid->itemAt(i)->widget()->deleteLater();
+    }
+
+    QRect geometry = _Grid->geometry();
+    int width = geometry.width();
+    _tempLayoutGriglia->setSpacing(width/25);
+
+    // Aggiornamento della Griglia
+      for(lista<wAnnotazione*>::constiterator citt=_wA.begin(); citt != _wA.end();citt++)
+    {
+        _SignalMapper->removeMappings(*citt);
+    }
+    _wA.clear();
+    lista<annotazione*> temp=_Model->getAnnotazioni();
+    wAnnotazione *_nuovoWAnn;
+    for(lista<annotazione*>::constiterator ci=temp.begin(); ci != temp.end();ci++)
+    {
+        _nuovoWAnn = new wAnnotazione(*ci);
+        _wA.insertBack(_nuovoWAnn);
+        SetSignalMapper(_nuovoWAnn);
+    }
+    int count = 0;
+    for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
+    {
+        resizeAnn(* cit);
+        if(i==count)
+            (*cit)->setStyleSheet("background-color:rgb(29, 158, 209)");
+        else
+            (*cit)->setStyleSheet("background-color:White");
+        (*cit)->setEnabled(false);
         _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
         count++;
     }
@@ -269,9 +321,11 @@ void view_annotazione::OnClickBtnAggiungi()
 void view_annotazione::GridEnable()
 {
     for(lista<wAnnotazione*>::constiterator ci=_wA.begin();ci!=_wA.end();ci++)
-       {
-           (*ci)->setEnabled(true);
-       }
+   {
+       (*ci)->setEnabled(true);
+       (*ci)->setStyleSheet("background-color:White");
+   }
+    this->setEnabled(true);
 }
 
 // Slot per refresh della Griglia
@@ -401,13 +455,19 @@ void view_annotazione::DeleteGrid()
 // On Click di wAnnotazione, apre la finestra dettagli
 void view_annotazione::OpenWindowDetails( int value)
 {
+    int i=0;
     view_finestra* _FinestraDescrizione = new view_finestra(_Model,_Model->getAnnotazione(value));
     for(lista<wAnnotazione*>::constiterator ci=_wA.begin();ci!=_wA.end();ci++)
     {
         (*ci)->setEnabled(false);
+        if(i==value)
+            (*ci)->setStyleSheet("background-color:rgb(29, 158, 209)");
+        i++;
     }
+    this->setEnabled(false);
     connect(_FinestraDescrizione ,SIGNAL(ClosedWindow()), this , SLOT(GridEnable()));
     connect(_FinestraDescrizione, SIGNAL(AggiornaGriglia()), this, SLOT(UpdateGrid()));
+    connect(_FinestraDescrizione, SIGNAL(AggiornaGrigliaAlternativo(int)), this, SLOT(viewGrigliaAlternativo(int)));
 
     _FinestraDescrizione->setMinimumSize(400,400);
     _FinestraDescrizione->show();

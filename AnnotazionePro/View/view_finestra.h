@@ -73,12 +73,14 @@ private:
 
 signals:
     void AggiornaGriglia();
+    void AggiornaGrigliaAlternativo(int i);
     void ClosedWindow();
 private slots:
     void OnClickModifica();
     void OnClickElimina();
     void MoveWAnnLeft();
     void MoveWAnnRight();
+    void ChiudoTutto();
 
 };
 
