@@ -478,7 +478,7 @@ void view_annotazione::OpenWindowDetails( int value)
     connect(_FinestraDescrizione, SIGNAL(AggiornaGrigliaAlternativo(int)), this, SLOT(viewGrigliaAlternativo(int)));
 
     _FinestraDescrizione->setMinimumSize(400,400);
-    _FinestraDescrizione->setWindowModality(Qt::WindowModal);
+    _FinestraDescrizione->setWindowModality(Qt::ApplicationModal);
     _FinestraDescrizione->show();
 
 }
