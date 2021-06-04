@@ -58,6 +58,7 @@ private:
     QVBoxLayout *_InsertAndOptions;
     QVBoxLayout *_Grid;
 
+
     QScrollArea *_scrollAreaAnnot;
 
     //Elementi per Inserimento
@@ -83,7 +84,6 @@ private:
 private slots:
     void OnClickBtnAggiungi();
     void UpdateGrid();
-    void GridEnable();
     void OnClickRow();
     void ComboBoxTypeChanged(int);
     void OnTextChanged();

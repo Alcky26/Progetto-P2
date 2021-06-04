@@ -166,7 +166,7 @@ void view_annotazione::viewGriglia()
     for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
     {
         resizeAnn(* cit);
-        (*cit)->setStyleSheet("background-color:White");
+        (*cit)->setStyleSheet(" border:2px solid ");
         _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
         count++;
     }
@@ -214,11 +214,15 @@ void view_annotazione::viewGrigliaAlternativo(int i)
     for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
     {
         resizeAnn(* cit);
+
         if(i==count)
-            (*cit)->setStyleSheet("background-color:rgb(29, 158, 209)");
+        {
+            (*cit)->setStyleSheet(" border: 2px solid; outline-color:red 20px solid");
+            qDebug() << "io c'ero";
+        }
         else
-            (*cit)->setStyleSheet("background-color:White");
-        (*cit)->setEnabled(false);
+            (*cit)->setStyleSheet(" border: 2px solid; ");
+        //(*cit)->setEnabled(false);
         _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
         count++;
     }
@@ -315,17 +319,6 @@ void view_annotazione::OnClickBtnAggiungi()
     _wA.insertBack(_nuovoWAnn);
     SetSignalMapper(_nuovoWAnn);
     viewGriglia();
-}
-
-// Slot per abilitare la griglia dopo averla disabilitata con l'apertura di una finestra
-void view_annotazione::GridEnable()
-{
-    for(lista<wAnnotazione*>::constiterator ci=_wA.begin();ci!=_wA.end();ci++)
-   {
-       (*ci)->setEnabled(true);
-       (*ci)->setStyleSheet("background-color:White");
-   }
-    this->setEnabled(true);
 }
 
 // Slot per refresh della Griglia
@@ -457,20 +450,22 @@ void view_annotazione::OpenWindowDetails( int value)
 {
     int i=0;
     view_finestra* _FinestraDescrizione = new view_finestra(_Model,_Model->getAnnotazione(value));
+
     for(lista<wAnnotazione*>::constiterator ci=_wA.begin();ci!=_wA.end();ci++)
     {
         (*ci)->setEnabled(false);
         if(i==value)
-            (*ci)->setStyleSheet("background-color:rgb(29, 158, 209)");
+            (*ci)->setStyleSheet(" border: 2px solid; border-color: red");
         i++;
     }
     this->setEnabled(false);
-    connect(_FinestraDescrizione ,SIGNAL(ClosedWindow()), this , SLOT(GridEnable()));
+    connect(_FinestraDescrizione ,SIGNAL(ClosedWindow()), this , SLOT(UpdateGrid()));
     connect(_FinestraDescrizione, SIGNAL(AggiornaGriglia()), this, SLOT(UpdateGrid()));
     connect(_FinestraDescrizione, SIGNAL(AggiornaGrigliaAlternativo(int)), this, SLOT(viewGrigliaAlternativo(int)));
 
     _FinestraDescrizione->setMinimumSize(400,400);
     _FinestraDescrizione->show();
+    _FinestraDescrizione->setWindowModality(Qt::ApplicationModal);
 }
 
 

@@ -151,7 +151,6 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     connect(_modifica,SIGNAL(clicked()),this,SLOT(OnClickModifica()));
     connect(_BtnLeft, SIGNAL( clicked() ), this, SLOT( MoveWAnnLeft() ));
     connect(_BtnRight, SIGNAL( clicked() ), this, SLOT( MoveWAnnRight() ));
-    //connect(this,SIGNAL(stoChiudendo()),this,SLOT(ChiudoTutto()));
 }
 
 // Distruttore
@@ -365,7 +364,3 @@ void view_finestra::MoveWAnnRight()
     }
 }
 
-void view_finestra::ChiudoTutto()
-{
-    this->close();
-}

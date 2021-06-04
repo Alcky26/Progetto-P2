@@ -80,7 +80,6 @@ private slots:
     void OnClickElimina();
     void MoveWAnnLeft();
     void MoveWAnnRight();
-    void ChiudoTutto();
 
 };
 

@@ -22,10 +22,11 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
 
 MainWindow::~MainWindow()
 {
+    delete viewA;
     delete mainLayout;
     delete _File;
     delete model;
-    delete viewA;
+
 }
 
 void MainWindow::addMenuButtons()
@@ -202,7 +203,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
     {
         checkUnsavedData();
     }
+
+    emit stoChiudendo();
     event->accept();
+    setAttribute(Qt::WA_DeleteOnClose);
 }
 
 
