@@ -22,6 +22,7 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     _LabTitolo = new QLabel(ann->getTitolo());
     _LabTitolo->setAlignment(Qt::AlignCenter);
     _BoxTitle->addWidget(_LabTitolo);
+
     _Titolo->setLayout(_BoxTitle);
     _mainVBoxLayout->addWidget(_Titolo);
 

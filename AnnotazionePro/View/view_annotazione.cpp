@@ -166,7 +166,7 @@ void view_annotazione::viewGriglia()
     for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
     {
         resizeAnn(* cit);
-        (*cit)->setStyleSheet(" border:2px solid ");
+
         _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
         count++;
     }
@@ -214,15 +214,13 @@ void view_annotazione::viewGrigliaAlternativo(int i)
     for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
     {
         resizeAnn(* cit);
-
+        (*cit)->setEnabled(false);
         if(i==count)
         {
-            (*cit)->setStyleSheet(" border: 2px solid; outline-color:red 20px solid");
-            qDebug() << "io c'ero";
+            (*cit)->setStyleSheet(" background-color: rgb(66, 245, 123)");
         }
         else
-            (*cit)->setStyleSheet(" border: 2px solid; ");
-        //(*cit)->setEnabled(false);
+            (*cit)->setStyleSheet(" background-color: white");
         _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
         count++;
     }
@@ -353,6 +351,7 @@ void view_annotazione::ComboBoxTypeChanged(int index)
         _TableList->setVisible(false);
         _BtnAddRow->setVisible(false);
     }
+
     else if (index == 1)
     {
         _LineCorpo->setVisible(true);
@@ -363,6 +362,7 @@ void view_annotazione::ComboBoxTypeChanged(int index)
         _TableList->setVisible(false);
         _BtnAddRow->setVisible(false);
     }
+
     else if (index == 2)
     {
         _LineCorpo->setVisible(true);
@@ -373,6 +373,7 @@ void view_annotazione::ComboBoxTypeChanged(int index)
         _TableList->setVisible(false);
         _BtnAddRow->setVisible(false);
     }
+
     else if (index == 3)
     {
         _LineCorpo->setVisible(false);
@@ -393,6 +394,7 @@ void view_annotazione::ComboBoxTypeChanged(int index)
         _TableList->setShowGrid(true);
         _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
     }
+
     else if (index == 4){
         _LineCorpo->setVisible(false);
         _LineDesc->setVisible(true);
@@ -445,6 +447,18 @@ void view_annotazione::DeleteGrid()
     }
 }
 
+// Slot per abilitare la griglia dopo averla disabilitata con l'apertura di una finestra
+void view_annotazione::GridEnable()
+{
+    for(lista<wAnnotazione*>::constiterator ci=_wA.begin();ci!=_wA.end();ci++)
+   {
+       (*ci)->setEnabled(true);
+       (*ci)->setStyleSheet("background-color:White");
+   }
+    this->setEnabled(true);
+}
+
+
 // On Click di wAnnotazione, apre la finestra dettagli
 void view_annotazione::OpenWindowDetails( int value)
 {
@@ -452,20 +466,21 @@ void view_annotazione::OpenWindowDetails( int value)
     view_finestra* _FinestraDescrizione = new view_finestra(_Model,_Model->getAnnotazione(value));
 
     for(lista<wAnnotazione*>::constiterator ci=_wA.begin();ci!=_wA.end();ci++)
-    {
+    {       
         (*ci)->setEnabled(false);
         if(i==value)
-            (*ci)->setStyleSheet(" border: 2px solid; border-color: red");
+            (*ci)->setStyleSheet("  background-color: rgb(66, 245, 123)");
         i++;
     }
-    this->setEnabled(false);
-    connect(_FinestraDescrizione ,SIGNAL(ClosedWindow()), this , SLOT(UpdateGrid()));
+
+    connect(_FinestraDescrizione ,SIGNAL(ClosedWindow()), this , SLOT(GridEnable()));
     connect(_FinestraDescrizione, SIGNAL(AggiornaGriglia()), this, SLOT(UpdateGrid()));
     connect(_FinestraDescrizione, SIGNAL(AggiornaGrigliaAlternativo(int)), this, SLOT(viewGrigliaAlternativo(int)));
 
     _FinestraDescrizione->setMinimumSize(400,400);
+    _FinestraDescrizione->setWindowModality(Qt::WindowModal);
     _FinestraDescrizione->show();
-    _FinestraDescrizione->setWindowModality(Qt::ApplicationModal);
+
 }
 
 

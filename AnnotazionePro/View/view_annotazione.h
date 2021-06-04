@@ -88,6 +88,7 @@ private slots:
     void ComboBoxTypeChanged(int);
     void OnTextChanged();
     void DeleteGrid();
+    void GridEnable();
     void OpenWindowDetails( int);
     void viewGrigliaAlternativo(int i);
 };
