@@ -138,17 +138,16 @@ void model_annotazione::modificaElemento(int _index,annotazione *annot)
                 dynamic_cast<ricorrenza*>(*ci)->setTime(dynamic_cast<ricorrenza*>(annot)->getTime());
                 dynamic_cast<ricorrenza*>(*ci)->setType(dynamic_cast<ricorrenza*>(annot)->getType());
             }
-            else if(dynamic_cast<elenco*>(*ci))
+            else if(dynamic_cast<spesa*>(*ci))
+            {
+                dynamic_cast<spesa*>(*ci)->setDescrizione(dynamic_cast<spesa*>(annot)->getDescrizione());
+                dynamic_cast<spesa*>(*ci)->setSpesa(dynamic_cast<spesa*>(annot)->getSpesa());
+            }
+            else if(dynamic_cast<elenco*>(*ci) )
             {
                 dynamic_cast<elenco*>(*ci)->setDescrizione(dynamic_cast<elenco*>(annot)->getDescrizione());
                 dynamic_cast<elenco*>(*ci)->setElenco(dynamic_cast<elenco*>(annot)->getElenco());
             }
-            else if(dynamic_cast<spesa*>(*ci))
-            {
-                dynamic_cast<spesa*>(*ci)->setDescrizione(dynamic_cast<spesa*>(annot)->getDescrizione());
-                dynamic_cast<spesa*>(*ci)->setElenco(dynamic_cast<spesa*>(annot)->getElenco());
-            }
-
             if(dynamic_cast<nota*>(*ci))
             {
                 dynamic_cast<nota*>(*ci)->setCorpo(dynamic_cast<nota*>(annot)->getCorpo());

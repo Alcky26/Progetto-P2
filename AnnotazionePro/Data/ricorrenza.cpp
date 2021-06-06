@@ -135,13 +135,6 @@ Tipo ricorrenza::QStringToTipo(QString stringa) const
         return Annuale;
     }
 }
-/*
-void ricorrenza::operator+(const QString &value)
-{
-   setCorpo(getCorpo() + " " + value);
-}
-*/
-
 
 void ricorrenza::Aggiorna()
 {

@@ -14,7 +14,6 @@ public:
     promemoria(QDomElement promemoria);
     virtual ~promemoria();
 
-
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
     static QDate strToItaDate(const QString& date);
     static QString dateToItaStr(const QDate& date);
@@ -28,8 +27,6 @@ public:
     //Override Operatori di Confronto
     bool operator==(const promemoria &p) const;
     bool operator!=(const promemoria &p) const;
-    //Override Operatore di Somma
-    /* void operator+(const QString &value);*/
 
 private:
     QDate _date;

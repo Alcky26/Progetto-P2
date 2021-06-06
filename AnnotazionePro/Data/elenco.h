@@ -22,7 +22,6 @@ public:
     ///Override Operatore di Somma
     ///void operator+(const QString &value);
 
-
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
 
     QString getListAsText();

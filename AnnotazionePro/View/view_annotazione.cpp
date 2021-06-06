@@ -153,15 +153,19 @@ void view_annotazione::viewGriglia()
     {
         _SignalMapper->removeMappings(*citt);
     }
+
     _wA.clear();
     lista<annotazione*> temp=_Model->getAnnotazioni();
     wAnnotazione *_nuovoWAnn;
+
+
     for(lista<annotazione*>::constiterator ci=temp.begin(); ci != temp.end();ci++)
     {
         _nuovoWAnn = new wAnnotazione(*ci);
         _wA.insertBack(_nuovoWAnn);
         SetSignalMapper(_nuovoWAnn);
     }
+
     int count = 0;
     for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
     {
@@ -197,7 +201,7 @@ void view_annotazione::viewGrigliaAlternativo(int i)
     _tempLayoutGriglia->setSpacing(width/25);
 
     // Aggiornamento della Griglia
-      for(lista<wAnnotazione*>::constiterator citt=_wA.begin(); citt != _wA.end();citt++)
+    for(lista<wAnnotazione*>::constiterator citt=_wA.begin(); citt != _wA.end();citt++)
     {
         _SignalMapper->removeMappings(*citt);
     }

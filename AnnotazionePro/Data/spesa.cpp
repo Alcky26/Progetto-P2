@@ -102,7 +102,11 @@ QString spesa::getListSpesaAsText()
     QString temp;
     for( lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
     {
-        temp = (*ci)->getValue() + " : " +  QString::number((*ci)->getCost()) + "\n";
+        temp = (*ci)->getValue() + " : " +  QString::number((*ci)->getCost()) + " : ";
+        if((*ci)->getIsDone())
+            temp += "Effettuato \n";
+        else
+            temp += "Non Effettuato \n";
         _finalValue+= temp;
     }
     return _finalValue;

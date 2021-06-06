@@ -53,9 +53,9 @@ QString elenco::getListAsText()
     {
         _finalValue += (*ci)->getValue();
         if( (*ci)->getIsDone())
-            _finalValue += "    V ";
+            _finalValue += "    Effettuato ";
         else
-            _finalValue += "    X ";
+            _finalValue += "    Non Effettuato ";
         _finalValue+="\n";
     }
     return _finalValue;

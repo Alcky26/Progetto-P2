@@ -6,9 +6,6 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 
     _state=0;
 
-    //setAttribute(Qt::WA_Hover);
-
-
     QListWidget *_MainWidgetList= new QListWidget();
     _MainWidgetList->setSizeAdjustPolicy(QListWidget::AdjustToContents);
 
@@ -61,18 +58,20 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
         _LabElenco->setReadOnly(true);
         _LabElenco->setVerticalScrollBar(new QScrollBar());
         _LabElenco->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        _LabElenco->setStyleSheet("background:rgb(224, 217, 215);");
         _mainVBoxLayout->addWidget(_LabElenco);
     }
 
     if(dynamic_cast<spesa*>(ann))
     {
-        _LabDescrizione = new QLabel(dynamic_cast<spesa*>(ann)->getDescrizione());
+        _LabDescrizione = new QLabel(dynamic_cast<spesa*>(ann)->getDescrizione());  
         _mainVBoxLayout->addWidget(_LabDescrizione);
         _LabElenco = new QPlainTextEdit(dynamic_cast<spesa*>(ann)->getListSpesaAsText());
         _LabElenco->setFrameStyle(1);
         _LabElenco->setReadOnly(true);
         _LabElenco->setVerticalScrollBar(new QScrollBar());
         _LabElenco->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        _LabElenco->setStyleSheet("background:rgb(224, 217, 215);");
         _mainVBoxLayout->addWidget(_LabElenco);
     }
 

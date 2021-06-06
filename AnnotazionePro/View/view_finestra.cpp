@@ -66,14 +66,15 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _TableList = new QTableWidget();
         _TableList->setShowGrid(true);
         _TableList->setColumnCount(2);
-        //_TableList->setColumnWidth(0,250);
         _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
-        _TableList->setHorizontalHeaderItem(1,new QTableWidgetItem("Conferma"));
+        _TableList->setColumnWidth(0,300);
+        _TableList->setHorizontalHeaderItem(1,new QTableWidgetItem(""));
+        _TableList->setColumnWidth(1,18);
         // Riempimento Tabella
         int i=0;
         lista<type_elenco*> _SupportList =  dynamic_cast<elenco*>(ann)->getElenco();
         _TableList->setRowCount(_SupportList.getSize());
-        _TableList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        _TableList->setEnabled(false);
 
         for(lista<type_elenco*>::constiterator ci = _SupportList.begin() ; ci!=_SupportList.end() ; ci++)
         {
@@ -81,7 +82,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
             _TableList->setItem(i,0,new QTableWidgetItem(_SupportList.index(ci)->getValue()));
             QTableWidgetItem *checkBoxItem = new QTableWidgetItem();
             checkBoxItem->setCheckState(Qt::Unchecked);
-            checkBoxItem->setText("effettuato");
+
             _TableList->setItem(i,1,checkBoxItem);
             i++;
         }
@@ -105,21 +106,20 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _TableList = new QTableWidget();
         _TableList->setShowGrid(true);
         _TableList->setColumnCount(3);
-        //_TableList->setColumnWidth(0,125);
-        //_TableList->setColumnWidth(0,125);
         _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
-        _TableList->setColumnWidth(0,130);
+        _TableList->setColumnWidth(0,160);
         _TableList->setHorizontalHeaderItem(1,new QTableWidgetItem("Costo"));
-        _TableList->setColumnWidth(1,130);
-        _TableList->setHorizontalHeaderItem(2,new QTableWidgetItem("Conferma"));
-        _TableList->setColumnWidth(2,80);
+        _TableList->setColumnWidth(1,160);
+        _TableList->setHorizontalHeaderItem(2,new QTableWidgetItem(""));
+        _TableList->setColumnWidth(2,18);
 
         // Riempimento Tabella
         int i=0;
         lista<type_spesa*> _SupportList =  dynamic_cast<spesa*>(ann)->getSpesa();
         _TableList->setRowCount(_SupportList.getSize());
-        _TableList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        _TableList->setEnabled(false);
 
+        //_TableList->setEnabled(false);
         for(lista<type_spesa*>::constiterator ci = _SupportList.begin() ; ci!=_SupportList.end() ; ci++)
         {
             _TableList->setItem(i,0,new QTableWidgetItem(_SupportList.index(ci)->getValue()));
@@ -195,19 +195,13 @@ void view_finestra::SetAllEnabled(bool _boolean)
     if(dynamic_cast<elenco*>(_ann))
     {
         _LineDesc->setEnabled(_boolean);
-        if(_boolean)
-            _TableList->setEditTriggers(QAbstractItemView::AllEditTriggers);
-        else
-            _TableList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        _TableList->setEnabled(_boolean);
     }
 
     if(dynamic_cast<spesa*>(_ann))
     {
         _LineDesc->setEnabled(_boolean);
-        if(_boolean)
-            _TableList->setEditTriggers(QAbstractItemView::AllEditTriggers);
-        else
-            _TableList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        _TableList->setEnabled(_boolean);
     }
 }
 
@@ -221,7 +215,8 @@ annotazione* view_finestra::ReadChangedValues()
         for(int i=0;i<_TableList->rowCount();i++)
         {
             _ValueTemp = _TableList->item(i,1)->text().toDouble();
-            _ListaTableSpesa->insertBack(new type_spesa( _TableList->item(i,0)->text(),_TableList->item(i,2)->checkState(),_ValueTemp));
+            qDebug() << _TableList->item(i,2)->checkState();
+            _ListaTableSpesa->insertFront(new type_spesa( _TableList->item(i,0)->text(),_TableList->item(i,2)->checkState(),_ValueTemp));
 
         }
         return new spesa(_LineTitolo->text(),_LineDesc->document()->toRawText(),*_ListaTableSpesa);
@@ -232,7 +227,7 @@ annotazione* view_finestra::ReadChangedValues()
         lista<type_elenco*> *_ListaTableElenco = new lista<type_elenco*>();
         for(int i=0;i<_TableList->rowCount();i++)
         {
-            _ListaTableElenco->insertBack(new type_elenco( _TableList->item(i,0)->text(),_TableList->item(i,1)->checkState() ));
+            _ListaTableElenco->insertFront(new type_elenco( _TableList->item(i,0)->text(),_TableList->item(i,1)->checkState() ));
 
         }
         return new elenco(_LineTitolo->text(),_LineDesc->document()->toRawText(),*_ListaTableElenco);
