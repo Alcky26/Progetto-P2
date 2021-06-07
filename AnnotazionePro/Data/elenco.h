@@ -19,20 +19,17 @@ public:
     elenco(QDomElement elenco);
     virtual ~elenco();
 
-    ///Override Operatore di Somma
-    ///void operator+(const QString &value);
-
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
     virtual QString ToString() const;
 
     QString getDescrizione() const;
-
-    void setElenco( lista<type_elenco*> _newElenco);
-    void setDescrizione(QString const &descrizione);
-
-    void addElemento(const QString* &elemento);
+    void setDescrizione(const QString  &descrizione);
 
     lista<type_elenco *> getElenco() const;
+    void setElenco(const lista<type_elenco*> _newElenco);
+
+    void addElemento(const QString* &elemento);
+    void Remove(const type_elenco* &_this);
 
 private:
     QString _descrizione;

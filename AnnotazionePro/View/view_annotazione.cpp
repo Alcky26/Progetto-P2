@@ -58,23 +58,12 @@ void view_annotazione::ApriGriglia()
     _scrollAreaAnnot = new QScrollArea;
     _scrollAreaAnnot->setWidgetResizable(true);
 
-    // Pulisce la Griglia dalle wAnnotazioni
-    for (int i = 0; i < _Grid->count(); i++)
-    {
-       _Grid->itemAt(i)->widget()->deleteLater();
-    }
-
     QRect geometry = _Grid->geometry();
     int width = geometry.width();
     _tempLayoutGriglia->setSpacing(width/25);
 
-    // Aggiornamento della Griglia
-      for(lista<wAnnotazione*>::constiterator citt=_wA.begin(); citt != _wA.end();citt++)
-    {
-        _SignalMapper->removeMappings(*citt);
-    }
+    clearGriglia();
 
-    _wA.clear();
     lista<annotazione*> temp=_Model->getAnnotazioni();
     wAnnotazione *_nuovoWAnn;
     _LineLog->append("Apertura File!");
@@ -210,26 +199,14 @@ void view_annotazione::viewGriglia()
     _scrollAreaAnnot = new QScrollArea;
     _scrollAreaAnnot->setWidgetResizable(true);
 
-    // Pulisce la Griglia dalle wAnnotazioni
-    for (int i = 0; i < _Grid->count(); i++)
-    {
-       _Grid->itemAt(i)->widget()->deleteLater();
-    }
-
     QRect geometry = _Grid->geometry();
     int width = geometry.width();
     _tempLayoutGriglia->setSpacing(width/25);
 
-    // Aggiornamento della Griglia
-      for(lista<wAnnotazione*>::constiterator citt=_wA.begin(); citt != _wA.end();citt++)
-    {
-        _SignalMapper->removeMappings(*citt);
-    }
+    clearGriglia();
 
-    _wA.clear();
     lista<annotazione*> temp=_Model->getAnnotazioni();
     wAnnotazione *_nuovoWAnn;
-
 
     for(lista<annotazione*>::constiterator ci=temp.begin(); ci != temp.end();ci++)
     {
@@ -262,22 +239,12 @@ void view_annotazione::viewGrigliaAlternativo(int i)
     _scrollAreaAnnot = new QScrollArea;
     _scrollAreaAnnot->setWidgetResizable(true);
 
-    // Pulisce la Griglia dalle wAnnotazioni
-    for (int i = 0; i < _Grid->count(); i++)
-    {
-       _Grid->itemAt(i)->widget()->deleteLater();
-    }
-
     QRect geometry = _Grid->geometry();
     int width = geometry.width();
     _tempLayoutGriglia->setSpacing(width/25);
 
-    // Aggiornamento della Griglia
-    for(lista<wAnnotazione*>::constiterator citt=_wA.begin(); citt != _wA.end();citt++)
-    {
-        _SignalMapper->removeMappings(*citt);
-    }
-    _wA.clear();
+    clearGriglia();
+
     lista<annotazione*> temp=_Model->getAnnotazioni();
     wAnnotazione *_nuovoWAnn;
     for(lista<annotazione*>::constiterator ci=temp.begin(); ci != temp.end();ci++)
@@ -293,7 +260,6 @@ void view_annotazione::viewGrigliaAlternativo(int i)
         (*cit)->setEnabled(false);
         if(i==count)
         {
-            //(*cit)->setPalette()
             (*cit)->setStyleSheet(" background-color: rgb(66, 245, 123)");
         }
         else
@@ -358,6 +324,22 @@ void view_annotazione::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
+void view_annotazione::clearGriglia()
+{
+    // Pulisce la Griglia dalle wAnnotazioni
+    for (int i = 0; i < _Grid->count(); i++)
+    {
+       _Grid->itemAt(i)->widget()->deleteLater();
+    }
+
+    // Aggiornamento della Griglia
+    for(lista<wAnnotazione*>::constiterator citt=_wA.begin(); citt != _wA.end();citt++)
+    {
+        _SignalMapper->removeMappings(*citt);
+    }
+    _wA.clear();
+}
+
 ////// S L O T
 
 // On Click aggiunge una nuova annotazione
@@ -374,7 +356,7 @@ void view_annotazione::OnClickBtnAggiungi()
         _nuovoInsert  = new promemoria(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_Calendario->selectedDate(),_Ora->time());
     //Ricorrenza
     else if (_value == 2)
-        _nuovoInsert  = new ricorrenza(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_Calendario->selectedDate(),_Ora->time(), metodi_extra::MetodoSupporto(_Ricorrenza->currentIndex()));
+        _nuovoInsert  = new ricorrenza(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_Calendario->selectedDate(),_Ora->time(), metodi_extra::IntToTipo(_Ricorrenza->currentIndex()));
     //Elenco
     else if (_value == 3)
     {
@@ -411,7 +393,8 @@ void view_annotazione::OnClickBtnAggiungi()
     }
 
     wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
-    _LineLog->append("Aggiunta elemento: "+_nuovoInsert->ToString());
+    if(_nuovoInsert != nullptr)
+        _LineLog->append("Aggiunta elemento: "+_nuovoInsert->ToString());
     _Model->aggiungiAnnotazione(_nuovoInsert);
     _wA.insertBack(_nuovoWAnn);
     SetSignalMapper(_nuovoWAnn);

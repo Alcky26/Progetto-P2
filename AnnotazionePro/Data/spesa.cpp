@@ -80,34 +80,6 @@ double spesa::CostoComplessivo() const
     return total;
 }
 
-/*double spesa::CostoRimanente() const
-{
-    double total=0;
-    for(lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
-    {
-        if(!(*ci)->getIsDone())
-        {
-            total+= (*ci)->getCost();
-        }
-
-    }
-    return total;
-}*/
-
-/*double spesa::CostoAttuale() const
-{
-    double total=0;
-    for(lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
-    {
-        if((*ci)->getIsDone())
-        {
-            total+= (*ci)->getCost();
-        }
-
-    }
-    return total;
-}*/
-
 void spesa::addElement(const QString &elemento, const double &prezzo)
 {
     type_spesa* newElement = new type_spesa();
@@ -116,16 +88,17 @@ void spesa::addElement(const QString &elemento, const double &prezzo)
     _spesa.insertBack(newElement);
 }
 
-void spesa::addElement( type_spesa* const &value)
+void spesa::addElement(const type_spesa* &value)
 {
-    _spesa.insertBack(value);
+
+    //_spesa.insertBack(value);
 }
 
-void spesa::Remove(const QString &elemento, const double &prezzo)
+void spesa::Remove(const type_spesa* &_this)
 {
     for(lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
     {
-        if((*ci)->getCost()==prezzo && (*ci)->getValue()==elemento)
+        if((*ci)->getCost()==_this->getCost() && (*ci)->getValue()==_this->getValue() && (*ci)->getIsDone() == _this->getIsDone())
         {
             _spesa.erase(ci);
         }

@@ -81,6 +81,7 @@ private:
     void resizeAnn(wAnnotazione* Ann);
     void SetSignalMapper(wAnnotazione *_wAnn);
     void resizeEvent(QResizeEvent *event);
+    void clearGriglia();
 
 private slots:
     void OnClickBtnAggiungi();

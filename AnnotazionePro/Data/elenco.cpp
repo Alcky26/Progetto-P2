@@ -4,7 +4,18 @@ elenco::elenco() : annotazione()
 {
 
 }
+
 elenco::elenco(QString titolo, QString descrizione):annotazione(titolo),_descrizione(descrizione),_elenco()
+{
+
+}
+
+elenco::elenco(QString titolo, QString descrizione, lista<type_elenco*> elenco):annotazione(titolo),_descrizione(descrizione),_elenco(elenco)
+{
+
+}
+
+elenco::elenco(const elenco &elen):annotazione(elen.getTitolo()),_descrizione(elen.getDescrizione()),_elenco(elen.getElenco())
 {
 
 }
@@ -57,39 +68,9 @@ QString elenco::ToString() const
     return testo;
 }
 
-elenco::elenco(QString titolo, QString descrizione, lista<QString*> &elenco):annotazione(titolo),_descrizione(descrizione)
-{
-    type_elenco* newElement;
-
-    for( lista<QString*>::constiterator ci = elenco.begin(); ci!=elenco.end();ci++)
-    {
-        newElement= new type_elenco(*ci);
-        _elenco.insertFront(newElement);
-    }
-}
-
-elenco::elenco(QString titolo, QString descrizione, lista<type_elenco*> elenco):annotazione(titolo),_descrizione(descrizione),_elenco(elenco)
-{
-
-}
-
-elenco::elenco(const elenco &elen):annotazione(elen.getTitolo()),_descrizione(elen.getDescrizione()),_elenco(elen.getElenco())
-{
-
-}
-
 QString elenco::getDescrizione() const
 {
     return _descrizione;
-}
-
-void elenco::setElenco(lista<type_elenco *> _newElenco)
-{
-    _elenco.clear();
-    for( lista<type_elenco*>::constiterator ci = _newElenco.begin(); ci!=_newElenco.end();ci++)
-    {
-        _elenco.insertFront(*ci);
-    }
 }
 
 void elenco::setDescrizione(const QString &descrizione)
@@ -104,8 +85,27 @@ void elenco::addElemento(const QString* &elemento)
     _elenco.insertBack(elem);
 }
 
+void elenco::Remove(const type_elenco *&_this)
+{
+    for(lista<type_elenco*>::constiterator ci = _elenco.begin(); ci!=_elenco.end();ci++)
+    {
+        if((*ci)->getValue()== _this->getValue() && (*ci)->getIsDone()==_this->getIsDone())
+        {
+            _elenco.erase(ci);
+        }
+    }
+}
+
 lista<type_elenco *> elenco::getElenco() const
 {
     return _elenco;
 }
 
+void elenco::setElenco(lista<type_elenco *> _newElenco)
+{
+    _elenco.clear();
+    for( lista<type_elenco*>::constiterator ci = _newElenco.begin(); ci!=_newElenco.end();ci++)
+    {
+        _elenco.insertFront(*ci);
+    }
+}

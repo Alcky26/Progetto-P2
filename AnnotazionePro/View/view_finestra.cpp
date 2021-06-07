@@ -239,7 +239,7 @@ annotazione* view_finestra::ReadChangedValues()
 
     else if (dynamic_cast<ricorrenza*>(_ann))
     {
-        return new ricorrenza(_LineTitolo->text(),_LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(),metodi_extra::MetodoSupporto(_tipo->currentIndex()) );
+        return new ricorrenza(_LineTitolo->text(),_LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(),metodi_extra::IntToTipo(_tipo->currentIndex()) );
     }
 
     else if (dynamic_cast<nota*>(_ann))

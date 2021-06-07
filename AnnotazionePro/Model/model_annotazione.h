@@ -19,9 +19,9 @@ public:
     ~model_annotazione();
 
     void readFromFile(const QDomDocument& doc);
-    QDomDocument saveFile();
+    QDomDocument saveFile() const;
 
-    void aggiungiAnnotazione(annotazione *annotazione);
+    void aggiungiAnnotazione(annotazione  *annotazione);
     // getter
     lista<annotazione*> getAnnotazioni() const;
     annotazione *getAnnotazione(unsigned int i) const;
@@ -30,7 +30,7 @@ public:
     void reset();
 
     /// METODO MODIFICA DI UN ELEMENTO
-    void rimouviElemento(annotazione *annot);
+    void rimouviElemento(const annotazione *annot);
     void modificaElemento(int _index,annotazione *annot);
 
     bool muoviElementoDx(lista<annotazione*>::constiterator ci);

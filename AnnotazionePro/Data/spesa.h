@@ -22,17 +22,14 @@ public:
 
     double CostoComplessivo() const;
 
-    //double CostoRimanente() const;
-    //double CostoAttuale() const;
-
     void addElement(const QString &elemento, const double &prezzo);
 
-    void addElement(type_spesa* const &value);
+    void addElement(const type_spesa* &value);
 
-    void Remove(const QString &elemento, const double &prezzo);
+    void Remove(const type_spesa* &_this);
 
     lista<type_spesa *> getSpesa() const;
-     void setSpesa( lista<type_spesa*> _newSpesa);
+    void setSpesa( lista<type_spesa*> _newSpesa);
 
 private:
     lista<type_spesa*> _spesa;

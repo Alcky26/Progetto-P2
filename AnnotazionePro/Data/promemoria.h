@@ -6,6 +6,8 @@
 #include "nota.h"
 #include <QDomDocument>
 #include <QDomElement>
+#include "Util/metodi_extra.h"
+
 
 class promemoria : virtual public nota
 {
@@ -16,8 +18,6 @@ public:
 
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
     virtual QString ToString() const;
-    static QDate strToItaDate(const QString& date);
-    static QString dateToItaStr(const QDate& date);
 
     //Get e Set
     QDate getDate() const;
@@ -25,9 +25,6 @@ public:
 
     QTime getTime() const;
     void setTime(const QTime &time);
-    //Override Operatori di Confronto
-    bool operator==(const promemoria &p) const;
-    bool operator!=(const promemoria &p) const;
 
 private:
     QDate _date;

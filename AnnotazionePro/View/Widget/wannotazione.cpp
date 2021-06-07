@@ -34,7 +34,7 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     {
         _LabDateTime = new QLabel("Data : "+dynamic_cast<ricorrenza*>(ann)->getDate().toString() + "\n"+"Ora : " +  dynamic_cast<ricorrenza*>(ann)->getTime().toString());
         _mainVBoxLayout->addWidget(_LabDateTime);
-        _LabRicorrenza = new QLabel(dynamic_cast<ricorrenza*>(ann)->typeToQString());
+        _LabRicorrenza = new QLabel(metodi_extra::TipoToQString( dynamic_cast<ricorrenza*>(ann)->getType()));
         _mainVBoxLayout->addWidget(_LabRicorrenza);
     }
 

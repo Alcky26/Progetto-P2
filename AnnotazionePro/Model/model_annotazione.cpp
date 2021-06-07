@@ -53,7 +53,7 @@ void model_annotazione::readFromFile(const QDomDocument &doc)
 
 }
 
-QDomDocument model_annotazione::saveFile()
+QDomDocument model_annotazione::saveFile() const
 {
     QDomDocument doc("Annotazioni");
     QDomElement root = doc.createElement("Annotazioni");
@@ -66,7 +66,7 @@ QDomDocument model_annotazione::saveFile()
     return doc;
 }
 
-void model_annotazione::aggiungiAnnotazione(annotazione *annotazione)
+void model_annotazione::aggiungiAnnotazione(annotazione  *annotazione)
 {
     _annotazioni.insertBack(annotazione);
     _needToSave=true;
@@ -102,7 +102,7 @@ void model_annotazione::reset()
     _needToSave=true;
 }
 
-void model_annotazione::rimouviElemento(annotazione *annot)
+void model_annotazione::rimouviElemento(const annotazione *annot)
 {
     lista<annotazione *>::constiterator ci = _annotazioni.begin();
     bool _eliminato = false;
