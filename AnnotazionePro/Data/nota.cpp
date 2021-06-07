@@ -25,6 +25,13 @@ QDomElement nota::XmlSerialize(QDomDocument doc) const
     return nota;
 }
 
+QString nota::ToString() const
+{
+    QString testo;
+    testo+=annotazione::ToString();
+    return testo+"Corpo: "+getCorpo()+";";
+}
+
 QString nota::getCorpo() const
 {
     return _corpo;

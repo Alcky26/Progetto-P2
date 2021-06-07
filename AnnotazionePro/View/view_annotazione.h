@@ -43,7 +43,7 @@ public:
     view_annotazione(model_annotazione *model, QWidget *parent = 0);
     ~view_annotazione();
 
-    void viewGriglia();
+    void ApriGriglia();
 private:
 
     // Modello
@@ -73,10 +73,11 @@ private:
     QSignalMapper *_SignalMapper;
 
     // Bottoni
-    QPushButton *_BtnAdd, *_BtnAddRow, *_BtnDeleteGrid, *_BtnLog;
+    QPushButton *_BtnAdd, *_BtnAddRow, *_BtnDeleteGrid;
 
     // Metodi
     void viewOpzioni();
+    void viewGriglia();
     void resizeAnn(wAnnotazione* Ann);
     void SetSignalMapper(wAnnotazione *_wAnn);
     void resizeEvent(QResizeEvent *event);
@@ -91,6 +92,10 @@ private slots:
     void GridEnable();
     void OpenWindowDetails( int);
     void viewGrigliaAlternativo(int i);
+    void SpostaSinistra(annotazione* a);
+    void SpostaDestra(annotazione* a);
+    void ModificaScrivi(annotazione* a);
+    void EliminaScrivi(annotazione* a);
 };
 
 #endif // VIEW_ANNOTAZIONE_H

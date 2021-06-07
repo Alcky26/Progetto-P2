@@ -14,6 +14,8 @@ public:
 
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
 
+    virtual QString ToString() const;
+
     QString getTitolo() const;
     void setTitolo(const QString &value);
 

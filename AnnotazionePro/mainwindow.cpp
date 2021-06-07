@@ -121,7 +121,7 @@ void MainWindow::openClicked()
         try
         {
             model->readFromFile(documentoLetto);
-            viewA->viewGriglia();
+            viewA->ApriGriglia();
         }
         catch (std::exception *e)
         {
@@ -129,7 +129,6 @@ void MainWindow::openClicked()
             model->salvato();
             QMessageBox::warning(this, "Impossibile leggere il file", e->what());
         }
-
     }
 }
 
@@ -181,13 +180,14 @@ void MainWindow::saveNameClicked()
 
 void MainWindow::openInfos() const
 {
-    QMessageBox box(QMessageBox::Information, "Informazione", QString("Questo Software può essere utilizzato per gestire un insieme di annotazioni e promemoria!"), QMessageBox::Ok);
+    QMessageBox box(QMessageBox::Information, "Informazione", QString("Questo Software può essere utilizzato per gestire un insieme di annotazioni e in forma di promemoria e elenchi!"), QMessageBox::Ok);
     box.exec();
 }
 
 void MainWindow::openHelp() const
 {
-    QMessageBox box(QMessageBox::Information, "Help", QString("Help - "), QMessageBox::Ok);
+    QMessageBox box(QMessageBox::Information, "Tutorial", QString("Per creare un nuovo elemento interagire con l'area <b>Inserimento</b>.<br>"
+                                                                "Se si possiede un file <u><i>.xml</i></u> con elementi salvati in precendenza, allora premere su <b>File>Apri</b>, in alto a sinistra.<br>"), QMessageBox::Ok);
     box.exec();
 }
 
@@ -203,8 +203,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
     {
         checkUnsavedData();
     }
-
-    emit stoChiudendo();
     event->accept();
     setAttribute(Qt::WA_DeleteOnClose);
 }

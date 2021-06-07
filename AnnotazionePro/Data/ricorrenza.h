@@ -17,6 +17,7 @@ public:
     virtual ~ricorrenza();
 
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
+    virtual QString ToString() const;
     static QDate strToItaDate(const QString& date);
     static QString dateToItaStr(const QDate& date);
     //Get e Set

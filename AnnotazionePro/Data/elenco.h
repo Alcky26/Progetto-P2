@@ -23,8 +23,7 @@ public:
     ///void operator+(const QString &value);
 
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
-
-
+    virtual QString ToString() const;
 
     QString getDescrizione() const;
 

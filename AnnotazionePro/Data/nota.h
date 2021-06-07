@@ -13,6 +13,7 @@ public:
     virtual ~nota();
 
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
+    virtual QString ToString() const;
     //Get e Set
     QString getCorpo() const;
     void setCorpo(const QString &value);

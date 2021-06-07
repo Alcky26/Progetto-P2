@@ -15,6 +15,7 @@ public:
     virtual ~promemoria();
 
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
+    virtual QString ToString() const;
     static QDate strToItaDate(const QString& date);
     static QString dateToItaStr(const QDate& date);
 

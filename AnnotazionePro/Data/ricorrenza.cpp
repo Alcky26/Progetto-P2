@@ -41,6 +41,13 @@ QDomElement ricorrenza::XmlSerialize(QDomDocument doc) const
     return ricor;
 }
 
+QString ricorrenza::ToString() const
+{
+    QString testo;
+    testo+=nota::ToString();
+    return testo+"Data: "+getDate().toString()+";Time: "+getTime().toString()+";Tipo: "+typeToQString()+";";
+}
+
 Tipo ricorrenza::getType() const
 {
     return _type;

@@ -39,6 +39,13 @@ QDomElement promemoria::XmlSerialize(QDomDocument doc) const
     return prom;
 }
 
+QString promemoria::ToString() const
+{
+    QString testo;
+    testo+=nota::ToString();
+    return testo+"Data: "+getDate().toString()+";Time: "+getTime().toString()+";";
+}
+
 QDate promemoria::getDate() const
 {
     return _date;

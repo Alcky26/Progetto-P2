@@ -215,7 +215,6 @@ annotazione* view_finestra::ReadChangedValues()
         for(int i=0;i<_TableList->rowCount();i++)
         {
             _ValueTemp = _TableList->item(i,1)->text().toDouble();
-            qDebug() << _TableList->item(i,2)->checkState();
             _ListaTableSpesa->insertFront(new type_spesa( _TableList->item(i,0)->text(),_TableList->item(i,2)->checkState(),_ValueTemp));
 
         }
@@ -310,6 +309,7 @@ void view_finestra::OnClickModifica()
         SetAllEnabled(_StatoModifica);
         _Model->modificaElemento(_Model->getAnnotazioni().indexOfInt(_ann),ReadChangedValues());
         emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
+        emit ModificaLog(_ann);
     }
 }
 
@@ -322,6 +322,7 @@ void view_finestra::OnClickElimina()
     {
         _Model->rimouviElemento(_ann);
         emit AggiornaGriglia();
+        emit EliminaLog(_ann);
         this->close();
     }
 }
@@ -337,6 +338,7 @@ void view_finestra::MoveWAnnLeft()
             {
 
                 emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
+                emit SpostaSinLog(_ann);
             }
             else
                 QMessageBox::information(this, "Limite Sinistro","Limite sinistro raggiunto!");
@@ -352,7 +354,10 @@ void view_finestra::MoveWAnnRight()
         if((*ci)==_ann)
         {
             if(_Model->muoviElementoDx(ci))
+            {
                 emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
+                emit SpostaDesLog(_ann);
+            }
             else
                 QMessageBox::information(this, "Limite Destro","Limite destro raggiunto!");
         }

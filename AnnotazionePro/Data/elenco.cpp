@@ -20,7 +20,7 @@ elenco::elenco(QDomElement elen):
         te=new type_elenco();
         te->setValue(elen.childNodes().at(count).toElement().attribute("Value"));
         te->setIsDone(elen.childNodes().at(count).toElement().attribute("IsDone")=="0" ? 0:1);
-        _elenco.insertFront(te);
+        _elenco.insertBack(te);
         count++;
     }
 }
@@ -35,7 +35,6 @@ QDomElement elenco::XmlSerialize(QDomDocument doc) const
     QDomElement elenco = doc.createElement("Elenco");
     elenco.appendChild(annotazione::XmlSerialize(doc));
     elenco.setAttribute("Descrizione", _descrizione);
-
     for( lista<type_elenco*>::constiterator ci = _elenco.begin(); ci!=_elenco.end();ci++)
     {
         QDomElement elemento=doc.createElement("Elemento");
@@ -44,6 +43,18 @@ QDomElement elenco::XmlSerialize(QDomDocument doc) const
         elenco.appendChild(elemento);
     }
     return elenco;
+}
+
+QString elenco::ToString() const
+{
+    QString testo;
+    testo+=annotazione::ToString();
+    testo+="Descrizione: "+getDescrizione()+";";
+    for( lista<type_elenco*>::constiterator ci = _elenco.begin(); ci!=_elenco.end();ci++)
+    {
+        testo+="Valore: "+(*ci)->getValue()+";IsDone: "+((*ci)->getIsDone() ? "0" : "1" )+";";
+    }
+    return testo;
 }
 
 elenco::elenco(QString titolo, QString descrizione, lista<QString*> &elenco):annotazione(titolo),_descrizione(descrizione)

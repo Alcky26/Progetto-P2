@@ -73,6 +73,9 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
         _LabElenco->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         _LabElenco->setStyleSheet("background:rgb(224, 217, 215);");
         _mainVBoxLayout->addWidget(_LabElenco);
+        _LabCostoTot = new QLabel("<b>Costo totale: "+QString::number(dynamic_cast<spesa*>(ann)->CostoComplessivo())+" €</b>");
+        _LabCostoTot->setStyleSheet("font-size: 13px;");
+        _mainVBoxLayout->addWidget(_LabCostoTot);
     }
 
     _MainWidgetList->setLayout(_mainVBoxLayout);

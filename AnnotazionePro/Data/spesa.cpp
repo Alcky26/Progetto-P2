@@ -27,7 +27,7 @@ spesa::spesa(QDomElement spesa):
         ts->setValue(spesa.childNodes().at(count).toElement().attribute("Value"));
         ts->setIsDone(spesa.childNodes().at(count).toElement().attribute("IsDone")=="0" ? 0:1);
         ts->setCost(spesa.childNodes().at(count).toElement().attribute("Cost").toDouble());
-        _spesa.insertFront(ts);
+        _spesa.insertBack(ts);
         count++;
     }
 }
@@ -57,18 +57,30 @@ QDomElement spesa::XmlSerialize(QDomDocument doc) const
     return spesa;
 }
 
+QString spesa::ToString() const
+{
+    QString testo;
+    testo+=annotazione::ToString();
+    testo+="Descrizione: "+getDescrizione()+";";
+    for( lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
+    {
+        testo+="Valore: "+(*ci)->getValue()+";Costo: "+QString::number((*ci)->getCost())+";"+((*ci)->getIsDone() ? "0" : "1" )+";";
+    }
+    return testo;
+}
+
 double spesa::CostoComplessivo() const
 {
 
     double total=0;
     for(lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
     {
-        total+= (*ci)->getCost();//(ci)*.getCost();
+        total+= (*ci)->getCost();
     }
     return total;
 }
 
-double spesa::CostoRimanente() const
+/*double spesa::CostoRimanente() const
 {
     double total=0;
     for(lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
@@ -80,9 +92,9 @@ double spesa::CostoRimanente() const
 
     }
     return total;
-}
+}*/
 
-double spesa::CostoAttuale() const
+/*double spesa::CostoAttuale() const
 {
     double total=0;
     for(lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
@@ -94,7 +106,7 @@ double spesa::CostoAttuale() const
 
     }
     return total;
-}
+}*/
 
 void spesa::addElement(const QString &elemento, const double &prezzo)
 {

@@ -27,6 +27,11 @@ QDomElement annotazione::XmlSerialize(QDomDocument doc) const
     return ann;
 }
 
+QString annotazione::ToString() const
+{
+    return "Titolo: "+getTitolo()+";";
+}
+
 QString annotazione::getTitolo() const
 {
     return _titolo;
@@ -36,4 +41,6 @@ void annotazione::setTitolo(const QString &value)
 {
     _titolo = value;
 }
+
+
 

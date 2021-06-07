@@ -75,6 +75,10 @@ signals:
     void AggiornaGriglia();
     void AggiornaGrigliaAlternativo(int i);
     void ClosedWindow();
+    void SpostaSinLog(annotazione* a);
+    void SpostaDesLog(annotazione* a);
+    void ModificaLog(annotazione* a);
+    void EliminaLog(annotazione* a);
 private slots:
     void OnClickModifica();
     void OnClickElimina();

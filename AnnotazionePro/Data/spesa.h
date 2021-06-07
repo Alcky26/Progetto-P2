@@ -18,12 +18,12 @@ public:
     ~spesa();
 
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
+    virtual QString ToString() const;
 
     double CostoComplessivo() const;
 
-    double CostoRimanente() const;
-
-    double CostoAttuale() const;
+    //double CostoRimanente() const;
+    //double CostoAttuale() const;
 
     void addElement(const QString &elemento, const double &prezzo);
 

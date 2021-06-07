@@ -47,6 +47,61 @@ view_annotazione::~view_annotazione()
     delete _BtnAdd;
     delete _BtnAddRow;
     delete _BtnDeleteGrid;
+    delete _LineLog;
+}
+
+void view_annotazione::ApriGriglia()
+{
+    QGridLayout *_tempLayoutGriglia = new QGridLayout();
+    QGroupBox *_suppLayoutGriglia = new QGroupBox();
+
+    _scrollAreaAnnot = new QScrollArea;
+    _scrollAreaAnnot->setWidgetResizable(true);
+
+    // Pulisce la Griglia dalle wAnnotazioni
+    for (int i = 0; i < _Grid->count(); i++)
+    {
+       _Grid->itemAt(i)->widget()->deleteLater();
+    }
+
+    QRect geometry = _Grid->geometry();
+    int width = geometry.width();
+    _tempLayoutGriglia->setSpacing(width/25);
+
+    // Aggiornamento della Griglia
+      for(lista<wAnnotazione*>::constiterator citt=_wA.begin(); citt != _wA.end();citt++)
+    {
+        _SignalMapper->removeMappings(*citt);
+    }
+
+    _wA.clear();
+    lista<annotazione*> temp=_Model->getAnnotazioni();
+    wAnnotazione *_nuovoWAnn;
+    _LineLog->append("Apertura File!");
+
+    for(lista<annotazione*>::constiterator ci=temp.begin(); ci != temp.end();ci++)
+    {
+        _nuovoWAnn = new wAnnotazione(*ci);
+        _wA.insertBack(_nuovoWAnn);
+        SetSignalMapper(_nuovoWAnn);
+        _LineLog->append("Aggiunta elemento: "+(*ci)->ToString());
+    }
+
+    int count = 0;
+    for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
+    {
+        resizeAnn(* cit);
+
+        _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
+        count++;
+    }
+    _tempLayoutGriglia->setAlignment(Qt::AlignTop);
+
+    _suppLayoutGriglia->setLayout(_tempLayoutGriglia);
+    _scrollAreaAnnot->setWidget(_suppLayoutGriglia);
+
+    _Grid->addWidget(_scrollAreaAnnot);
+
 }
 
 // Creazione di Opzioni ( Parte a Destra )
@@ -128,10 +183,7 @@ void view_annotazione::viewOpzioni()
     _LineLog = new QTextEdit();
     _LineLog->setReadOnly(true);
 
-    _BtnLog = new QPushButton("Mostra Più Informazioni");
-
     _tempLayoutLog->addWidget(_LineLog);
-    _tempLayoutLog->addWidget(_BtnLog);
 
     _GroupBoxLog->setLayout(_tempLayoutLog);
     _InsertAndOptions->addWidget(_GroupBoxLog);
@@ -140,6 +192,8 @@ void view_annotazione::viewOpzioni()
     QVBoxLayout *_tempLayoutDelete = new QVBoxLayout();
     QGroupBox *_GroupBoxDelete = new QGroupBox("Svuota Griglia");
     _BtnDeleteGrid = new QPushButton("Svuota");
+    _BtnDeleteGrid->setMinimumHeight(70);
+    _BtnDeleteGrid->setStyleSheet("font-size: 24px;");
 
     _tempLayoutDelete->addWidget(_BtnDeleteGrid);
     _GroupBoxDelete->setLayout(_tempLayoutDelete);
@@ -255,6 +309,27 @@ void view_annotazione::viewGrigliaAlternativo(int i)
     _Grid->addWidget(_scrollAreaAnnot);
 }
 
+void view_annotazione::SpostaSinistra(annotazione* a)
+{
+     _LineLog->append("Spostato a sinistra: "+a->ToString());
+
+}
+
+void view_annotazione::SpostaDestra(annotazione *a)
+{
+    _LineLog->append("Spostato a destra: "+a->ToString());
+}
+
+void view_annotazione::ModificaScrivi(annotazione *a)
+{
+    _LineLog->append("Elemento modificato: "+a->ToString());
+}
+
+void view_annotazione::EliminaScrivi(annotazione *a)
+{
+    _LineLog->append("Elemento eliminato: "+a->ToString());
+}
+
 // Quando creo un oggetto di tipo wAnnotazione, lo passiamo a questo metodo che aggiunge connette slot e signal
 void view_annotazione::SetSignalMapper(wAnnotazione *_wAnn)
 {
@@ -336,9 +411,11 @@ void view_annotazione::OnClickBtnAggiungi()
     }
 
     wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
+    _LineLog->append("Aggiunta elemento: "+_nuovoInsert->ToString());
     _Model->aggiungiAnnotazione(_nuovoInsert);
     _wA.insertBack(_nuovoWAnn);
     SetSignalMapper(_nuovoWAnn);
+
     viewGriglia();
 }
 
@@ -467,6 +544,7 @@ void view_annotazione::DeleteGrid()
     {
         _Model->reset();
         viewGriglia();
+        _LineLog->append("Griglia Svuotata!");
     }
 }
 
@@ -499,7 +577,10 @@ void view_annotazione::OpenWindowDetails( int value)
     connect(_FinestraDescrizione ,SIGNAL(ClosedWindow()), this , SLOT(GridEnable()));
     connect(_FinestraDescrizione, SIGNAL(AggiornaGriglia()), this, SLOT(UpdateGrid()));
     connect(_FinestraDescrizione, SIGNAL(AggiornaGrigliaAlternativo(int)), this, SLOT(viewGrigliaAlternativo(int)));
-
+    connect(_FinestraDescrizione, SIGNAL(SpostaSinLog(annotazione*)), this, SLOT(SpostaSinistra(annotazione*)));
+    connect(_FinestraDescrizione, SIGNAL(SpostaDesLog(annotazione*)), this, SLOT(SpostaDestra(annotazione*)));
+    connect(_FinestraDescrizione, SIGNAL(ModificaLog(annotazione*)), this, SLOT(ModificaScrivi(annotazione*)));
+    connect(_FinestraDescrizione, SIGNAL(EliminaLog(annotazione*)), this, SLOT(EliminaScrivi(annotazione*)));
     _FinestraDescrizione->setMinimumSize(400,400);
     _FinestraDescrizione->setWindowModality(Qt::ApplicationModal);
     _FinestraDescrizione->show();

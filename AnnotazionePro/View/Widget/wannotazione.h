@@ -47,6 +47,7 @@ private:
     QLabel *_LabDateTime;
     QLabel *_LabRicorrenza;
     QLabel *_LabDescrizione;
+    QLabel *_LabCostoTot;
     QPlainTextEdit *_LabElenco;
 
     bool _state;
