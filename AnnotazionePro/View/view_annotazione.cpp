@@ -122,11 +122,29 @@ void view_annotazione::viewOpzioni()
 
     _InsertAndOptions->addWidget(_GroupBoxInserimento);
 
+
+    QVBoxLayout *_tempLayoutLog = new QVBoxLayout();
+    QGroupBox *_GroupBoxLog = new QGroupBox("Log");
+    _LineLog = new QTextEdit();
+    _LineLog->setReadOnly(true);
+
+    _BtnLog = new QPushButton("Mostra Più Informazioni");
+
+    _tempLayoutLog->addWidget(_LineLog);
+    _tempLayoutLog->addWidget(_BtnLog);
+
+    _GroupBoxLog->setLayout(_tempLayoutLog);
+    _InsertAndOptions->addWidget(_GroupBoxLog);
+
     // Bottone Clear
+    QVBoxLayout *_tempLayoutDelete = new QVBoxLayout();
+    QGroupBox *_GroupBoxDelete = new QGroupBox("Svuota Griglia");
     _BtnDeleteGrid = new QPushButton("Svuota");
 
-    _InsertAndOptions->addWidget(_BtnDeleteGrid);
-    _InsertAndOptions->setAlignment(_BtnDeleteGrid,Qt::AlignBottom);
+    _tempLayoutDelete->addWidget(_BtnDeleteGrid);
+    _GroupBoxDelete->setLayout(_tempLayoutDelete);
+    _InsertAndOptions->addWidget(_GroupBoxDelete);
+    _InsertAndOptions->setAlignment(_GroupBoxDelete,Qt::AlignBottom);
 }
 
 // Creazione della Griglia di wAnnotazioni

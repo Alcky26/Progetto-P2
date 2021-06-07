@@ -63,7 +63,7 @@ private:
 
     //Elementi per Inserimento
     QLineEdit *_LineTitolo;
-    QTextEdit *_LineCorpo, *_LineDesc;
+    QTextEdit *_LineCorpo, *_LineDesc, *_LineLog;
     QComboBox *_Tipologia;
     QCalendarWidget *_Calendario;
     QDateTimeEdit *_Ora;
@@ -73,7 +73,7 @@ private:
     QSignalMapper *_SignalMapper;
 
     // Bottoni
-    QPushButton *_BtnAdd, *_BtnAddRow, *_BtnDeleteGrid;
+    QPushButton *_BtnAdd, *_BtnAddRow, *_BtnDeleteGrid, *_BtnLog;
 
     // Metodi
     void viewOpzioni();
