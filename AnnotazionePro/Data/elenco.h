@@ -24,7 +24,7 @@ public:
 
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
 
-    QString getListAsText();
+
 
     QString getDescrizione() const;
 

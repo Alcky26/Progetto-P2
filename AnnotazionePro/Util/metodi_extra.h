@@ -14,7 +14,8 @@ public:
 
     //Metodi da mettere su file a parte
     static Tipo MetodoSupporto(int _index);
-
+    static QString ElencoAsText(lista<type_elenco*> _elenco);
+    static QString SpesaAsText(lista<type_spesa*> _spesa);
 };
 
 #endif // METODI_EXTRA_H

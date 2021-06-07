@@ -53,7 +53,7 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     {
         _LabDescrizione = new QLabel(dynamic_cast<elenco*>(ann)->getDescrizione());
         _mainVBoxLayout->addWidget(_LabDescrizione);
-        _LabElenco = new QPlainTextEdit (dynamic_cast<elenco*>(ann)->getListAsText());
+        _LabElenco = new QPlainTextEdit (metodi_extra::ElencoAsText(dynamic_cast<elenco*>(ann)->getElenco()));
         _LabElenco->setFrameStyle(1);
         _LabElenco->setReadOnly(true);
         _LabElenco->setVerticalScrollBar(new QScrollBar());
@@ -66,7 +66,7 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     {
         _LabDescrizione = new QLabel(dynamic_cast<spesa*>(ann)->getDescrizione());  
         _mainVBoxLayout->addWidget(_LabDescrizione);
-        _LabElenco = new QPlainTextEdit(dynamic_cast<spesa*>(ann)->getListSpesaAsText());
+        _LabElenco = new QPlainTextEdit(metodi_extra::SpesaAsText(dynamic_cast<spesa*>(ann)->getSpesa() ));
         _LabElenco->setFrameStyle(1);
         _LabElenco->setReadOnly(true);
         _LabElenco->setVerticalScrollBar(new QScrollBar());

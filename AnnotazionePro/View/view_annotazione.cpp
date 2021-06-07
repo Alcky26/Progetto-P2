@@ -221,6 +221,7 @@ void view_annotazione::viewGrigliaAlternativo(int i)
         (*cit)->setEnabled(false);
         if(i==count)
         {
+            //(*cit)->setPalette()
             (*cit)->setStyleSheet(" background-color: rgb(66, 245, 123)");
         }
         else

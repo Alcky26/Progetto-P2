@@ -25,8 +25,6 @@ public:
 
     double CostoAttuale() const;
 
-    QString getListSpesaAsText();
-
     void addElement(const QString &elemento, const double &prezzo);
 
     void addElement(type_spesa* const &value);

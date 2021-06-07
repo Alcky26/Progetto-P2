@@ -16,12 +16,14 @@
 #include "Data/promemoria.h"
 #include "Data/elenco.h"
 #include "Data/spesa.h"
+#include "Util/metodi_extra.h"
 #include <QGraphicsView>
 #include <QListWidget>
 #include <QPlainTextEdit >
 #include <QMessageBox>
 #include <QDebug>
 #include <QScrollBar>
+
 
 
 class wAnnotazione : public QWidget

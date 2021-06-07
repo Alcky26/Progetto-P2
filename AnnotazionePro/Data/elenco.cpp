@@ -46,21 +46,6 @@ QDomElement elenco::XmlSerialize(QDomDocument doc) const
     return elenco;
 }
 
-QString elenco::getListAsText()
-{
-    QString _finalValue="";
-    for( lista<type_elenco*>::constiterator ci = _elenco.begin(); ci!=_elenco.end();ci++)
-    {
-        _finalValue += (*ci)->getValue();
-        if( (*ci)->getIsDone())
-            _finalValue += "    Effettuato ";
-        else
-            _finalValue += "    Non Effettuato ";
-        _finalValue+="\n";
-    }
-    return _finalValue;
-}
-
 elenco::elenco(QString titolo, QString descrizione, lista<QString*> &elenco):annotazione(titolo),_descrizione(descrizione)
 {
     type_elenco* newElement;

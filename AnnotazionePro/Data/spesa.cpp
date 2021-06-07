@@ -96,23 +96,6 @@ double spesa::CostoAttuale() const
     return total;
 }
 
-QString spesa::getListSpesaAsText()
-{
-    QString _finalValue="";
-    QString temp;
-    for( lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
-    {
-        temp = (*ci)->getValue() + " : " +  QString::number((*ci)->getCost()) + " : ";
-        if((*ci)->getIsDone())
-            temp += "Effettuato \n";
-        else
-            temp += "Non Effettuato \n";
-        _finalValue+= temp;
-    }
-    return _finalValue;
-
-}
-
 void spesa::addElement(const QString &elemento, const double &prezzo)
 {
     type_spesa* newElement = new type_spesa();
