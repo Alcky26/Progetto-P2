@@ -34,7 +34,7 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     {
         _LabDateTime = new QLabel("Data : "+dynamic_cast<ricorrenza*>(ann)->getDate().toString() + "\n"+"Ora : " +  dynamic_cast<ricorrenza*>(ann)->getTime().toString());
         _mainVBoxLayout->addWidget(_LabDateTime);
-        _LabRicorrenza = new QLabel(metodi_extra::TipoToQString( dynamic_cast<ricorrenza*>(ann)->getType()));
+        _LabRicorrenza = new QLabel( dynamic_cast<ricorrenza*>(ann)->TipoToQString() );
         _mainVBoxLayout->addWidget(_LabRicorrenza);
     }
 
@@ -73,8 +73,8 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
         _LabElenco->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         _LabElenco->setStyleSheet("background:rgb(224, 217, 215);");
         _mainVBoxLayout->addWidget(_LabElenco);
-        _LabCostoTot = new QLabel("<b>Costo totale: "+QString::number(dynamic_cast<spesa*>(ann)->CostoComplessivo())+" €</b>");
-        _LabCostoTot->setStyleSheet("font-size: 13px;");
+        _LabCostoTot = new QLabel("<b>Costo totale: <b>"+QString::number(dynamic_cast<spesa*>(ann)->CostoComplessivo()));
+        //_LabCostoTot->setStyleSheet("font-size: 13px;");
         _mainVBoxLayout->addWidget(_LabCostoTot);
     }
 

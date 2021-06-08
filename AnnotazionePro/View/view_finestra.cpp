@@ -33,7 +33,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         setupDataOra();
         // Tipo
         _tipo=new QComboBox();
-        _tipo->addItems(ricorrenza::getTipi());
+        _tipo->addItems(metodi_extra::getTipi());
         _MainLayout->addWidget(_tipo);
         _tipo->setCurrentIndex(dynamic_cast<ricorrenza*>(ann)->getType());
         _tipo->setEnabled(false);
@@ -90,6 +90,10 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _TableLayout->addWidget(_TableList);
         _BoxTable->setLayout(_TableLayout);
         _MainLayout->addWidget(_BoxTable);
+
+        _BtnAddRow = new QPushButton("Aggiungi una Nuova Riga");
+        _BtnAddRow->setEnabled(false);
+        _MainLayout->addWidget(_BtnAddRow);
     }
 
     // Se è di tipo Spesa
@@ -133,12 +137,19 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _TableLayout->addWidget(_TableList);
         _BoxTable->setLayout(_TableLayout);
         _MainLayout->addWidget(_BoxTable);
+
+        _BtnAddRow = new QPushButton("Aggiungi una Nuova Riga");
+        _BtnAddRow->setEnabled(false);
+        _MainLayout->addWidget(_BtnAddRow);
     }
 
     _elimina = new QPushButton("Elimina Questo Elemento");
     _modifica = new QPushButton("Modifica Valori di Questo Elemento");
     _BtnLeft = new QPushButton("⟸ Sposta a Sinistra");
     _BtnRight = new QPushButton("Sposta a Destra ⟹");
+
+
+
     QGridLayout *_LayoutLeftRight = new QGridLayout();
     _LayoutLeftRight->addWidget(_BtnLeft,1,0,Qt::AlignTop);
     _LayoutLeftRight->addWidget(_BtnRight,1,1,Qt::AlignTop);
@@ -151,6 +162,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     connect(_modifica,SIGNAL(clicked()),this,SLOT(OnClickModifica()));
     connect(_BtnLeft, SIGNAL( clicked() ), this, SLOT( MoveWAnnLeft() ));
     connect(_BtnRight, SIGNAL( clicked() ), this, SLOT( MoveWAnnRight() ));
+    connect(_BtnAddRow, SIGNAL( clicked() ), this, SLOT( AggiungiRiga() ));
 }
 
 // Distruttore
@@ -171,7 +183,7 @@ view_finestra::~view_finestra()
 }
 
 // Setta tutti i widget a interagibile o non interagibile
-void view_finestra::SetAllEnabled(bool _boolean)
+void view_finestra::SetAllEnabled(const bool _boolean)
 {
     _LineTitolo->setEnabled(_boolean);
     if(dynamic_cast<ricorrenza*>(_ann))
@@ -196,17 +208,19 @@ void view_finestra::SetAllEnabled(bool _boolean)
     {
         _LineDesc->setEnabled(_boolean);
         _TableList->setEnabled(_boolean);
+        _BtnAddRow->setEnabled(_boolean);
     }
 
     if(dynamic_cast<spesa*>(_ann))
     {
         _LineDesc->setEnabled(_boolean);
         _TableList->setEnabled(_boolean);
+        _BtnAddRow->setEnabled(_boolean);
     }
 }
 
 // Legge i valori modificati per modificare i valori al Model
-annotazione* view_finestra::ReadChangedValues()
+annotazione* view_finestra::ReadChangedValues() const
 {
     if(dynamic_cast<spesa*>(_ann) )
     {
@@ -239,7 +253,7 @@ annotazione* view_finestra::ReadChangedValues()
 
     else if (dynamic_cast<ricorrenza*>(_ann))
     {
-        return new ricorrenza(_LineTitolo->text(),_LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(),metodi_extra::IntToTipo(_tipo->currentIndex()) );
+        return new ricorrenza(_LineTitolo->text(),_LineCorpo->document()->toRawText(),_calendario->selectedDate(),_ora->time(),metodo_tipo::IntToTipo(_tipo->currentIndex()) );
     }
 
     else if (dynamic_cast<nota*>(_ann))
@@ -361,6 +375,27 @@ void view_finestra::MoveWAnnRight()
             else
                 QMessageBox::information(this, "Limite Destro","Limite destro raggiunto!");
         }
+    }
+}
+
+void view_finestra::AggiungiRiga()
+{
+
+    _TableList->insertRow(_TableList->rowCount());
+    if(_TableList->columnCount()==1)
+    {
+        _TableList->setItem(_TableList->rowCount()-1,0,new QTableWidgetItem(""));
+        QTableWidgetItem *checkBoxItem = new QTableWidgetItem();
+        checkBoxItem->setCheckState(Qt::Unchecked);
+        _TableList->setItem(_TableList->rowCount()-1,1,checkBoxItem);
+    }
+    else
+    {
+        _TableList->setItem(_TableList->rowCount()-1,0,new QTableWidgetItem(""));
+        _TableList->setItem(_TableList->rowCount()-1,1,new QTableWidgetItem(""));
+        QTableWidgetItem *checkBoxItem = new QTableWidgetItem();
+        checkBoxItem->setCheckState(Qt::Unchecked);
+        _TableList->setItem(_TableList->rowCount()-1,2,checkBoxItem);
     }
 }
 

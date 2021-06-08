@@ -29,7 +29,7 @@ public:
     void Remove(const type_spesa* &_this);
 
     lista<type_spesa *> getSpesa() const;
-    void setSpesa( lista<type_spesa*> _newSpesa);
+    void setSpesa(const lista<type_spesa*> _newSpesa);
 
 private:
     lista<type_spesa*> _spesa;

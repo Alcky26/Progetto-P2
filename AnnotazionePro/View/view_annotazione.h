@@ -34,6 +34,7 @@
 #include <QRadioButton>
 #include <QGraphicsItem>
 #include <QHeaderView>
+#include "Util/metodo_tipo.h"
 
 class view_annotazione : public QWidget
 {
@@ -73,7 +74,7 @@ private:
     QSignalMapper *_SignalMapper;
 
     // Bottoni
-    QPushButton *_BtnAdd, *_BtnAddRow, *_BtnDeleteGrid;
+    QPushButton *_BtnAdd, *_BtnAddRow, *_BtnDeleteGrid, *_BtnLogClear;
 
     // Metodi
     void viewOpzioni();
@@ -97,6 +98,7 @@ private slots:
     void SpostaDestra(annotazione* a);
     void ModificaScrivi(annotazione* a);
     void EliminaScrivi(annotazione* a);
+    void DeleteLog();
 };
 
 #endif // VIEW_ANNOTAZIONE_H

@@ -6,21 +6,20 @@
 #include "lista.h"
 #include <QString>
 #include <QStringList>
-#include "Data/ricorrenza.h"
+#include <QDate>
+
 
 class metodi_extra
 {
 public:
 
     //Metodi da mettere su file a parte
-    static ricorrenza::Tipo IntToTipo(int _index);
-    static ricorrenza::Tipo QStringToTipo(QString stringa);
-    static QString TipoToQString(ricorrenza::Tipo _type);
-    static QString ElencoAsText(lista<type_elenco*> _elenco);
-    static QString SpesaAsText(lista<type_spesa*> _spesa);
-    static QDate strToItaDate(const QString& date) ;
-    static QString dateToItaStr(const QDate& date);
+    static QString ElencoAsText(const lista<type_elenco*> _elenco);
+    static QString SpesaAsText(const lista<type_spesa*> _spesa);
     static QStringList getTipi();
+
+    static QString dateToItaStr(const QDate& date);
+    static QDate strToItaDate(const QString& date);
 };
 
 #endif // METODI_EXTRA_H

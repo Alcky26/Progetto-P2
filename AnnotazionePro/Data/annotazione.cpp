@@ -29,7 +29,7 @@ QDomElement annotazione::XmlSerialize(QDomDocument doc) const
 
 QString annotazione::ToString() const
 {
-    return "Titolo: "+getTitolo()+";";
+    return "Titolo: "+getTitolo()+"; ";
 }
 
 QString annotazione::getTitolo() const

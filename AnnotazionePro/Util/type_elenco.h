@@ -2,11 +2,6 @@
 #define TYPE_ELENCO_H
 
 #include <QString>
-/*
-struct elenchi {
-    QString value;
-    bool isDone=0;
-};*/
 
 class type_elenco
 {
@@ -16,7 +11,6 @@ public:
     type_elenco(QString* value);
     type_elenco(QString value, bool isDone=0);
 
-
     virtual ~type_elenco();
 
     //Get e Set
@@ -24,7 +18,7 @@ public:
     void setValue(const QString &value);
 
     bool getIsDone() const;
-    void setIsDone(bool value);
+    void setIsDone(const bool value);
 
 private:
     QString _value;

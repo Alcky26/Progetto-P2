@@ -33,7 +33,7 @@ QString promemoria::ToString() const
 {
     QString testo;
     testo+=nota::ToString();
-    return testo+"Data: "+getDate().toString()+";Time: "+getTime().toString()+";";
+    return testo+"Data: "+getDate().toString()+"; Time: "+getTime().toString()+"; ";
 }
 
 QDate promemoria::getDate() const

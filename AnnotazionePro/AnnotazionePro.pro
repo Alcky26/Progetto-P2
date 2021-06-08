@@ -18,6 +18,7 @@ SOURCES += \
     Model/model_annotazione.cpp \
     Util/lista.cpp \
     Util/metodi_extra.cpp \
+    Util/metodo_tipo.cpp \
     Util/nodo.cpp \
     Util/type_elenco.cpp \
     Util/type_spesa.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     Model/model_annotazione.h \
     Util/lista.h \
     Util/metodi_extra.h \
+    Util/metodo_tipo.h \
     Util/nodo.h \
     Util/type_elenco.h \
     Util/type_spesa.h \

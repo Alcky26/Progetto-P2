@@ -60,10 +60,11 @@ QString elenco::ToString() const
 {
     QString testo;
     testo+=annotazione::ToString();
-    testo+="Descrizione: "+getDescrizione()+";";
+    testo+="Descrizione: "+getDescrizione()+"; ";
+    testo+="Elenco : \n";
     for( lista<type_elenco*>::constiterator ci = _elenco.begin(); ci!=_elenco.end();ci++)
     {
-        testo+="Valore: "+(*ci)->getValue()+";IsDone: "+((*ci)->getIsDone() ? "0" : "1" )+";";
+        testo+="- Valore: "+(*ci)->getValue()+"; IsDone: "+((*ci)->getIsDone() ? "0" : "1" )+"; ";
     }
     return testo;
 }

@@ -29,7 +29,7 @@ QString nota::ToString() const
 {
     QString testo;
     testo+=annotazione::ToString();
-    return testo+"Corpo: "+getCorpo()+";";
+    return testo+"Corpo: "+getCorpo()+"; ";
 }
 
 QString nota::getCorpo() const

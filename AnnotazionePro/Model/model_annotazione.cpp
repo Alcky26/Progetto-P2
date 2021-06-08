@@ -77,7 +77,7 @@ lista<annotazione *> model_annotazione::getAnnotazioni() const
     return _annotazioni;
 }
 
-annotazione *model_annotazione::getAnnotazione(unsigned int i) const
+annotazione *model_annotazione::getAnnotazione(const unsigned int i) const
 {
     if( _annotazioni.getSize()<i)
     {
@@ -158,7 +158,7 @@ void model_annotazione::modificaElemento(int _index,annotazione *annot)
     _needToSave=true;
 }
 
-bool model_annotazione::muoviElementoDx(lista<annotazione*>::constiterator ci)
+bool model_annotazione::muoviElementoDx(const lista<annotazione*>::constiterator ci)
 {
     int i = _annotazioni.indexOfInt(_annotazioni.index(ci));
     bool trovato=false;
@@ -188,7 +188,7 @@ bool model_annotazione::muoviElementoDx(lista<annotazione*>::constiterator ci)
     return trovato;
 }
 
-bool model_annotazione::muoviElementoSx(lista<annotazione*>::constiterator ci)
+bool model_annotazione::muoviElementoSx(const lista<annotazione*>::constiterator ci)
 {
     int i = _annotazioni.indexOfInt(_annotazioni.index(ci));
     bool trovato=false;

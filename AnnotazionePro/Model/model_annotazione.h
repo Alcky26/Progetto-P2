@@ -24,7 +24,7 @@ public:
     void aggiungiAnnotazione(annotazione  *annotazione);
     // getter
     lista<annotazione*> getAnnotazioni() const;
-    annotazione *getAnnotazione(unsigned int i) const;
+    annotazione *getAnnotazione(const unsigned int i) const;
     //annotazione* getAnnotazioni(QString Titolo) const;
 
     void reset();
@@ -33,8 +33,8 @@ public:
     void rimouviElemento(const annotazione *annot);
     void modificaElemento(int _index,annotazione *annot);
 
-    bool muoviElementoDx(lista<annotazione*>::constiterator ci);
-    bool muoviElementoSx(lista<annotazione*>::constiterator ci);
+    bool muoviElementoDx(const lista<annotazione*>::constiterator ci);
+    bool muoviElementoSx(const lista<annotazione*>::constiterator ci);
 
     bool deviSalvare() const;
     void salvato();

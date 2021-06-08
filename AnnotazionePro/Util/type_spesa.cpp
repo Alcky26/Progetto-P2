@@ -20,7 +20,7 @@ double type_spesa::getCost() const
     return _cost;
 }
 
-void type_spesa::setCost(double cost)
+void type_spesa::setCost(const double cost)
 {
     _cost = cost;
 }

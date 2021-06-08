@@ -8,11 +8,11 @@
 #include <QDomElement>
 #include "Util/metodi_extra.h"
 
+enum Tipo {Giornaliero,Settimanale,Mensile,Annuale};
+
 class ricorrenza : virtual public nota
 {
 public:
-
-    enum Tipo {Giornaliero,Settimanale,Mensile,Annuale};
 
     ricorrenza(QString titolo, QString corpo,QDate date,QTime time,Tipo type);
     ricorrenza(QDomElement ricorrenza);
@@ -30,6 +30,9 @@ public:
 
     QTime getTime() const;
     void setTime(const QTime &time);
+
+    QString TipoToQString() const;
+    Tipo QStringToTipo(QString stringa) const;
 
 private:
     QDate _date;

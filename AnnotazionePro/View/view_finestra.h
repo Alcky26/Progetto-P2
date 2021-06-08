@@ -32,18 +32,15 @@
 #include "Util/lista.h"
 #include "Util/type_elenco.h"
 #include "Util/type_spesa.h"
-
+#include "Util/metodo_tipo.h"
 
 class view_finestra : public QWidget
 {
     Q_OBJECT
 
 public:
-    //view_finestra();
     view_finestra(model_annotazione* model, annotazione* ann, QWidget *parent = nullptr);
     ~view_finestra();
-
-    //view_finestra& operator=(const view_finestra& other);
 
 private:
     model_annotazione *_Model;
@@ -60,11 +57,12 @@ private:
     QDateTimeEdit *_ora;
     QTableWidget *_TableList;
     QComboBox *_tipo;
+    QPushButton *_BtnAddRow;
     QPushButton *_BtnLeft,*_BtnRight;
     QPushButton *_elimina,*_modifica;
 
-    void SetAllEnabled(bool _boolean);
-    annotazione* ReadChangedValues();
+    void SetAllEnabled(const bool _boolean);
+    annotazione* ReadChangedValues() const;
     void closeEvent(QCloseEvent *event);
 
     void setupTitolo();
@@ -84,6 +82,7 @@ private slots:
     void OnClickElimina();
     void MoveWAnnLeft();
     void MoveWAnnRight();
+    void AggiungiRiga();
 
 };
 

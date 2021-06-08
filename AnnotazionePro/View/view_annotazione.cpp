@@ -20,6 +20,8 @@ view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): Q
     connect(_BtnAdd, SIGNAL( clicked() ), this, SLOT( OnClickBtnAggiungi() ));
     connect(_BtnAddRow, SIGNAL( clicked() ), this, SLOT( OnClickRow() ));
     connect(_BtnDeleteGrid, SIGNAL( clicked() ), this, SLOT( DeleteGrid() ));
+    connect(_BtnLogClear, SIGNAL( clicked() ), this, SLOT( DeleteLog() ));
+
 
     // Signal Mapper per OnClick di wAnnotazione
     _SignalMapper = new QSignalMapper(this);
@@ -66,14 +68,14 @@ void view_annotazione::ApriGriglia()
 
     lista<annotazione*> temp=_Model->getAnnotazioni();
     wAnnotazione *_nuovoWAnn;
-    _LineLog->append("Apertura File!");
+    _LineLog->append("[Apertura File] ");
 
     for(lista<annotazione*>::constiterator ci=temp.begin(); ci != temp.end();ci++)
     {
         _nuovoWAnn = new wAnnotazione(*ci);
         _wA.insertBack(_nuovoWAnn);
         SetSignalMapper(_nuovoWAnn);
-        _LineLog->append("Aggiunta elemento: "+(*ci)->ToString());
+        _LineLog->append("[Aggiunta elemento] "+(*ci)->ToString());
     }
 
     int count = 0;
@@ -143,7 +145,7 @@ void view_annotazione::viewOpzioni()
    // _Calendario->setStyleSheet();
 
     //TIPO
-    _Ricorrenza->addItems(ricorrenza::getTipi());
+    _Ricorrenza->addItems(metodi_extra::getTipi());
     _tempLayoutOpzioni->addWidget(_Ricorrenza);
     _Ricorrenza->setVisible(false);
 
@@ -172,7 +174,10 @@ void view_annotazione::viewOpzioni()
     _LineLog = new QTextEdit();
     _LineLog->setReadOnly(true);
 
+    _BtnLogClear = new QPushButton("Svuota Log");
+
     _tempLayoutLog->addWidget(_LineLog);
+    _tempLayoutLog->addWidget(_BtnLogClear);
 
     _GroupBoxLog->setLayout(_tempLayoutLog);
     _InsertAndOptions->addWidget(_GroupBoxLog);
@@ -181,8 +186,8 @@ void view_annotazione::viewOpzioni()
     QVBoxLayout *_tempLayoutDelete = new QVBoxLayout();
     QGroupBox *_GroupBoxDelete = new QGroupBox("Svuota Griglia");
     _BtnDeleteGrid = new QPushButton("Svuota");
-    _BtnDeleteGrid->setMinimumHeight(70);
-    _BtnDeleteGrid->setStyleSheet("font-size: 24px;");
+    //_BtnDeleteGrid->setMinimumHeight(70);
+    //_BtnDeleteGrid->setStyleSheet("font-size: 24px;");
 
     _tempLayoutDelete->addWidget(_BtnDeleteGrid);
     _GroupBoxDelete->setLayout(_tempLayoutDelete);
@@ -277,23 +282,22 @@ void view_annotazione::viewGrigliaAlternativo(int i)
 
 void view_annotazione::SpostaSinistra(annotazione* a)
 {
-     _LineLog->append("Spostato a sinistra: "+a->ToString());
-
+     _LineLog->append("[Spostato a sinistra] "+a->ToString());
 }
 
 void view_annotazione::SpostaDestra(annotazione *a)
 {
-    _LineLog->append("Spostato a destra: "+a->ToString());
+    _LineLog->append("[Spostato a destra] " +a->ToString());
 }
 
 void view_annotazione::ModificaScrivi(annotazione *a)
 {
-    _LineLog->append("Elemento modificato: "+a->ToString());
+    _LineLog->append("[Elemento modificato] "+a->ToString());
 }
 
 void view_annotazione::EliminaScrivi(annotazione *a)
 {
-    _LineLog->append("Elemento eliminato: "+a->ToString());
+    _LineLog->append("[Elemento eliminato] "+a->ToString());
 }
 
 // Quando creo un oggetto di tipo wAnnotazione, lo passiamo a questo metodo che aggiunge connette slot e signal
@@ -309,8 +313,8 @@ void view_annotazione::resizeAnn(wAnnotazione* Ann)
     QRect geometry = _Grid->geometry();
     int width = geometry.width();
     int height = geometry.height();
-    Ann->setMaximumSize(width/5,height/5);
-    Ann->setFixedSize(width/5,height/5);
+    Ann->setMaximumSize(width/5,height/4);
+    Ann->setFixedSize(width/5,height/4);
     Ann->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
 }
 
@@ -356,7 +360,7 @@ void view_annotazione::OnClickBtnAggiungi()
         _nuovoInsert  = new promemoria(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_Calendario->selectedDate(),_Ora->time());
     //Ricorrenza
     else if (_value == 2)
-        _nuovoInsert  = new ricorrenza(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_Calendario->selectedDate(),_Ora->time(), metodi_extra::IntToTipo(_Ricorrenza->currentIndex()));
+        _nuovoInsert  = new ricorrenza(_LineTitolo->text(), _LineCorpo->document()->toRawText(),_Calendario->selectedDate(),_Ora->time(), metodo_tipo::IntToTipo(_Ricorrenza->currentIndex()));
     //Elenco
     else if (_value == 3)
     {
@@ -394,7 +398,7 @@ void view_annotazione::OnClickBtnAggiungi()
 
     wAnnotazione *_nuovoWAnn = new wAnnotazione(_nuovoInsert );
     if(_nuovoInsert != nullptr)
-        _LineLog->append("Aggiunta elemento: "+_nuovoInsert->ToString());
+        _LineLog->append("[Aggiunta elemento] "+_nuovoInsert->ToString());
     _Model->aggiungiAnnotazione(_nuovoInsert);
     _wA.insertBack(_nuovoWAnn);
     SetSignalMapper(_nuovoWAnn);
@@ -527,7 +531,7 @@ void view_annotazione::DeleteGrid()
     {
         _Model->reset();
         viewGriglia();
-        _LineLog->append("Griglia Svuotata!");
+        _LineLog->append("[Griglia Svuotata] ");
     }
 }
 
@@ -568,6 +572,12 @@ void view_annotazione::OpenWindowDetails( int value)
     _FinestraDescrizione->setWindowModality(Qt::ApplicationModal);
     _FinestraDescrizione->show();
 
+}
+
+
+void view_annotazione::DeleteLog()
+{
+    _LineLog->clear();
 }
 
 

@@ -34,11 +34,11 @@ public:
     wAnnotazione(annotazione *ann, QWidget *parent = 0);
     ~wAnnotazione();
 
+// Funzionalità di Clicked
 protected:
     void mousePressEvent(QMouseEvent*);
     void mouseReleaseEvent(QMouseEvent*);
     void paintEvent(QPaintEvent*);
-
 
 private:
     QVBoxLayout *_mainBoxLayout;

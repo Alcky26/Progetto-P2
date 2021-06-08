@@ -3,10 +3,7 @@
 
 #include <QString>
 #include "Util/type_elenco.h"
-/*
- * struct type_spesa : public elenchi{
-     double costo;
-  };*/
+
 class type_spesa : virtual public type_elenco
 {
 public:
@@ -16,7 +13,7 @@ public:
     ~type_spesa();
     //Get and Set
     double getCost() const;
-    void setCost(double cost);
+    void setCost(const double cost);
 
 private:
     double _cost;

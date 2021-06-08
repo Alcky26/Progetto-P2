@@ -12,12 +12,13 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //a.setWindowIcon(QIcon("dog.png"));
+
     a.setApplicationName("AnnotazionePro");
 
     MainWindow w;
 
-    w.show();
-
+    w.showMinimized();
+    w.setWindowState(Qt::WindowActive);
+    //w.show();
     return a.exec();
 }

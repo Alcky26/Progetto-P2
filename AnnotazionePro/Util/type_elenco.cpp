@@ -35,7 +35,7 @@ bool type_elenco::getIsDone() const
     return _isDone;
 }
 
-void type_elenco::setIsDone(bool value)
+void type_elenco::setIsDone(const bool value)
 {
     _isDone = value;
 }
