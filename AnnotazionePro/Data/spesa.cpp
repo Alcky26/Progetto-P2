@@ -81,31 +81,6 @@ double spesa::CostoComplessivo() const
     return total;
 }
 
-void spesa::addElement(const QString &elemento, const double &prezzo)
-{
-    type_spesa* newElement = new type_spesa();
-    newElement->setCost(prezzo);
-    newElement->setValue(elemento);
-    _spesa.insertBack(newElement);
-}
-
-void spesa::addElement(const type_spesa* &value)
-{
-
-    //_spesa.insertBack(value);
-}
-
-void spesa::Remove(const type_spesa* &_this)
-{
-    for(lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
-    {
-        if((*ci)->getCost()==_this->getCost() && (*ci)->getValue()==_this->getValue() && (*ci)->getIsDone() == _this->getIsDone())
-        {
-            _spesa.erase(ci);
-        }
-    }
-}
-
 lista<type_spesa *> spesa::getSpesa() const
 {
     return _spesa;

@@ -79,23 +79,6 @@ void elenco::setDescrizione(const QString &descrizione)
     _descrizione = descrizione;
 }
 
-void elenco::addElemento(const QString* &elemento)
-{
-    type_elenco* elem = new type_elenco();
-    elem->setValue(*elemento);
-    _elenco.insertBack(elem);
-}
-
-void elenco::Remove(const type_elenco *&_this)
-{
-    for(lista<type_elenco*>::constiterator ci = _elenco.begin(); ci!=_elenco.end();ci++)
-    {
-        if((*ci)->getValue()== _this->getValue() && (*ci)->getIsDone()==_this->getIsDone())
-        {
-            _elenco.erase(ci);
-        }
-    }
-}
 
 lista<type_elenco *> elenco::getElenco() const
 {

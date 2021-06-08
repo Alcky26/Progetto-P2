@@ -67,7 +67,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _TableList->setShowGrid(true);
         _TableList->setColumnCount(2);
         _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
-        _TableList->setColumnWidth(0,300);
+        _TableList->setColumnWidth(0,402);
         _TableList->setHorizontalHeaderItem(1,new QTableWidgetItem(""));
         _TableList->setColumnWidth(1,18);
         // Riempimento Tabella
@@ -88,12 +88,11 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         }
         //  _TableList->setEnabled(false);
         _TableLayout->addWidget(_TableList);
-        _BoxTable->setLayout(_TableLayout);
-        _MainLayout->addWidget(_BoxTable);
-
         _BtnAddRow = new QPushButton("Aggiungi una Nuova Riga");
         _BtnAddRow->setEnabled(false);
-        _MainLayout->addWidget(_BtnAddRow);
+        _TableLayout->addWidget(_BtnAddRow);
+        _BoxTable->setLayout(_TableLayout);
+        _MainLayout->addWidget(_BoxTable);
     }
 
     // Se è di tipo Spesa
@@ -111,9 +110,9 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _TableList->setShowGrid(true);
         _TableList->setColumnCount(3);
         _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
-        _TableList->setColumnWidth(0,160);
+        _TableList->setColumnWidth(0,201);
         _TableList->setHorizontalHeaderItem(1,new QTableWidgetItem("Costo"));
-        _TableList->setColumnWidth(1,160);
+        _TableList->setColumnWidth(1,201);
         _TableList->setHorizontalHeaderItem(2,new QTableWidgetItem(""));
         _TableList->setColumnWidth(2,18);
 
@@ -135,12 +134,14 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         }
         //_TableList->setEnabled(false);
         _TableLayout->addWidget(_TableList);
-        _BoxTable->setLayout(_TableLayout);
-        _MainLayout->addWidget(_BoxTable);
+
 
         _BtnAddRow = new QPushButton("Aggiungi una Nuova Riga");
         _BtnAddRow->setEnabled(false);
-        _MainLayout->addWidget(_BtnAddRow);
+        _TableLayout->addWidget(_BtnAddRow);
+
+        _BoxTable->setLayout(_TableLayout);
+        _MainLayout->addWidget(_BoxTable);
     }
 
     _elimina = new QPushButton("Elimina Questo Elemento");
@@ -382,7 +383,7 @@ void view_finestra::AggiungiRiga()
 {
 
     _TableList->insertRow(_TableList->rowCount());
-    if(_TableList->columnCount()==1)
+    if(_TableList->columnCount()==2)
     {
         _TableList->setItem(_TableList->rowCount()-1,0,new QTableWidgetItem(""));
         QTableWidgetItem *checkBoxItem = new QTableWidgetItem();

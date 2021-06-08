@@ -7,9 +7,9 @@ QString metodi_extra::ElencoAsText(const lista<type_elenco *> _elenco)
     {
         _finalValue += (*ci)->getValue();
         if( (*ci)->getIsDone())
-            _finalValue += "    Effettuato ";
+            _finalValue += " : ✔ ";
         else
-            _finalValue += "    Non Effettuato ";
+            _finalValue += " : ✘ ";
         _finalValue+="\n";
     }
     return _finalValue;
@@ -23,9 +23,9 @@ QString metodi_extra::SpesaAsText(const lista<type_spesa *> _spesa)
     {
         temp = (*ci)->getValue() + " : " +  QString::number((*ci)->getCost()) + " : ";
         if((*ci)->getIsDone())
-            temp += "Effettuato \n";
+            temp += "✔ \n";
         else
-            temp += "Non Effettuato \n";
+            temp += "✘ \n";
         _finalValue+= temp;
     }
     return _finalValue;

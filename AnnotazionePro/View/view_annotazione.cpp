@@ -502,7 +502,9 @@ void view_annotazione::ComboBoxTypeChanged(int index)
         {
             _TableList->setItem(i,0,new QTableWidgetItem(""));
             _TableList->setItem(i,1,new QTableWidgetItem(""));
+
         }
+        //_TableList->setItemDelegateForColumn(1,)
         _TableList->setHorizontalHeaderItem(1,new QTableWidgetItem("Costo"));
 
         }
@@ -568,7 +570,8 @@ void view_annotazione::OpenWindowDetails( int value)
     connect(_FinestraDescrizione, SIGNAL(SpostaDesLog(annotazione*)), this, SLOT(SpostaDestra(annotazione*)));
     connect(_FinestraDescrizione, SIGNAL(ModificaLog(annotazione*)), this, SLOT(ModificaScrivi(annotazione*)));
     connect(_FinestraDescrizione, SIGNAL(EliminaLog(annotazione*)), this, SLOT(EliminaScrivi(annotazione*)));
-    _FinestraDescrizione->setMinimumSize(400,400);
+    _FinestraDescrizione->setMinimumWidth(500);
+    _FinestraDescrizione->setMaximumHeight(700);
     _FinestraDescrizione->setWindowModality(Qt::ApplicationModal);
     _FinestraDescrizione->show();
 

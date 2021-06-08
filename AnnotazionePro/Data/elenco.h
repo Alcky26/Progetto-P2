@@ -28,9 +28,6 @@ public:
     lista<type_elenco *> getElenco() const;
     void setElenco(const lista<type_elenco*> _newElenco);
 
-    void addElemento(const QString* &elemento);
-    void Remove(const type_elenco* &_this);
-
 private:
     QString _descrizione;
     lista<type_elenco*> _elenco;

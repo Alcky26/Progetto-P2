@@ -22,12 +22,6 @@ public:
 
     double CostoComplessivo() const;
 
-    void addElement(const QString &elemento, const double &prezzo);
-
-    void addElement(const type_spesa* &value);
-
-    void Remove(const type_spesa* &_this);
-
     lista<type_spesa *> getSpesa() const;
     void setSpesa(const lista<type_spesa*> _newSpesa);
 
