@@ -93,6 +93,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _TableLayout->addWidget(_BtnAddRow);
         _BoxTable->setLayout(_TableLayout);
         _MainLayout->addWidget(_BoxTable);
+        connect(_BtnAddRow, SIGNAL( clicked() ), this, SLOT( AggiungiRiga() ));
     }
 
     // Se è di tipo Spesa
@@ -142,6 +143,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
 
         _BoxTable->setLayout(_TableLayout);
         _MainLayout->addWidget(_BoxTable);
+        connect(_BtnAddRow, SIGNAL( clicked() ), this, SLOT( AggiungiRiga() ));
     }
 
     _elimina = new QPushButton("Elimina Questo Elemento");
@@ -163,7 +165,6 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     connect(_modifica,SIGNAL(clicked()),this,SLOT(OnClickModifica()));
     connect(_BtnLeft, SIGNAL( clicked() ), this, SLOT( MoveWAnnLeft() ));
     connect(_BtnRight, SIGNAL( clicked() ), this, SLOT( MoveWAnnRight() ));
-    connect(_BtnAddRow, SIGNAL( clicked() ), this, SLOT( AggiungiRiga() ));
 }
 
 // Distruttore
@@ -349,14 +350,20 @@ void view_finestra::MoveWAnnLeft()
     {
         if((*ci)==_ann)
         {
+            _BtnRight->setEnabled(true);
             if(_Model->muoviElementoSx(ci))
             {
-
+                if(!_Model->muoviElementoSx(ci))
+                {
+                    _BtnLeft->setEnabled(false);
+                }
+                else
+                {
+                    _Model->muoviElementoDx(ci);
+                }
                 emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
                 emit SpostaSinLog(_ann);
             }
-            else
-                QMessageBox::information(this, "Limite Sinistro","Limite sinistro raggiunto!");
         }
     }
 }
@@ -368,13 +375,20 @@ void view_finestra::MoveWAnnRight()
     {
         if((*ci)==_ann)
         {
+            _BtnLeft->setEnabled(true);
             if(_Model->muoviElementoDx(ci))
             {
+                if(!_Model->muoviElementoDx(ci))
+                {
+                    _BtnRight->setEnabled(false);
+                }
+                else
+                {
+                    _Model->muoviElementoSx(ci);
+                }
                 emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
                 emit SpostaDesLog(_ann);
             }
-            else
-                QMessageBox::information(this, "Limite Destro","Limite destro raggiunto!");
         }
     }
 }
