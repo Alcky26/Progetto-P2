@@ -151,7 +151,10 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     _BtnLeft = new QPushButton("⟸ Sposta a Sinistra");
     _BtnRight = new QPushButton("Sposta a Destra ⟹");
 
-
+    if(_ann==model->getAnnotazioni().front())
+        _BtnLeft->setEnabled(false);
+    if(_ann==model->getAnnotazioni().back())
+        _BtnRight->setEnabled(false);
 
     QGridLayout *_LayoutLeftRight = new QGridLayout();
     _LayoutLeftRight->addWidget(_BtnLeft,1,0,Qt::AlignTop);
