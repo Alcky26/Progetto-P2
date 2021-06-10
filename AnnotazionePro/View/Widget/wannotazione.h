@@ -19,7 +19,7 @@
 #include "Util/metodi_extra.h"
 #include <QGraphicsView>
 #include <QListWidget>
-#include <QPlainTextEdit >
+#include <QPlainTextEdit>
 #include <QMessageBox>
 #include <QDebug>
 #include <QScrollBar>
