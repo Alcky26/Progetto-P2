@@ -60,7 +60,7 @@ void MainWindow::addMenuButtons()
     // ORA FACCIO IO HELP HAHAHAHAHA
 
     // Creo Menu
-    QMenu* _helpMenu = new QMenu("Help!", menuBar);
+    QMenu* _helpMenu = new QMenu("Help", menuBar);
     // Creo Azioni
     QAction* _info = new QAction("Infos",_helpMenu);
     QAction* _help = new QAction("How to",_helpMenu);
@@ -91,14 +91,14 @@ void MainWindow::setApplicationStyle()
 void MainWindow::checkUnsavedData()
 {
     if(model->deviSalvare())
+    {
+        QMessageBox::StandardButton response= QMessageBox::question(this, "Salvare i dati?", "Vuoi salvare i dati modificati prima di continuare?", QMessageBox::No | QMessageBox::Yes , QMessageBox::Yes);
+        if(response == QMessageBox::Yes)
         {
-            QMessageBox::StandardButton response= QMessageBox::question(this, "Salvare i dati?", "Vuoi salvare i dati modificati prima di continuare?", QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes);
-            if(response == QMessageBox::Yes)
-            {
-                salvaClicked();
-                QMessageBox::information(this, "File salvato","Il File è stato salvato correttamente!");
-            }
+            salvaClicked();
+            QMessageBox::information(this, "File salvato","Il File è stato salvato correttamente!");
         }
+    }
 }
 
 void MainWindow::openClicked()
@@ -199,12 +199,21 @@ void MainWindow::openAboutUs() const
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if (model->deviSalvare())
+    if(model->deviSalvare())
     {
-        checkUnsavedData();
+        QMessageBox::StandardButton response= QMessageBox::question(this, "Salvare i dati?", "Vuoi salvare i dati modificati prima di continuare?", QMessageBox::No | QMessageBox::Yes | QMessageBox::Cancel, QMessageBox::Yes);
+        if(response == QMessageBox::Yes)
+        {
+            salvaClicked();
+            QMessageBox::information(this, "File salvato","Il File è stato salvato correttamente!");
+            event->accept();
+            setAttribute(Qt::WA_DeleteOnClose);
+        }
+        if(response == QMessageBox::Cancel)
+            event->ignore();
+        if(response == QMessageBox::Close)
+            event->ignore();
     }
-    event->accept();
-    setAttribute(Qt::WA_DeleteOnClose);
 }
 
 
