@@ -93,3 +93,4 @@ void elenco::setElenco(lista<type_elenco *> _newElenco)
         _elenco.insertFront(*ci);
     }
 }
+

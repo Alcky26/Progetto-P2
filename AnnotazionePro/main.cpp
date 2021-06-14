@@ -3,7 +3,6 @@
 #include <QApplication>
 #include "Util/lista.h"
 #include "Data/spesa.h"
-#include <QDebug>
 #include <string.h>
 #include <QString>
 
@@ -17,8 +16,6 @@ int main(int argc, char *argv[])
 
     MainWindow w;
 
-    w.showMinimized();
-    w.setWindowState(Qt::WindowActive);
-    //w.show();
+    w.show();
     return a.exec();
 }

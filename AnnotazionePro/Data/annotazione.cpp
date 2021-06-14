@@ -42,5 +42,3 @@ void annotazione::setTitolo(const QString &value)
     _titolo = value;
 }
 
-
-

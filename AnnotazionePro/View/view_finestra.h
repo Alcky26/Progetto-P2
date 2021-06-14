@@ -12,27 +12,26 @@
 #include <QLabel>
 #include <QCalendarWidget>
 #include <QDateTimeEdit>
-#include "Model/model_annotazione.h"
 #include <QTextEdit>
-#include <QtDebug>
 #include <QTime>
+#include <QScrollBar>
+#include <QMessageBox>
+#include <QTableWidget>
+
 #include "Data/annotazione.h"
 #include "Data/nota.h"
 #include "Data/ricorrenza.h"
 #include "Data/promemoria.h"
 #include "Data/elenco.h"
 #include "Data/spesa.h"
-#include "View/Widget/wannotazione.h"
-#include <QGraphicsView>
-#include <QScrollBar>
-#include <QMessageBox>
-#include <QTableWidget>
-#include "Util/metodi_extra.h"
-#include "View/view_annotazione.h"
+#include "Model/model_annotazione.h"
 #include "Util/lista.h"
 #include "Util/type_elenco.h"
 #include "Util/type_spesa.h"
 #include "Util/metodo_tipo.h"
+#include "Util/metodi_extra.h"
+#include "View/Widget/wannotazione.h"
+#include "View/view_annotazione.h"
 
 class view_finestra : public QWidget
 {

@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QVBoxLayout>
 #include <QLineEdit>
 #include <QComboBox>
 #include <QPushButton>
@@ -12,29 +11,26 @@
 #include <QLabel>
 #include <QCalendarWidget>
 #include <QDateTimeEdit>
-#include "Model/model_annotazione.h"
 #include <QTextEdit>
-#include <QtDebug>
 #include <QTime>
+#include <QScrollBar>
+#include <QMessageBox>
+#include <QTableWidget>
+#include <QSignalMapper>
+#include <QRadioButton>
+
 #include "Data/annotazione.h"
 #include "Data/nota.h"
 #include "Data/ricorrenza.h"
 #include "Data/promemoria.h"
 #include "Data/elenco.h"
 #include "Data/spesa.h"
-#include "View/Widget/wannotazione.h"
-#include <QGraphicsView>
-#include <QScrollBar>
-#include <QMessageBox>
-#include <QTableWidget>
-#include "Util/metodi_extra.h"
-#include <QSignalMapper>
-#include "view_finestra.h"
-#include <QCheckBox>
-#include <QRadioButton>
-#include <QGraphicsItem>
-#include <QHeaderView>
+#include "Model/model_annotazione.h"
 #include "Util/metodo_tipo.h"
+#include "Util/metodi_extra.h"
+#include "View/Widget/wannotazione.h"
+#include "view_finestra.h"
+
 
 class view_annotazione : public QWidget
 {
