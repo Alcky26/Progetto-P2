@@ -1,19 +1,19 @@
 <!DOCTYPE Annotazioni>
 <Annotazioni>
- <Nota Corpo="Questa è una nota">
+ <Nota Corpo="Questa Ã¨ una nota">
   <Annotazione Titolo="Nota"/>
  </Nota>
  <Promemoria Ora="20:30:00" Data="25/06/2021">
-  <Nota Corpo="Questo è un promemoria">
+  <Nota Corpo="Questo Ã¨ un promemoria">
    <Annotazione Titolo="Promemoria"/>
   </Nota>
  </Promemoria>
  <Ricorrenza Ora="20:30:00" Tipo="Mensile" Data="gio giu 10 2021">
-  <Nota Corpo="Questa è un Ricorrenza">
+  <Nota Corpo="Questa Ã¨ un Ricorrenza">
    <Annotazione Titolo="Ricorrenza"/>
   </Nota>
  </Ricorrenza>
- <Elenco Descrizione="Questo è un Elenco">
+ <Elenco Descrizione="Questo Ã¨ un Elenco">
   <Annotazione Titolo="Elenco"/>
   <Elemento Value="1" IsDone="0"/>
   <Elemento Value="2" IsDone="0"/>
@@ -22,12 +22,12 @@
   <Elemento Value="5" IsDone="1"/>
  </Elenco>
  <Spesa>
-  <Elenco Descrizione="Questa è una Spesa">
+  <Elenco Descrizione="Questa Ã¨ una Spesa">
    <Annotazione Titolo="Spesa"/>
   </Elenco>
   <Elemento Value="el uno" Cost="1" IsDone="0"/>
   <Elemento Value="el 2" Cost="2.5" IsDone="0"/>
-  <Elemento Value="el 3" Cost="99" IsDone="0"/>
+  <Elemento Value="el 3" Cost="99.99" IsDone="1"/>
   <Elemento Value="el 4" Cost="0" IsDone="0"/>
  </Spesa>
 </Annotazioni>

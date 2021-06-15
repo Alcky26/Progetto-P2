@@ -57,8 +57,6 @@ void MainWindow::addMenuButtons()
     file->addAction(salvaConNome);
     file->addAction(chiudi);
 
-    // ORA FACCIO IO HELP HAHAHAHAHA
-
     // Creo Menu
     QMenu* _helpMenu = new QMenu("Help", menuBar);
     // Creo Azioni
@@ -136,7 +134,7 @@ void MainWindow::salvaClicked()
 {
     if (_File != nullptr)
     {
-       if(!_File->open(QIODevice::ReadWrite | QIODevice::Text|QIODevice::Truncate))
+       if(!_File->open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Truncate))
        {
            QMessageBox::information(this, "Impossibile salvare nel file", _File->errorString());
            return;
