@@ -24,7 +24,7 @@ QDomElement ricorrenza::XmlSerialize(QDomDocument doc) const
 {
     QDomElement ricor = doc.createElement("Ricorrenza");
     ricor.appendChild(nota::XmlSerialize(doc));
-    ricor.setAttribute("Data", _date.toString());
+    ricor.setAttribute("Data", metodi_extra::dateToItaStr(_date));
     ricor.setAttribute("Ora", _time.toString()); 
     ricor.setAttribute("Tipo", TipoToQString());
     return ricor;

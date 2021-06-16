@@ -3,31 +3,31 @@
  <Nota Corpo="Esempio di una nota">
   <Annotazione Titolo="Nota"/>
  </Nota>
- <Promemoria Ora="20:30:00" Data="25/06/2021">
+ <Promemoria Data="25/06/2021" Ora="20:30:00">
   <Nota Corpo="Esempio di un Promemoria">
    <Annotazione Titolo="Promemoria"/>
   </Nota>
  </Promemoria>
- <Ricorrenza Tipo="Mensile" Ora="20:30:00" Data="">
+ <Ricorrenza Data="16/06/2021" Tipo="Mensile" Ora="20:30:00">
   <Nota Corpo="Esempio di una Ricorrenza">
    <Annotazione Titolo="Ricorrenza"/>
   </Nota>
  </Ricorrenza>
  <Elenco Descrizione="Esempio di un Elenco">
   <Annotazione Titolo="Elenco"/>
-  <Elemento Value="uno" IsDone="0"/>
-  <Elemento Value="due" IsDone="0"/>
-  <Elemento Value="tre" IsDone="1"/>
-  <Elemento Value="quattro" IsDone="0"/>
-  <Elemento Value="cinque" IsDone="1"/>
+  <Elemento IsDone="0" Value="uno"/>
+  <Elemento IsDone="0" Value="due"/>
+  <Elemento IsDone="1" Value="tre"/>
+  <Elemento IsDone="0" Value="quattro"/>
+  <Elemento IsDone="1" Value="cinque"/>
  </Elenco>
  <Spesa>
   <Elenco Descrizione="Esempio di una Spesa">
    <Annotazione Titolo="Spesa"/>
   </Elenco>
-  <Elemento Value="primo elemento" Cost="1" IsDone="0"/>
-  <Elemento Value="secondo elemento" Cost="2.5" IsDone="0"/>
-  <Elemento Value="terzo elemento" Cost="99.99" IsDone="1"/>
-  <Elemento Value="quarto elemento" Cost="0" IsDone="0"/>
+  <Elemento Cost="1" IsDone="0" Value="primo elemento"/>
+  <Elemento Cost="2.5" IsDone="0" Value="secondo elemento"/>
+  <Elemento Cost="99.99" IsDone="1" Value="terzo elemento"/>
+  <Elemento Cost="0" IsDone="0" Value="quarto elemento"/>
  </Spesa>
 </Annotazioni>
