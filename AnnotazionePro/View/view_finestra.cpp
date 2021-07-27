@@ -14,28 +14,31 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     // Se è di tipo Promemoria, aggiungiamo Data e Ora
     if(dynamic_cast<promemoria*>(ann))
     {
+        promemoria* _prom = dynamic_cast<promemoria*>(ann);
+
         //Ora
-        _ora = new QDateTimeEdit(dynamic_cast<promemoria*>(ann)->getTime());
+        _ora = new QDateTimeEdit(_prom->getTime());
         //Calendario
         _calendario = new QCalendarWidget();
-        _calendario->setSelectedDate(dynamic_cast<promemoria*>(ann)->getDate());
+        _calendario->setSelectedDate(_prom->getDate());
         setupDataOra();
     }
 
     // Se è di tipo Ricorrenza, aggiungiamo Data, Ora e Tipo
     if(dynamic_cast<ricorrenza*>(ann))
     {
+        ricorrenza* _rico= dynamic_cast<ricorrenza*>(ann);
         // Ora
-        _ora = new QDateTimeEdit(dynamic_cast<ricorrenza*>(ann)->getTime());
+        _ora = new QDateTimeEdit(_rico->getTime());
         // Calendario
         _calendario = new QCalendarWidget();
-        _calendario->setSelectedDate(dynamic_cast<ricorrenza*>(ann)->getDate());
+        _calendario->setSelectedDate(_rico->getDate());
         setupDataOra();
         // Tipo
         _tipo=new QComboBox();
         _tipo->addItems(metodi_extra::getTipi());
         _MainLayout->addWidget(_tipo);
-        _tipo->setCurrentIndex(dynamic_cast<ricorrenza*>(ann)->getType());
+        _tipo->setCurrentIndex(_rico->getType());
         _tipo->setEnabled(false);
 
     }
@@ -43,10 +46,11 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     // Se è di tipo Nota, Ricorrenza o Promemoria
     if(dynamic_cast<nota*>(ann))
     {
+        nota* _nota= dynamic_cast<nota*>(ann);
         // Corpo
         _BoxCorpo = new QGroupBox("Corpo");
         QVBoxLayout *_CorpoLayout = new QVBoxLayout();
-        _LineCorpo = new QTextEdit(dynamic_cast<nota*>(ann)->getCorpo());
+        _LineCorpo = new QTextEdit(_nota->getCorpo());
         _LineCorpo->setEnabled(false);
         _CorpoLayout->addWidget(_LineCorpo);
         _BoxCorpo->setLayout(_CorpoLayout);
@@ -56,7 +60,9 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     // Se è di tipo Elenco ( Escludiamo Spesa che è figlia )
     if(dynamic_cast<elenco*>(ann) && !dynamic_cast<spesa*>(ann))
     {
-        _LineDesc = new QTextEdit(dynamic_cast<elenco*>(ann)->getDescrizione());
+        elenco* _ele = dynamic_cast<elenco*>(ann);
+
+        _LineDesc = new QTextEdit(_ele->getDescrizione());
         setupDescrizione();
 
         _BoxTable = new QGroupBox(" Lista Elementi ");
@@ -72,7 +78,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _TableList->setColumnWidth(1,18);
         // Riempimento Tabella
         int i=0;
-        lista<type_elenco*> _SupportList =  dynamic_cast<elenco*>(ann)->getElenco();
+        lista<type_elenco*> _SupportList = _ele->getElenco();
         _TableList->setRowCount(_SupportList.getSize());
         _TableList->setEnabled(false);
 
@@ -99,8 +105,10 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     // Se è di tipo Spesa
     if(dynamic_cast<spesa*>(ann))
     {
+        spesa* _spe = dynamic_cast<spesa*>(ann);
+
         // Descrizione
-        _LineDesc = new QTextEdit(dynamic_cast<spesa*>(ann)->getDescrizione());
+        _LineDesc = new QTextEdit(_spe->getDescrizione());
         setupDescrizione();
 
         _BoxTable = new QGroupBox(" Lista Elementi ");
@@ -115,11 +123,12 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _TableList->setHorizontalHeaderItem(1,new QTableWidgetItem("Costo"));
         _TableList->setColumnWidth(1,201);
         _TableList->setHorizontalHeaderItem(2,new QTableWidgetItem(""));
-        _TableList->setColumnWidth(2,18);
+       // _TableList->setColumnWidth(2,18);
+        _TableList->resizeColumnToContents(2);
 
         // Riempimento Tabella
         int i=0;
-        lista<type_spesa*> _SupportList =  dynamic_cast<spesa*>(ann)->getSpesa();
+        lista<type_spesa*> _SupportList =  _spe->getSpesa();
         _TableList->setRowCount(_SupportList.getSize());
         _TableList->setEnabled(false);
 
@@ -134,6 +143,7 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
             i++;
         }
         //_TableList->setEnabled(false);
+
         _TableLayout->addWidget(_TableList);
 
 
