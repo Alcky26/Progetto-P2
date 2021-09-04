@@ -74,7 +74,7 @@ private:
 
     // Metodi
     void viewOpzioni();
-    void viewGriglia();
+    void viewGriglia(int=-1);
     void resizeAnn(wAnnotazione* Ann);
     void SetSignalMapper(wAnnotazione *_wAnn);
     void resizeEvent(QResizeEvent *event);
@@ -83,13 +83,13 @@ private:
 private slots:
     void OnClickBtnAggiungi();
     void UpdateGrid();
+    void UpdateGridwValues(int);
     void OnClickRow();
     void ComboBoxTypeChanged(int);
     void OnTextChanged();
     void DeleteGrid();
     void GridEnable();
     void OpenWindowDetails( int);
-    void viewGrigliaAlternativo(int i);
     void SpostaSinistra(annotazione* a);
     void SpostaDestra(annotazione* a);
     void ModificaScrivi(annotazione* a);

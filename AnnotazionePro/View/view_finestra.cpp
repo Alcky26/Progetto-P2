@@ -338,7 +338,7 @@ void view_finestra::OnClickModifica()
         _modifica->setText("Modifica Valori di Questo Elemento");
         SetAllEnabled(_StatoModifica);
         _Model->modificaElemento(_Model->getAnnotazioni().indexOfInt(_ann),ReadChangedValues());
-        emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
+        emit AggiornaGrigliawValue(_Model->getAnnotazioni().indexOfInt(_ann));
         emit ModificaLog(_ann);
     }
 }
@@ -375,7 +375,7 @@ void view_finestra::MoveWAnnLeft()
                 {
                     _Model->muoviElementoDx(ci);
                 }
-                emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
+                emit AggiornaGrigliawValue(_Model->getAnnotazioni().indexOfInt(_ann));
                 emit SpostaSinLog(_ann);
             }
         }
@@ -400,7 +400,7 @@ void view_finestra::MoveWAnnRight()
                 {
                     _Model->muoviElementoSx(ci);
                 }
-                emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
+                emit AggiornaGrigliawValue(_Model->getAnnotazioni().indexOfInt(_ann));
                 emit SpostaDesLog(_ann);
             }
         }

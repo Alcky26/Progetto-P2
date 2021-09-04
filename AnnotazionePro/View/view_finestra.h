@@ -69,8 +69,8 @@ private:
     void setupDescrizione();
 
 signals:
-    void AggiornaGriglia();
-    void AggiornaGrigliaAlternativo(int i);
+    void AggiornaGriglia(int =-1);
+    void AggiornaGrigliawValue(int i);
     void ClosedWindow();
     void SpostaSinLog(annotazione* a);
     void SpostaDesLog(annotazione* a);

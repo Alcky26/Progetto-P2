@@ -15,7 +15,6 @@ public:
     // distruttore
     virtual ~annotazione()=0;
 
-
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
 
     virtual QString ToString() const;

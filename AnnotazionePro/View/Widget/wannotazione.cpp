@@ -20,9 +20,7 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     _LabTitolo->setAlignment(Qt::AlignCenter);
 
     _BoxTitle->addWidget(_LabTitolo);
-
     _Titolo->setLayout(_BoxTitle);
-    _Titolo->setStyleSheet("background::rgb(102, 153, 153)");
     _mainVBoxLayout->addWidget(_Titolo);
 
 
