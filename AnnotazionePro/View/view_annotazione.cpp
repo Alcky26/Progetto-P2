@@ -228,6 +228,7 @@ void view_annotazione::viewGriglia()
         _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
         count++;
     }
+
     _tempLayoutGriglia->setAlignment(Qt::AlignTop);
 
     _suppLayoutGriglia->setLayout(_tempLayoutGriglia);
@@ -252,12 +253,14 @@ void view_annotazione::viewGrigliaAlternativo(int i)
 
     lista<annotazione*> temp=_Model->getAnnotazioni();
     wAnnotazione *_nuovoWAnn;
+
     for(lista<annotazione*>::constiterator ci=temp.begin(); ci != temp.end();ci++)
     {
         _nuovoWAnn = new wAnnotazione(*ci);
         _wA.insertBack(_nuovoWAnn);
         SetSignalMapper(_nuovoWAnn);
     }
+    //-----------------------------------------------------
     int count = 0;
     for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
     {
@@ -272,6 +275,7 @@ void view_annotazione::viewGrigliaAlternativo(int i)
         _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
         count++;
     }
+    //---------------------------------------------------
     _tempLayoutGriglia->setAlignment(Qt::AlignTop);
 
     _suppLayoutGriglia->setLayout(_tempLayoutGriglia);
@@ -279,6 +283,8 @@ void view_annotazione::viewGrigliaAlternativo(int i)
 
     _Grid->addWidget(_scrollAreaAnnot);
 }
+
+
 
 void view_annotazione::SpostaSinistra(annotazione* a)
 {

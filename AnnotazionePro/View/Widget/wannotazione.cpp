@@ -11,16 +11,18 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 
     QVBoxLayout *_mainVBoxLayout = new QVBoxLayout();
 
-    //varia in base al tipo dynamico di ann
+    //varia in base al tipo dinamico di ann
     QGroupBox *_Titolo = new QGroupBox();
     QVBoxLayout *_BoxTitle =new QVBoxLayout();
 
-
+    // Il Titolo è sempre presente
     _LabTitolo = new QLabel(ann->getTitolo());
     _LabTitolo->setAlignment(Qt::AlignCenter);
+
     _BoxTitle->addWidget(_LabTitolo);
 
     _Titolo->setLayout(_BoxTitle);
+    _Titolo->setStyleSheet("background::rgb(102, 153, 153)");
     _mainVBoxLayout->addWidget(_Titolo);
 
 

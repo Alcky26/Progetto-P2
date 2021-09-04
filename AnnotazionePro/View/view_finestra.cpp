@@ -15,7 +15,6 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     if(dynamic_cast<promemoria*>(ann))
     {
         promemoria* _prom = dynamic_cast<promemoria*>(ann);
-
         //Ora
         _ora = new QDateTimeEdit(_prom->getTime());
         //Calendario
@@ -23,6 +22,8 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _calendario->setSelectedDate(_prom->getDate());
         setupDataOra();
     }
+
+
 
     // Se è di tipo Ricorrenza, aggiungiamo Data, Ora e Tipo
     if(dynamic_cast<ricorrenza*>(ann))
