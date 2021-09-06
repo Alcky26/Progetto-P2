@@ -58,19 +58,33 @@ void MainWindow::addMenuButtons()
     file->addAction(chiudi);
 
     // Creo Menu
-    QMenu* _helpMenu = new QMenu("Help", menuBar);
+    QMenu* _helpMenu = new QMenu("Aiuto", menuBar);
+
     // Creo Azioni
-    QAction* _info = new QAction("Infos",_helpMenu);
-    QAction* _help = new QAction("How to",_helpMenu);
-    QAction* _aboutUs = new QAction("About us",_helpMenu);
+    QAction* _info = new QAction("Informazioni",_helpMenu);
+    QAction* _aboutUs = new QAction("Creatori",_helpMenu);
+
+    // Creo Sottomenu con azioni
+    QMenu* _help = new QMenu("Come utilizzare questo Software",_helpMenu);
+    QAction* _file = new QAction("Operazioni da/su File",_help);
+    QAction* _newEl = new QAction("Creazione nuovo Elemento",_help);
+    QAction* _modEl = new QAction("Modifica di un Elemento Esistente",_help);
+
     // Associo Actions
     connect(_info,SIGNAL(triggered()),this,SLOT(openInfos()));
-    connect(_help,SIGNAL(triggered()),this,SLOT(openHelp()));
     connect(_aboutUs,SIGNAL(triggered()),this,SLOT(openAboutUs()));
 
+    connect(_file,SIGNAL(triggered()),this,SLOT(openFile()));
+    connect(_newEl,SIGNAL(triggered()),this,SLOT(openNew()));
+    connect(_modEl,SIGNAL(triggered()),this,SLOT(openMod()));
+
     _helpMenu->addAction(_info);
-    _helpMenu->addAction(_help);
+    _helpMenu->addMenu(_help);
     _helpMenu->addAction(_aboutUs);
+
+    _help->addAction(_file);
+    _help->addAction(_newEl);
+    _help->addAction(_modEl);
 
     menuBar->addMenu(file);
     menuBar->addMenu(_helpMenu);
@@ -178,14 +192,27 @@ void MainWindow::saveNameClicked()
 
 void MainWindow::openInfos() const
 {
-    QMessageBox box(QMessageBox::Information, "Informazione", QString("Questo Software può essere utilizzato per gestire un insieme di annotazioni e in forma di promemoria e elenchi!"), QMessageBox::Ok);
+    QMessageBox box(QMessageBox::Information, "Informazione", QString("Questo Software può essere utilizzato per gestire le proprie annotazioni"), QMessageBox::Ok);
     box.exec();
 }
 
-void MainWindow::openHelp() const
+void MainWindow::openFile() const
+{
+    QMessageBox box(QMessageBox::Information, "Tutorial", QString("Per aprire un file, utilizzare l'opzione <b>File -> Apri</b> in alto a sinistra.<br>"
+                                                                ), QMessageBox::Ok);
+    box.exec();
+}
+
+void MainWindow::openMod() const
+{
+    QMessageBox box(QMessageBox::Information, "Tutorial", QString("Per modificare un elemento, cliccare sull'elemento che si desidera modificare."), QMessageBox::Ok);
+    box.exec();
+}
+
+void MainWindow::openNew() const
 {
     QMessageBox box(QMessageBox::Information, "Tutorial", QString("Per creare un nuovo elemento interagire con l'area <b>Inserimento</b>.<br>"
-                                                                "Se si possiede un file <u><i>.xml</i></u> con elementi salvati in precendenza, allora premere su <b>File>Apri</b>, in alto a sinistra.<br>"), QMessageBox::Ok);
+                                                                "Gli elementi creati verrano mostrati nella griglia centrale."), QMessageBox::Ok);
     box.exec();
 }
 

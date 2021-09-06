@@ -34,7 +34,7 @@ QString ricorrenza::ToString() const
 {
     QString testo;
     testo+=nota::ToString();
-    return testo+"Data: "+getDate().toString()+"; Time: "+getTime().toString()+"; Tipo: "+TipoToQString()+";";
+    return testo+"Data: "+getDate().toString()+"; Time: "+getTime().toString()+"; Tipo: "+TipoToQString()+"; ";
 }
 
 Tipo ricorrenza::getType() const

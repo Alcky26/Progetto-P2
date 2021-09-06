@@ -75,7 +75,7 @@ void view_annotazione::ApriGriglia()
         _nuovoWAnn = new wAnnotazione(*ci);
         _wA.insertBack(_nuovoWAnn);
         SetSignalMapper(_nuovoWAnn);
-        _LineLog->append("[Aggiunta elemento] "+(*ci)->ToString());
+        _LineLog->append("[Aggiunta elemento] \n"+(*ci)->ToString());
     }
 
     int count = 0;
@@ -282,22 +282,22 @@ void view_annotazione::viewGrigliaAlternativo(int i)
 
 void view_annotazione::SpostaSinistra(annotazione* a)
 {
-     _LineLog->append("[Spostato a sinistra] "+a->ToString());
+     _LineLog->append("[Spostamento a sinistra] \n"+a->ToString());
 }
 
 void view_annotazione::SpostaDestra(annotazione *a)
 {
-    _LineLog->append("[Spostato a destra] " +a->ToString());
+    _LineLog->append("[Spostamento a destra] \n" +a->ToString());
 }
 
 void view_annotazione::ModificaScrivi(annotazione *a)
 {
-    _LineLog->append("[Elemento modificato] "+a->ToString());
+    _LineLog->append("[Elemento modificato] \n"+a->ToString());
 }
 
 void view_annotazione::EliminaScrivi(annotazione *a)
 {
-    _LineLog->append("[Elemento eliminato] "+a->ToString());
+    _LineLog->append("[Elemento eliminato] \n"+a->ToString());
 }
 
 // Quando creo un oggetto di tipo wAnnotazione, lo passiamo a questo metodo che aggiunge connette slot e signal

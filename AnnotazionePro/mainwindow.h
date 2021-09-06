@@ -58,7 +58,9 @@ private slots:
 
     // Metodi Per Help!
     void openInfos() const;
-    void openHelp() const;
+    void openFile() const;
+    void openMod() const;
+    void openNew() const;
     void openAboutUs() const;
 
 };

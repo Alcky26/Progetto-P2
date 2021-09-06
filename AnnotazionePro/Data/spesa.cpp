@@ -62,10 +62,10 @@ QString spesa::ToString() const
     QString testo;
     testo+=annotazione::ToString();
     testo+="Descrizione: "+getDescrizione()+"; ";
-    testo+="Spesa : \n";
+    testo+="Spesa :";
     for( lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
     {
-        testo+="- Valore: "+(*ci)->getValue()+"; Costo: "+QString::number((*ci)->getCost())+";"+((*ci)->getIsDone() ? "0" : "1" )+"; ";
+        testo+="\n- Valore: "+(*ci)->getValue()+"; Costo: "+QString::number((*ci)->getCost())+"; Stato: "+((*ci)->getIsDone() ? "Non Completato" : "Completato" )+";";
     }
     return testo;
 }

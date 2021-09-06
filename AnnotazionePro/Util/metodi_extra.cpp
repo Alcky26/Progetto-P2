@@ -6,11 +6,7 @@ QString metodi_extra::ElencoAsText(const lista<type_elenco *> _elenco)
     for( lista<type_elenco*>::constiterator ci = _elenco.begin(); ci!=_elenco.end();ci++)
     {
         _finalValue += (*ci)->getValue();
-        if( (*ci)->getIsDone())
-            _finalValue += " : ✔ ";
-        else
-            _finalValue += " : ✘ ";
-        _finalValue+="\n";
+        (*ci)->getIsDone() ?  _finalValue += " : Completato \n" : _finalValue += " : Non Completato \n";
     }
     return _finalValue;
 }
@@ -22,10 +18,7 @@ QString metodi_extra::SpesaAsText(const lista<type_spesa *> _spesa)
     for( lista<type_spesa*>::constiterator ci = _spesa.begin(); ci!=_spesa.end();ci++)
     {
         temp = (*ci)->getValue() + " : " +  QString::number((*ci)->getCost()) + " : ";
-        if((*ci)->getIsDone())
-            temp += "✔ \n";
-        else
-            temp += "✘ \n";
+        (*ci)->getIsDone() ?  temp += "Completato \n" : temp += "Non Completato \n";
         _finalValue+= temp;
     }
     return _finalValue;
