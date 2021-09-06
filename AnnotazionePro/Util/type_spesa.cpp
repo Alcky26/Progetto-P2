@@ -15,6 +15,10 @@ type_spesa::~type_spesa()
 
 }
 
+bool type_spesa::operator==(const type_spesa &ts) const {
+    return ts.getCost()==_cost && type_elenco::operator==(ts);
+}
+
 double type_spesa::getCost() const
 {
     return _cost;

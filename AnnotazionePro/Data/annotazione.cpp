@@ -32,6 +32,16 @@ QString annotazione::ToString() const
     return "Titolo: "+getTitolo()+"; ";
 }
 
+bool annotazione::operator==(const annotazione& A) const {
+    return A.getTitolo()==_titolo;
+}
+
+annotazione &annotazione::operator=(const annotazione &A)
+{
+    _titolo= A.getTitolo();
+    return *this;
+}
+
 QString annotazione::getTitolo() const
 {
     return _titolo;

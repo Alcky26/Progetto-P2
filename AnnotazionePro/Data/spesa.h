@@ -20,6 +20,9 @@ public:
     // Distruttore
     ~spesa();
 
+    bool operator==(const spesa& s) const;
+    spesa& operator=(const spesa& s);;
+
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
     virtual QString ToString() const;
 

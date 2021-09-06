@@ -21,6 +21,8 @@ public:
     // Distruttore
     virtual ~ricorrenza();
 
+    bool operator==(const ricorrenza& R) const;
+    ricorrenza& operator=(const ricorrenza& R);;
 
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
     virtual QString ToString() const;

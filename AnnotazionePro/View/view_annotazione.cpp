@@ -4,6 +4,7 @@
 view_annotazione::view_annotazione(model_annotazione *model, QWidget *parent): QWidget(parent), _Model(model)
 {
     _MainLayout = new QHBoxLayout(this);
+    setFont(QFont( "MS Shell Dlg 2,7.8,-1,5,50,0,0,0,0,0" ));
     _Grid = new QVBoxLayout();
     _InsertAndOptions = new QVBoxLayout();
     // Setup Opzioni
@@ -82,7 +83,7 @@ void view_annotazione::ApriGriglia()
     for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
     {
         resizeAnn(* cit);
-
+        (*cit)->setStyleSheet("font-size : 12px;");
         _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
         count++;
     }
@@ -168,7 +169,6 @@ void view_annotazione::viewOpzioni()
 
     _InsertAndOptions->addWidget(_GroupBoxInserimento);
 
-
     QVBoxLayout *_tempLayoutLog = new QVBoxLayout();
     QGroupBox *_GroupBoxLog = new QGroupBox("Log");
     _LineLog = new QTextEdit();
@@ -186,8 +186,6 @@ void view_annotazione::viewOpzioni()
     QVBoxLayout *_tempLayoutDelete = new QVBoxLayout();
     QGroupBox *_GroupBoxDelete = new QGroupBox("Svuota Griglia");
     _BtnDeleteGrid = new QPushButton("Svuota");
-    //_BtnDeleteGrid->setMinimumHeight(70);
-    //_BtnDeleteGrid->setStyleSheet("font-size: 24px;");
 
     _tempLayoutDelete->addWidget(_BtnDeleteGrid);
     _GroupBoxDelete->setLayout(_tempLayoutDelete);
@@ -226,7 +224,7 @@ void view_annotazione::viewGriglia(int i)
         for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
         {
             resizeAnn(* cit);
-
+            (*cit)->setStyleSheet("font-size : 12px;");
             _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
             count++;
         }
@@ -238,10 +236,10 @@ void view_annotazione::viewGriglia(int i)
             (*cit)->setEnabled(false);
             if(i==count)
             {
-                (*cit)->setStyleSheet(" background-color: rgb(66, 245, 123)");
+                (*cit)->setStyleSheet("font-size : 12px;  background-color: rgb(66, 245, 123)");
             }
             else
-                (*cit)->setStyleSheet(" background-color: white");
+                (*cit)->setStyleSheet("font-size : 12px;  background-color: white");
             _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
             count++;
         }
@@ -539,7 +537,7 @@ void view_annotazione::OpenWindowDetails( int value)
     {       
         (*ci)->setEnabled(false);
         if(i==value)
-            (*ci)->setStyleSheet("  background-color: rgb(66, 245, 123)");
+            (*ci)->setStyleSheet("font-size : 12px;  background-color: rgb(66, 245, 123)");
         i++;
     }
 

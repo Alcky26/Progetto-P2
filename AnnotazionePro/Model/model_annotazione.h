@@ -35,7 +35,7 @@ public:
 
     /// Rimozione e Modifica
     void rimouviElemento(const annotazione *annot);
-    void modificaElemento(int _index,annotazione *annot);
+    bool modificaElemento(int _index,annotazione *annot);
 
     bool muoviElementoDx(const lista<annotazione*>::constiterator ci);
     bool muoviElementoSx(const lista<annotazione*>::constiterator ci);

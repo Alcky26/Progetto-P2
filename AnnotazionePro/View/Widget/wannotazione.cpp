@@ -3,7 +3,6 @@
 wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 {
     _mainBoxLayout = new QVBoxLayout(this);
-
     _state=0;
 
     QListWidget *_MainWidgetList= new QListWidget();
@@ -16,12 +15,14 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
     QVBoxLayout *_BoxTitle =new QVBoxLayout();
 
     // Il Titolo è sempre presente
-    _LabTitolo = new QLabel(ann->getTitolo());
+    _LabTitolo = new QLabel("<b>"+ann->getTitolo()+"</b>");
+    _LabTitolo->setFont(QFont( "MS Shell Dlg 2,7.8,-1,5,50,0,0,0,0,0" ));
     _LabTitolo->setAlignment(Qt::AlignCenter);
 
     _BoxTitle->addWidget(_LabTitolo);
     _Titolo->setLayout(_BoxTitle);
     _mainVBoxLayout->addWidget(_Titolo);
+
 
 
     if(dynamic_cast<promemoria*>(ann))
@@ -78,12 +79,13 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
         _LabElenco->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         _LabElenco->setStyleSheet("background:rgb(224, 217, 215);");
         _mainVBoxLayout->addWidget(_LabElenco);
-        _LabCostoTot = new QLabel("<b>Costo totale: <b>"+QString::number(_spe->CostoComplessivo()));
-        //_LabCostoTot->setStyleSheet("font-size: 13px;");
+        _LabCostoTot = new QLabel("Costo totale: "+QString::number(_spe->CostoComplessivo()));
+
         _mainVBoxLayout->addWidget(_LabCostoTot);
     }
 
     _MainWidgetList->setLayout(_mainVBoxLayout);
+
 
     _mainBoxLayout->addWidget(_MainWidgetList);
 

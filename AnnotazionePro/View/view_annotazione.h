@@ -18,7 +18,7 @@
 #include <QTableWidget>
 #include <QSignalMapper>
 #include <QRadioButton>
-
+#include <QApplication>
 #include "Data/annotazione.h"
 #include "Data/nota.h"
 #include "Data/ricorrenza.h"

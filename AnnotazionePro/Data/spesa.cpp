@@ -42,6 +42,17 @@ spesa::~spesa()
     _spesa.clear();
 }
 
+bool spesa::operator==(const spesa &s) const {
+    return s.getSpesa()==_spesa && s.getDescrizione()==getDescrizione()&&annotazione::operator==(s);
+}
+
+spesa &spesa::operator=(const spesa &s) {
+    _spesa=s.getSpesa();
+    setDescrizione(s.getDescrizione());
+    annotazione::operator=(s);
+    return *this;
+}
+
 QDomElement spesa::XmlSerialize(QDomDocument doc) const
 {
     QDomElement spesa = doc.createElement("Spesa");
@@ -91,7 +102,7 @@ void spesa::setSpesa(const lista<type_spesa *> _newSpesa)
     _spesa.clear();
     for( lista<type_spesa*>::constiterator ci = _newSpesa.begin(); ci!=_newSpesa.end();ci++)
     {
-        _spesa.insertFront(*ci);
+        _spesa.insertBack(*ci);
     }
 }
 

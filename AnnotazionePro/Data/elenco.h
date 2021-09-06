@@ -22,6 +22,9 @@ public:
     // Distruttore
     virtual ~elenco();
 
+    bool operator==( elenco& E) const;
+    elenco &operator=(const elenco& E);;
+
 
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
     virtual QString ToString() const;

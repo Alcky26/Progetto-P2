@@ -19,6 +19,9 @@ public:
 
     virtual QString ToString() const;
 
+    bool operator==(const annotazione& A) const;
+
+    annotazione &operator=(const annotazione& A);
     // Get & Set
     QString getTitolo() const;
     void setTitolo(const QString &value);

@@ -1,7 +1,8 @@
 #include "ricorrenza.h"
 
 
-ricorrenza::ricorrenza(QString titolo, QString corpo, QDate date, QTime time, Tipo type) : annotazione(titolo), nota(titolo,corpo), _date(date), _time(time), _type(type)
+ricorrenza::ricorrenza(QString titolo, QString corpo, QDate date, QTime time, Tipo type)
+    : annotazione(titolo), nota(titolo,corpo), _date(date), _time(time), _type(type)
 {
 
 }
@@ -18,6 +19,19 @@ ricorrenza::ricorrenza(QDomElement ric):
 ricorrenza::~ricorrenza()
 {
 
+}
+
+bool ricorrenza::operator==(const ricorrenza &R) const {
+    return R.getDate()==_date && R.getTime()==_time && R.getType()==_type && nota::operator==(R);
+}
+
+ricorrenza &ricorrenza::operator=(const ricorrenza &R)
+{
+    _date=R.getDate();
+    _time=R.getTime();
+    _type=R.getType();
+    nota::operator==(R);
+    return *this;
 }
 
 QDomElement ricorrenza::XmlSerialize(QDomDocument doc) const
@@ -102,10 +116,12 @@ Tipo ricorrenza::QStringToTipo(QString stringa) const
     {
         return Mensile;
     }
-    else
+    else if( stringa == "Annuale")
     {
         return Annuale;
     }
+    else
+        return Giornaliero;
 }
 
 

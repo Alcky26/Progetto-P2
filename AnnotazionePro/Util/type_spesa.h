@@ -11,6 +11,8 @@ public:
     type_spesa();
     type_spesa( QString value,bool isDone ,double costo);
     ~type_spesa();
+
+    bool operator==(const type_spesa& ts) const;
     //Get & Set
     double getCost() const;
     void setCost(const double cost);

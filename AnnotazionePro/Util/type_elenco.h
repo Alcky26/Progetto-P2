@@ -17,8 +17,11 @@ public:
     QString getValue() const;
     void setValue(const QString &value);
 
+    bool operator==(const type_elenco& t) const;
+
     bool getIsDone() const;
     void setIsDone(const bool value);
+
 
 private:
     QString _value;

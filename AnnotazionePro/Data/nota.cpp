@@ -32,6 +32,17 @@ QString nota::ToString() const
     return testo+"Corpo: "+getCorpo()+"; ";
 }
 
+bool nota::operator==(const nota &N) const {
+    return N.getCorpo()==_corpo && annotazione::operator==(N);
+}
+
+nota& nota::operator=(const nota &N)
+{
+    _corpo=N.getCorpo();
+    annotazione::operator=((N));
+    return *this;
+}
+
 QString nota::getCorpo() const
 {
     return _corpo;

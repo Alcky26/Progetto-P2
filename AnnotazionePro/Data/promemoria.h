@@ -19,9 +19,11 @@ public:
     // Distruttore
     virtual ~promemoria();
 
-
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
     virtual QString ToString() const;
+
+    bool operator==(const promemoria& P) const;
+    promemoria &operator=(const promemoria& P);;
 
     //Get & Set
     QDate getDate() const;

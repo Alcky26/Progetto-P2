@@ -118,45 +118,90 @@ void model_annotazione::rimouviElemento(const annotazione *annot)
     _needToSave=true;
 }
 
-void model_annotazione::modificaElemento(int _index,annotazione *annot)
+bool model_annotazione::modificaElemento(int _index,annotazione *annot)
 {
     int i=0;
-    for(lista<annotazione*>::constiterator ci=_annotazioni.begin();ci!=_annotazioni.end();ci++)
+    for(lista<annotazione*>::constiterator ci=_annotazioni.begin();
+        ci!=_annotazioni.end();ci++)
     {
 
         if(i==_index)
         {
-            (*ci)->setTitolo(annot->getTitolo());
+
             if(dynamic_cast<promemoria*>(*ci))
             {
-               dynamic_cast<promemoria*>(*ci)->setDate(dynamic_cast<promemoria*>(annot)->getDate());
-               dynamic_cast<promemoria*>(*ci)->setTime(dynamic_cast<promemoria*>(annot)->getTime());
+
+                promemoria* P1= dynamic_cast<promemoria*>(*ci);
+                promemoria* P2= dynamic_cast<promemoria*>(annot);
+
+                if( (*P1)==(*P2))
+                    return false;
+                else{
+                    _needToSave=true;
+                    *P1=*P2;
+                    return true;
+                }
             }
             else if(dynamic_cast<ricorrenza*>(*ci))
             {
-                dynamic_cast<ricorrenza*>(*ci)->setDate(dynamic_cast<ricorrenza*>(annot)->getDate());
-                dynamic_cast<ricorrenza*>(*ci)->setTime(dynamic_cast<ricorrenza*>(annot)->getTime());
-                dynamic_cast<ricorrenza*>(*ci)->setType(dynamic_cast<ricorrenza*>(annot)->getType());
+                ricorrenza* R1= dynamic_cast<ricorrenza*>(*ci);
+                ricorrenza* R2= dynamic_cast<ricorrenza*>(annot);
+
+                if( (*R1)==(*R2))
+                    return false;
+                else{
+                    _needToSave=true;
+                    *R1=*R2;
+                    return true;
+                }
             }
             else if(dynamic_cast<spesa*>(*ci))
             {
-                dynamic_cast<spesa*>(*ci)->setDescrizione(dynamic_cast<spesa*>(annot)->getDescrizione());
-                dynamic_cast<spesa*>(*ci)->setSpesa(dynamic_cast<spesa*>(annot)->getSpesa());
+                spesa* S1= dynamic_cast<spesa*>(*ci);
+                spesa* S2= dynamic_cast<spesa*>(annot);
+
+                if(*S1==(*S2))
+                    return false;
+                else
+                {
+                    _needToSave=true;
+                    *S1=*S2;
+                    return true;
+                }
             }
             else if(dynamic_cast<elenco*>(*ci) )
             {
-                dynamic_cast<elenco*>(*ci)->setDescrizione(dynamic_cast<elenco*>(annot)->getDescrizione());
-                dynamic_cast<elenco*>(*ci)->setElenco(dynamic_cast<elenco*>(annot)->getElenco());
+                elenco* E1= dynamic_cast<elenco*>(*ci);
+                elenco* E2= dynamic_cast<elenco*>(annot);
+
+                if(*E1==(*E2))
+                    return false;
+                else
+                {
+                    _needToSave=true;
+                    *E1=*E2;
+                    return true;
+                }
+
             }
             if(dynamic_cast<nota*>(*ci))
             {
-                dynamic_cast<nota*>(*ci)->setCorpo(dynamic_cast<nota*>(annot)->getCorpo());
+                nota* N1= dynamic_cast<nota*>(*ci);
+                nota* N2= dynamic_cast<nota*>(annot);
+
+                if( *N1==(*N2) )
+                    return false;
+                else{
+                    _needToSave=true;
+                    *N1=*N2;
+                    return true;
+                }
             }
         }
         i++;
     }
-    _needToSave=true;
-}
+    return false;
+};
 
 bool model_annotazione::muoviElementoDx(const lista<annotazione*>::constiterator ci)
 {

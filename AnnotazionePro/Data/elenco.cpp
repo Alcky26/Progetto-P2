@@ -5,17 +5,21 @@ elenco::elenco() : annotazione()
 
 }
 
-elenco::elenco(QString titolo, QString descrizione):annotazione(titolo),_descrizione(descrizione),_elenco()
+elenco::elenco(QString titolo, QString descrizione)
+    : annotazione(titolo),_descrizione(descrizione),_elenco()
 {
 
 }
 
-elenco::elenco(QString titolo, QString descrizione, lista<type_elenco*> elenco):annotazione(titolo),_descrizione(descrizione),_elenco(elenco)
+elenco::elenco(QString titolo, QString descrizione, lista<type_elenco*> elenco)
+    : annotazione(titolo),_descrizione(descrizione),_elenco(elenco)
 {
 
 }
 
-elenco::elenco(const elenco &elen):annotazione(elen.getTitolo()),_descrizione(elen.getDescrizione()),_elenco(elen.getElenco())
+elenco::elenco(const elenco &elen)
+    : annotazione(elen.getTitolo()),
+      _descrizione(elen.getDescrizione()),_elenco(elen.getElenco())
 {
 
 }
@@ -41,6 +45,17 @@ elenco::~elenco()
     _elenco.clear();
 }
 
+bool elenco::operator==(elenco& E) const {
+    return E.getElenco()==_elenco && E.getDescrizione()==_descrizione && annotazione::operator==(E);
+}
+
+elenco &elenco::operator=(const elenco &E){
+    _elenco=E.getElenco();
+    _descrizione=E.getDescrizione();
+    annotazione::operator=(E);
+    return *this;
+}
+
 QDomElement elenco::XmlSerialize(QDomDocument doc) const
 {
     QDomElement elenco = doc.createElement("Elenco");
@@ -64,7 +79,8 @@ QString elenco::ToString() const
     testo+="Elenco : ";
     for( lista<type_elenco*>::constiterator ci = _elenco.begin(); ci!=_elenco.end();ci++)
     {
-        testo+="\n- Valore: "+(*ci)->getValue()+"; Stato: "+((*ci)->getIsDone() ? "Non Completato" : "Completato" )+"; ";
+        testo+="\n- Valore: "+(*ci)->getValue()+"; Stato: ";
+        testo+= ( (*ci)->getIsDone() ? "Completato; " : "Non Completato; " );
     }
     return testo;
 }
@@ -90,7 +106,7 @@ void elenco::setElenco(lista<type_elenco *> _newElenco)
     _elenco.clear();
     for( lista<type_elenco*>::constiterator ci = _newElenco.begin(); ci!=_newElenco.end();ci++)
     {
-        _elenco.insertFront(*ci);
+        _elenco.insertBack(*ci);
     }
 }
 

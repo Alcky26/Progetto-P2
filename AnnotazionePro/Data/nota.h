@@ -1,6 +1,6 @@
 #ifndef nota_H
 #define nota_H
-
+#include <QDebug>
 #include <QString>
 #include "annotazione.h"
 #include <QDomDocument>
@@ -17,6 +17,10 @@ public:
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
 
     virtual QString ToString() const;
+
+    bool operator==(const nota& N) const;;
+
+    nota& operator=(const nota& N);;
 
     //Get & Set
     QString getCorpo() const;

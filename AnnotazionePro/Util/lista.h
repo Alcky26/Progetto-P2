@@ -1,6 +1,6 @@
 #ifndef LISTA_H
 #define LISTA_H
-
+#include <QDebug>
 #include "nodo.h"
 
 
@@ -80,6 +80,8 @@ public:
 
     //rimuove tutti gli elementi della lista
     void clear();
+
+    bool operator==(const lista<T> LT) const;
 
 };
 
@@ -367,6 +369,27 @@ void lista<T>::clear(){
     _size = 0;
 }
 
+template<class T>
+bool lista<T>::operator==(const lista<T> LT) const
+{
+    if(getSize()!=LT.getSize())
+        return false;
+    else
+    {
+        lista<T>::constiterator ci_2 = begin();
+        for(lista<T>::constiterator ci=LT.begin();ci!=LT.end();ci++)
+        {
+
+            if( *(LT.index(ci)) == *(index(ci_2)))
+                ci_2++;
+            else
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
 
 #endif // LISTA_H
 

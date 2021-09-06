@@ -1,7 +1,8 @@
 #include "promemoria.h"
 
 
-promemoria::promemoria(QString titolo, QString corpo, QDate date, QTime time) : annotazione(titolo), nota(titolo,corpo), _date(date), _time(time)
+promemoria::promemoria(QString titolo, QString corpo, QDate date, QTime time)
+    : annotazione(titolo), nota(titolo,corpo), _date(date), _time(time)
 {
 
 }
@@ -10,7 +11,9 @@ promemoria::promemoria(QDomElement prom):
     annotazione(prom.childNodes().at(0).toElement().childNodes().at(0).toElement()),
     nota(prom.childNodes().at(0).toElement()),
     _date(metodi_extra::strToItaDate(prom.attribute("Data"))),
-    _time(prom.attribute("Ora").split(":")[0].toInt(),prom.attribute("Ora").split(":")[1].toInt(),prom.attribute("Ora").split(":")[2].toInt())
+    _time(prom.attribute("Ora").split(":")[0].toInt(),
+    prom.attribute("Ora").split(":")[1].toInt(),
+    prom.attribute("Ora").split(":")[2].toInt())
 {
 
 }
@@ -34,6 +37,18 @@ QString promemoria::ToString() const
     QString testo;
     testo+=nota::ToString();
     return testo+"Data: "+getDate().toString()+"; Time: "+getTime().toString()+"; ";
+}
+
+bool promemoria::operator==(const promemoria &P) const {
+    return P.getTime() == _time && P.getDate() == _date && nota::operator==(P);
+}
+
+promemoria &promemoria::operator=(const promemoria &P)
+{
+    _date=P.getDate();
+    _time=P.getTime();
+    nota::operator=(P);
+    return *this;
 }
 
 QDate promemoria::getDate() const

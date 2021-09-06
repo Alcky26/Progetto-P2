@@ -30,6 +30,10 @@ void type_elenco::setValue(const QString &value)
     _value = value;
 }
 
+bool type_elenco::operator==(const type_elenco& t) const {
+    return _value==t.getValue() && _isDone==t.getIsDone();
+}
+
 bool type_elenco::getIsDone() const
 {
     return _isDone;
