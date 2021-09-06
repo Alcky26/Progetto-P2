@@ -15,29 +15,35 @@
 class model_annotazione
 {
 public:
+    // Costruttore & Distruttore
     model_annotazione();
     ~model_annotazione();
 
+    // Metodi I\O da/su file
     void readFromFile(const QDomDocument& doc);
     QDomDocument saveFile() const;
 
+    // Metodo Add
     void aggiungiAnnotazione(annotazione  *annotazione);
-    // getter
+    // Metodi Get
     lista<annotazione*> getAnnotazioni() const;
     annotazione *getAnnotazione(const unsigned int i) const;
     //annotazione* getAnnotazioni(QString Titolo) const;
 
+    // Clean
     void reset();
 
-    /// METODO MODIFICA DI UN ELEMENTO
+    /// Rimozione e Modifica
     void rimouviElemento(const annotazione *annot);
     void modificaElemento(int _index,annotazione *annot);
 
     bool muoviElementoDx(const lista<annotazione*>::constiterator ci);
     bool muoviElementoSx(const lista<annotazione*>::constiterator ci);
 
+    // Salvataggio
     bool deviSalvare() const;
     void salvato();
+    // Metodo Extra
     static QStringList categorie();
 
 private:

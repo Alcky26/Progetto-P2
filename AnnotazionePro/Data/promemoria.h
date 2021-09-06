@@ -12,14 +12,18 @@
 class promemoria : virtual public nota
 {
 public:
+    //Costruttori
     promemoria(QString titolo, QString corpo,QDate date,QTime time);
     promemoria(QDomElement promemoria);
+
+    // Distruttore
     virtual ~promemoria();
+
 
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
     virtual QString ToString() const;
 
-    //Get e Set
+    //Get & Set
     QDate getDate() const;
     void setDate(const QDate &date);
 

@@ -13,7 +13,7 @@ public:
 
     virtual ~type_elenco();
 
-    //Get e Set
+    //Get & Set
     QString getValue() const;
     void setValue(const QString &value);
 

@@ -11,15 +11,15 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
 
     QVBoxLayout *_mainVBoxLayout = new QVBoxLayout();
 
-    //varia in base al tipo dynamico di ann
+    //varia in base al tipo dinamico di ann
     QGroupBox *_Titolo = new QGroupBox();
     QVBoxLayout *_BoxTitle =new QVBoxLayout();
 
-
-    _LabTitolo = new QLabel("<b>"+ann->getTitolo()+"</b>");
+    // Il Titolo è sempre presente
+    _LabTitolo = new QLabel(ann->getTitolo());
     _LabTitolo->setAlignment(Qt::AlignCenter);
-    _BoxTitle->addWidget(_LabTitolo);
 
+    _BoxTitle->addWidget(_LabTitolo);
     _Titolo->setLayout(_BoxTitle);
     _mainVBoxLayout->addWidget(_Titolo);
 
@@ -36,7 +36,7 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
         ricorrenza* _ric=dynamic_cast<ricorrenza*>(ann);
         _LabDateTime = new QLabel("Data : "+_ric->getDate().toString() + "\n"+"Ora : " +  _ric->getTime().toString());
         _mainVBoxLayout->addWidget(_LabDateTime);
-        _LabRicorrenza = new QLabel( "Ricorrenza " + _ric->TipoToQString() );
+        _LabRicorrenza = new QLabel( _ric->TipoToQString() );
         _mainVBoxLayout->addWidget(_LabRicorrenza);
     }
 
@@ -78,7 +78,8 @@ wAnnotazione::wAnnotazione(annotazione *ann, QWidget *parent) : QWidget(parent)
         _LabElenco->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         _LabElenco->setStyleSheet("background:rgb(224, 217, 215);");
         _mainVBoxLayout->addWidget(_LabElenco);
-        _LabCostoTot = new QLabel("Costo totale: "+QString::number(_spe->CostoComplessivo()));
+        _LabCostoTot = new QLabel("<b>Costo totale: <b>"+QString::number(_spe->CostoComplessivo()));
+        //_LabCostoTot->setStyleSheet("font-size: 13px;");
         _mainVBoxLayout->addWidget(_LabCostoTot);
     }
 

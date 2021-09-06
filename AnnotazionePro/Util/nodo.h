@@ -10,10 +10,13 @@ class nodo
     friend class lista<T>;
 private:
     T _info;
-    nodo *_prev, *_next;
+    nodo *_prev, *_next; // double Linked
+    // Costruttore
     nodo();
     nodo(const T& t, nodo *prev=nullptr, nodo *next=nullptr);
+    // Distruttore
     ~nodo();
+    // Get
     T getInfo() const;
 };
 

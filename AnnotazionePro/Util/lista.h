@@ -45,6 +45,7 @@ public:
             bool operator==(const constiterator& x) const;
             bool operator!=(const constiterator& x) const;
         };
+
     //restituisce il constiterator al primo nodo della lista
     constiterator begin() const;
 

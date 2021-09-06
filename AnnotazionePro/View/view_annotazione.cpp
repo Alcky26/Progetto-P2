@@ -196,7 +196,7 @@ void view_annotazione::viewOpzioni()
 }
 
 // Creazione della Griglia di wAnnotazioni
-void view_annotazione::viewGriglia()
+void view_annotazione::viewGriglia(int i)
 {
     QGridLayout *_tempLayoutGriglia = new QGridLayout();
     QGroupBox *_suppLayoutGriglia = new QGroupBox();
@@ -221,57 +221,33 @@ void view_annotazione::viewGriglia()
     }
 
     int count = 0;
-    for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
-    {
-        resizeAnn(* cit);
 
-        _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
-        count++;
-    }
-    _tempLayoutGriglia->setAlignment(Qt::AlignTop);
-
-    _suppLayoutGriglia->setLayout(_tempLayoutGriglia);
-    _scrollAreaAnnot->setWidget(_suppLayoutGriglia);
-
-    _Grid->addWidget(_scrollAreaAnnot);
-}
-
-void view_annotazione::viewGrigliaAlternativo(int i)
-{
-    QGridLayout *_tempLayoutGriglia = new QGridLayout();
-    QGroupBox *_suppLayoutGriglia = new QGroupBox();
-
-    _scrollAreaAnnot = new QScrollArea;
-    _scrollAreaAnnot->setWidgetResizable(true);
-
-    QRect geometry = _Grid->geometry();
-    int width = geometry.width();
-    _tempLayoutGriglia->setSpacing(width/25);
-
-    clearGriglia();
-
-    lista<annotazione*> temp=_Model->getAnnotazioni();
-    wAnnotazione *_nuovoWAnn;
-    for(lista<annotazione*>::constiterator ci=temp.begin(); ci != temp.end();ci++)
-    {
-        _nuovoWAnn = new wAnnotazione(*ci);
-        _wA.insertBack(_nuovoWAnn);
-        SetSignalMapper(_nuovoWAnn);
-    }
-    int count = 0;
-    for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
-    {
-        resizeAnn(* cit);
-        (*cit)->setEnabled(false);
-        if(i==count)
+    if(i== -1){
+        for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
         {
-            (*cit)->setStyleSheet(" background-color: rgb(66, 245, 123)");
+            resizeAnn(* cit);
+
+            _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
+            count++;
         }
-        else
-            (*cit)->setStyleSheet(" background-color: white");
-        _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
-        count++;
     }
+    else{
+        for(lista<wAnnotazione*>::constiterator cit = _wA.begin(); cit != _wA.end(); cit++)
+        {
+            resizeAnn(* cit);
+            (*cit)->setEnabled(false);
+            if(i==count)
+            {
+                (*cit)->setStyleSheet(" background-color: rgb(66, 245, 123)");
+            }
+            else
+                (*cit)->setStyleSheet(" background-color: white");
+            _tempLayoutGriglia->addWidget(*cit,  (count > 3) ? count/4 : 0, (count > 3) ? count-4*(count/4) : count);
+            count++;
+        }
+    }
+
+
     _tempLayoutGriglia->setAlignment(Qt::AlignTop);
 
     _suppLayoutGriglia->setLayout(_tempLayoutGriglia);
@@ -411,6 +387,10 @@ void view_annotazione::UpdateGrid()
 {
     viewGriglia();
 }
+
+void view_annotazione::UpdateGridwValues(int i){
+    viewGriglia(i);
+};
 
 // On click Row, Aggiunge linee extra per inserimento nelle tabelle
 void view_annotazione::OnClickRow()
@@ -565,7 +545,7 @@ void view_annotazione::OpenWindowDetails( int value)
 
     connect(_FinestraDescrizione ,SIGNAL(ClosedWindow()), this , SLOT(GridEnable()));
     connect(_FinestraDescrizione, SIGNAL(AggiornaGriglia()), this, SLOT(UpdateGrid()));
-    connect(_FinestraDescrizione, SIGNAL(AggiornaGrigliaAlternativo(int)), this, SLOT(viewGrigliaAlternativo(int)));
+    connect(_FinestraDescrizione, SIGNAL(AggiornaGrigliawValue(int)), this, SLOT(UpdateGridwValues(int)));
     connect(_FinestraDescrizione, SIGNAL(SpostaSinLog(annotazione*)), this, SLOT(SpostaSinistra(annotazione*)));
     connect(_FinestraDescrizione, SIGNAL(SpostaDesLog(annotazione*)), this, SLOT(SpostaDestra(annotazione*)));
     connect(_FinestraDescrizione, SIGNAL(ModificaLog(annotazione*)), this, SLOT(ModificaScrivi(annotazione*)));

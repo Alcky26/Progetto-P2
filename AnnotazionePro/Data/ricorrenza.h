@@ -14,14 +14,18 @@ class ricorrenza : virtual public nota
 {
 public:
 
+    // Costruttori
     ricorrenza(QString titolo, QString corpo,QDate date,QTime time,Tipo type);
     ricorrenza(QDomElement ricorrenza);
+
+    // Distruttore
     virtual ~ricorrenza();
+
 
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
     virtual QString ToString() const;
 
-    //Get e Set
+    //Get & Set
     Tipo getType() const;
     void setType(const Tipo &type);
 

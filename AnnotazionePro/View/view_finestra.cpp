@@ -15,7 +15,6 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
     if(dynamic_cast<promemoria*>(ann))
     {
         promemoria* _prom = dynamic_cast<promemoria*>(ann);
-
         //Ora
         _ora = new QDateTimeEdit(_prom->getTime());
         //Calendario
@@ -23,6 +22,8 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _calendario->setSelectedDate(_prom->getDate());
         setupDataOra();
     }
+
+
 
     // Se è di tipo Ricorrenza, aggiungiamo Data, Ora e Tipo
     if(dynamic_cast<ricorrenza*>(ann))
@@ -337,7 +338,7 @@ void view_finestra::OnClickModifica()
         _modifica->setText("Modifica Valori di Questo Elemento");
         SetAllEnabled(_StatoModifica);
         _Model->modificaElemento(_Model->getAnnotazioni().indexOfInt(_ann),ReadChangedValues());
-        emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
+        emit AggiornaGrigliawValue(_Model->getAnnotazioni().indexOfInt(_ann));
         emit ModificaLog(_ann);
     }
 }
@@ -374,7 +375,7 @@ void view_finestra::MoveWAnnLeft()
                 {
                     _Model->muoviElementoDx(ci);
                 }
-                emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
+                emit AggiornaGrigliawValue(_Model->getAnnotazioni().indexOfInt(_ann));
                 emit SpostaSinLog(_ann);
             }
         }
@@ -399,7 +400,7 @@ void view_finestra::MoveWAnnRight()
                 {
                     _Model->muoviElementoSx(ci);
                 }
-                emit AggiornaGrigliaAlternativo(_Model->getAnnotazioni().indexOfInt(_ann));
+                emit AggiornaGrigliawValue(_Model->getAnnotazioni().indexOfInt(_ann));
                 emit SpostaDesLog(_ann);
             }
         }

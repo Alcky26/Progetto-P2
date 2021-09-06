@@ -11,7 +11,7 @@ public:
     type_spesa();
     type_spesa( QString value,bool isDone ,double costo);
     ~type_spesa();
-    //Get and Set
+    //Get & Set
     double getCost() const;
     void setCost(const double cost);
 
