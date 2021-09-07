@@ -76,6 +76,7 @@ signals:
     void SpostaDesLog(annotazione* a);
     void ModificaLog(annotazione* a);
     void EliminaLog(annotazione* a);
+    void StringLog(QString a);
 private slots:
     void OnClickModifica();
     void OnClickElimina();

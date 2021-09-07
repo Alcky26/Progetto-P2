@@ -274,6 +274,11 @@ void view_annotazione::EliminaScrivi(annotazione *a)
     _LineLog->append("[Elemento eliminato] \n"+a->ToString());
 }
 
+void view_annotazione::Scrivi(QString a)
+{
+    _LineLog->append(a);
+}
+
 // Quando creo un oggetto di tipo wAnnotazione, lo passiamo a questo metodo che aggiunge connette slot e signal
 void view_annotazione::SetSignalMapper(wAnnotazione *_wAnn)
 {
@@ -548,6 +553,7 @@ void view_annotazione::OpenWindowDetails( int value)
     connect(_FinestraDescrizione, SIGNAL(SpostaDesLog(annotazione*)), this, SLOT(SpostaDestra(annotazione*)));
     connect(_FinestraDescrizione, SIGNAL(ModificaLog(annotazione*)), this, SLOT(ModificaScrivi(annotazione*)));
     connect(_FinestraDescrizione, SIGNAL(EliminaLog(annotazione*)), this, SLOT(EliminaScrivi(annotazione*)));
+    connect(_FinestraDescrizione, SIGNAL(StringLog(QString)), this, SLOT(Scrivi(QString)));
     _FinestraDescrizione->setMinimumWidth(500);
     _FinestraDescrizione->setMaximumHeight(700);
     _FinestraDescrizione->setWindowModality(Qt::ApplicationModal);

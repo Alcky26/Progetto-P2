@@ -1,8 +1,7 @@
 #ifndef LISTA_H
 #define LISTA_H
-#include <QDebug>
-#include "nodo.h"
 
+#include "nodo.h"
 
 template <class T>
 class lista
@@ -81,8 +80,11 @@ public:
     //rimuove tutti gli elementi della lista
     void clear();
 
-    bool operator==(const lista<T> LT) const;
+    //overloading operator==
+    bool operator==(const lista<T>& LT) const;
 
+    //overloading operator!=
+    bool operator!=(const lista<T>& LT) const;
 };
 
 template<class T>
@@ -370,7 +372,7 @@ void lista<T>::clear(){
 }
 
 template<class T>
-bool lista<T>::operator==(const lista<T> LT) const
+bool lista<T>::operator==(const lista<T>& LT) const
 {
     if(getSize()!=LT.getSize())
         return false;
@@ -379,16 +381,19 @@ bool lista<T>::operator==(const lista<T> LT) const
         lista<T>::constiterator ci_2 = begin();
         for(lista<T>::constiterator ci=LT.begin();ci!=LT.end();ci++)
         {
-
             if( *(LT.index(ci)) == *(index(ci_2)))
                 ci_2++;
             else
-            {
                 return false;
-            }
         }
     }
     return true;
+}
+
+template<class T>
+bool lista<T>::operator!=(const lista<T>& LT) const
+{
+    return !(this==&LT);
 }
 
 #endif // LISTA_H

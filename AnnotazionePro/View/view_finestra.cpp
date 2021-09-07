@@ -124,11 +124,11 @@ view_finestra::view_finestra(model_annotazione *model, annotazione *ann, QWidget
         _TableList->setShowGrid(true);
         _TableList->setColumnCount(3);
         _TableList->setHorizontalHeaderItem(0,new QTableWidgetItem("Elemento"));
-        _TableList->setColumnWidth(0,201);
+        _TableList->setColumnWidth(0,120);
         _TableList->setHorizontalHeaderItem(1,new QTableWidgetItem("Costo"));
-        _TableList->setColumnWidth(1,201);
+        _TableList->setColumnWidth(1,120);
         _TableList->setHorizontalHeaderItem(2,new QTableWidgetItem(""));
-       // _TableList->setColumnWidth(2,18);
+        _TableList->setColumnWidth(2,25);
         _TableList->resizeColumnToContents(2);
 
         // Riempimento Tabella
@@ -345,8 +345,12 @@ void view_finestra::OnClickModifica()
         _modifica->setText("Modifica Valori di Questo Elemento");
         SetAllEnabled(_StatoModifica);
         bool result = _Model->modificaElemento(_Model->getAnnotazioni().indexOfInt(_ann),ReadChangedValues());
-        emit AggiornaGrigliawValue(_Model->getAnnotazioni().indexOfInt(_ann));
-        if(result) emit ModificaLog(_ann) ;
+        if(result) {
+            emit AggiornaGrigliawValue(_Model->getAnnotazioni().indexOfInt(_ann));
+            emit ModificaLog(_ann) ;
+        }
+        else
+            emit StringLog("[Nessun Elemento Modificato]");
     }
 }
 
@@ -424,6 +428,7 @@ void view_finestra::AggiungiRiga()
         QTableWidgetItem *checkBoxItem = new QTableWidgetItem();
         checkBoxItem->setCheckState(Qt::Unchecked);
         _TableList->setItem(_TableList->rowCount()-1,1,checkBoxItem);
+        emit StringLog("[Aggiunta riga di Elenco]");
     }
     else
     {
@@ -432,6 +437,8 @@ void view_finestra::AggiungiRiga()
         QTableWidgetItem *checkBoxItem = new QTableWidgetItem();
         checkBoxItem->setCheckState(Qt::Unchecked);
         _TableList->setItem(_TableList->rowCount()-1,2,checkBoxItem);
+        emit StringLog("[Aggiunta riga di Spesa]");
     }
+
 }
 

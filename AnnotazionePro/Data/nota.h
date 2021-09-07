@@ -1,6 +1,6 @@
 #ifndef nota_H
 #define nota_H
-#include <QDebug>
+
 #include <QString>
 #include "annotazione.h"
 #include <QDomDocument>

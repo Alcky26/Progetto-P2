@@ -94,6 +94,7 @@ private slots:
     void SpostaDestra(annotazione* a);
     void ModificaScrivi(annotazione* a);
     void EliminaScrivi(annotazione* a);
+    void Scrivi(QString a);
     void DeleteLog();
 };
 

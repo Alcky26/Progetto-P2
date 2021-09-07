@@ -8,7 +8,6 @@
 #include <QStringList>
 #include <QDate>
 
-
 class metodi_extra
 {
 public:

@@ -2,7 +2,6 @@
 #define SPESA_H
 
 #include "elenco.h"
-#include <QDebug>
 #include "Util/type_spesa.h"
 #include <QDomDocument>
 #include <QDomElement>
