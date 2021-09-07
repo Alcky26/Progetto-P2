@@ -22,18 +22,9 @@ public:
     void setIsDone(const bool value);
 
     // overloading operatore
-
     bool operator==(const type_elenco& t) const;
     bool operator!=(const type_elenco& t) const;
-    type_elenco& operator=(const type_elenco& t)
-    {
-        if(this!=&t)
-        {
-            _value=t.getValue();
-            _isDone=t.getIsDone();
-        }
-        return *this;
-    }
+    type_elenco &operator=(const type_elenco& t);
 
 private:
     QString _value;

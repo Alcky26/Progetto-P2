@@ -19,6 +19,22 @@ bool type_spesa::operator==(const type_spesa &ts) const {
     return ts.getCost()==_cost && type_elenco::operator==(ts);
 }
 
+bool type_spesa::operator!=(const type_spesa &ts) const
+{
+    return !(this==&ts);
+}
+
+type_spesa &type_spesa::operator=(const type_spesa &ts)
+{
+    if(this!=&ts)
+    {
+        _cost=ts.getCost();
+        setIsDone((ts.getIsDone()));
+        setValue(ts.getValue());
+    }
+    return *this;
+}
+
 double type_spesa::getCost() const
 {
     return _cost;
