@@ -14,20 +14,23 @@ class ricorrenza : virtual public nota
 {
 public:
 
-    // Costruttori
+    // costruttori
     ricorrenza(QString titolo, QString corpo,QDate date,QTime time,Tipo type);
     ricorrenza(QDomElement ricorrenza);
 
-    // Distruttore
+    // distruttore
     virtual ~ricorrenza();
 
-    bool operator==(const ricorrenza& R) const;
-    ricorrenza& operator=(const ricorrenza& R);;
-
+    // metodi polimorfi
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
     virtual QString ToString() const;
 
-    //Get & Set
+    // overloading operatori
+    bool operator==(const ricorrenza& R) const;
+    bool operator!=(const ricorrenza& R) const;
+    ricorrenza& operator=(const ricorrenza& R);
+
+    // Get & Set
     Tipo getType() const;
     void setType(const Tipo &type);
 

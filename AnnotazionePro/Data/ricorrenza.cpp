@@ -25,12 +25,20 @@ bool ricorrenza::operator==(const ricorrenza &R) const {
     return R.getDate()==_date && R.getTime()==_time && R.getType()==_type && nota::operator==(R);
 }
 
+bool ricorrenza::operator!=(const ricorrenza &R) const
+{
+    return !(this==&R);
+}
+
 ricorrenza &ricorrenza::operator=(const ricorrenza &R)
 {
-    _date=R.getDate();
-    _time=R.getTime();
-    _type=R.getType();
-    nota::operator==(R);
+    if(this!=&R)
+    {
+        _date=R.getDate();
+        _time=R.getTime();
+        _type=R.getType();
+        nota::operator==(R);
+    }
     return *this;
 }
 

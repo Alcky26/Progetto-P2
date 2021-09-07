@@ -11,7 +11,7 @@
 class elenco: virtual public annotazione
 {
 public:
-    // Costruttori
+    // costruttori
     elenco();
     elenco(QString titolo, QString descrizione);
     elenco(QString titolo, QString descrizione,lista<QString*> &elenco);
@@ -19,17 +19,19 @@ public:
     elenco(const elenco& elen);
     elenco(QDomElement elenco);
 
-    // Distruttore
+    // distruttore
     virtual ~elenco();
 
-    bool operator==( elenco& E) const;
-    elenco &operator=(const elenco& E);;
-
-
+    // metodi polimorfici
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
     virtual QString ToString() const;
 
-    //Get & Set
+    // overloading operatori
+    bool operator==( elenco& E) const;
+    bool operator!=( elenco& E) const;
+    elenco &operator=(const elenco& E);
+
+    // Get & Set
     QString getDescrizione() const;
     void setDescrizione(const QString  &descrizione);
 

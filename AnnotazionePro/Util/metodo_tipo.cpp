@@ -3,16 +3,12 @@
 
 Tipo metodo_tipo::IntToTipo(const int _index)
 {
-    Tipo _nuovoTipo=Giornaliero;
+    switch(_index) {
+    case(0) : return Giornaliero; break;
+    case(1) : return Settimanale; break;
+    case(2) : return Mensile; break;
+    case(3) : return Annuale; break;
+    default: return Giornaliero; break;
+    }
 
-    if(_index==0)
-        _nuovoTipo = Giornaliero;
-    else if (_index == 1)
-        _nuovoTipo = Settimanale;
-    else if (_index == 2)
-       _nuovoTipo = Mensile;
-    else if (_index == 3)
-       _nuovoTipo = Annuale;
-
-    return _nuovoTipo;
 }

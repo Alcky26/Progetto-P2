@@ -36,10 +36,18 @@ bool nota::operator==(const nota &N) const {
     return N.getCorpo()==_corpo && annotazione::operator==(N);
 }
 
+bool nota::operator!=(const nota &N) const
+{
+    return !(this==&N);
+}
+
 nota& nota::operator=(const nota &N)
 {
-    _corpo=N.getCorpo();
-    annotazione::operator=((N));
+    if(this!=&N)
+    {
+        _corpo=N.getCorpo();
+        annotazione::operator=((N));
+    }
     return *this;
 }
 

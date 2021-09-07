@@ -43,11 +43,19 @@ bool promemoria::operator==(const promemoria &P) const {
     return P.getTime() == _time && P.getDate() == _date && nota::operator==(P);
 }
 
+bool promemoria::operator!=(const promemoria &P) const
+{
+    return !(this==&P);
+}
+
 promemoria &promemoria::operator=(const promemoria &P)
 {
-    _date=P.getDate();
-    _time=P.getTime();
-    nota::operator=(P);
+    if(this!=&P)
+    {
+        _date=P.getDate();
+        _time=P.getTime();
+        nota::operator=(P);
+    }
     return *this;
 }
 

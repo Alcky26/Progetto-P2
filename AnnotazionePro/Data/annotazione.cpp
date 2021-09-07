@@ -36,9 +36,14 @@ bool annotazione::operator==(const annotazione& A) const {
     return A.getTitolo()==_titolo;
 }
 
+bool annotazione::operator!=(const annotazione &A) const {
+    return !(this==&A);
+}
+
 annotazione &annotazione::operator=(const annotazione &A)
 {
-    _titolo= A.getTitolo();
+    if(this!=&A)
+        _titolo= A.getTitolo();
     return *this;
 }
 

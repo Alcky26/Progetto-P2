@@ -46,10 +46,18 @@ bool spesa::operator==(const spesa &s) const {
     return s.getSpesa()==_spesa && s.getDescrizione()==getDescrizione()&&annotazione::operator==(s);
 }
 
+bool spesa::operator!=(const spesa &s) const
+{
+    return !(this==&s);
+}
+
 spesa &spesa::operator=(const spesa &s) {
-    _spesa=s.getSpesa();
-    setDescrizione(s.getDescrizione());
-    annotazione::operator=(s);
+    if(this!=&s)
+    {
+        _spesa=s.getSpesa();
+        setDescrizione(s.getDescrizione());
+        annotazione::operator=(s);
+    }
     return *this;
 }
 

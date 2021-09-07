@@ -10,21 +10,24 @@
 class spesa : virtual public elenco
 {
 public:
-    // Costruttori
+    // costruttori
     spesa();
     spesa(QString titolo, QString descrizione);
     spesa(QString titolo, QString descrizione,const lista<type_spesa*> &spesa);
     spesa(QDomElement spesa);
     spesa(const spesa& spesa);
 
-    // Distruttore
+    // distruttore
     ~spesa();
 
-    bool operator==(const spesa& s) const;
-    spesa& operator=(const spesa& s);;
-
+    // metodi polimorfici
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
     virtual QString ToString() const;
+
+    // overloading operatori
+    bool operator==(const spesa& s) const;
+    bool operator!=(const spesa& s) const;
+    spesa& operator=(const spesa& s);
 
     // Metodo Extra
     double CostoComplessivo() const;

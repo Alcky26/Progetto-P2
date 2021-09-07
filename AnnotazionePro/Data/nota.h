@@ -8,21 +8,23 @@
 class nota: virtual public annotazione
 {
 public:
-    // Costruttori
+    // costruttori
     nota(QString titolo, QString Corpo);
     nota(QDomElement nota);
-    // Distruttore
+
+    // distruttore
     virtual ~nota();
 
+    // metodi polimorfi
     virtual QDomElement XmlSerialize(QDomDocument doc) const;
-
     virtual QString ToString() const;
 
-    bool operator==(const nota& N) const;;
+    // overloading operatori
+    bool operator==(const nota& N) const;
+    bool operator!=(const nota& N) const;
+    nota& operator=(const nota& N);
 
-    nota& operator=(const nota& N);;
-
-    //Get & Set
+    // Get & Set
     QString getCorpo() const;
     void setCorpo(const QString &value);
 

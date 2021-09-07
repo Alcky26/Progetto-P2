@@ -49,10 +49,18 @@ bool elenco::operator==(elenco& E) const {
     return E.getElenco()==_elenco && E.getDescrizione()==_descrizione && annotazione::operator==(E);
 }
 
+bool elenco::operator!=(elenco &E) const
+{
+    return !(this==&E);
+}
+
 elenco &elenco::operator=(const elenco &E){
-    _elenco=E.getElenco();
-    _descrizione=E.getDescrizione();
-    annotazione::operator=(E);
+    if(this!=&E)
+    {
+        _elenco=E.getElenco();
+        _descrizione=E.getDescrizione();
+        annotazione::operator=(E);
+    }
     return *this;
 }
 
